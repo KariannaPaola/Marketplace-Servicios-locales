@@ -14,17 +14,35 @@ const reviewSchema= new mongoose.Schema({
   provider_Id:{
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "Provider"
+    ref: "User"
   },
   rating:{
     type: Number,
     min: 1,
-    max: 5
+    max: 5,
+    required:true
   },
   comment:{
     type: String,
     maxlength: 500,
     trim: true
+  },
+  reported: { 
+    type: Boolean, 
+    default: false 
+  }, 
+  reported_by: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "User",
+  default: null
+  },
+  reported_at: {
+  type: Date,
+  default: null
+  },
+  visible:{ 
+    type: Boolean, 
+    default: true 
   },
   is_deleted:{
     type: Boolean,
@@ -38,5 +56,6 @@ const reviewSchema= new mongoose.Schema({
 },
 {timestamps: true}
 )
-
+reviewSchema.index({ request_Id: 1 }, { unique: true });
 const Review=mongoose.model("Review", reviewSchema)
+export default Review;

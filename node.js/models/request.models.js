@@ -15,7 +15,7 @@ const requestSchema= new mongoose.Schema({
     type: {
       name_service:{
         type: String,
-        required:true
+        required:false
       },
       description:{
         type: String,
@@ -23,7 +23,7 @@ const requestSchema= new mongoose.Schema({
       },
       date:{
         type: Date,
-        required:true
+        required:false
       }
     },
   },
@@ -59,4 +59,5 @@ const requestSchema= new mongoose.Schema({
 {timestamps: true}
 )
 
-const Request=mongoose.model("Request", requestSchema)
+const Request=mongoose.model("Request", requestSchema);
+export default Request;

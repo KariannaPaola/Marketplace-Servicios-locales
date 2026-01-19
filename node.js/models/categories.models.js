@@ -8,14 +8,12 @@ const categoriesSchema= new mongoose.Schema({
       validator: function (v){
         return /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(v)
       }
-    }
+    },
+    trim: true,
+    uppercase: true
   },
   description:{
     type: String
-  },
-  active:{
-    type: Boolean,
-    default: true
   },
   created_by:{
     type: mongoose.Schema.Types.ObjectId,
@@ -43,3 +41,10 @@ const categoriesSchema= new mongoose.Schema({
 },
 {timestamps: true}
 )
+categoriesSchema.index(
+  { name: 1, is_deleted: 1 },
+  { unique: true }
+);
+const Category=mongoose.model("Category", categoriesSchema);
+export default Category;
+

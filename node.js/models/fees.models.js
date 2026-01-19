@@ -19,7 +19,7 @@ const feeSchema= new mongoose.Schema({
   amount_bs:{
     type: mongoose.Schema.Types.Decimal128,
     required: true,
-  },
+  },  
   payment_reference:{
     type: String,
     default: null
@@ -47,4 +47,5 @@ const feeSchema= new mongoose.Schema({
 {timestamps: true}
 )
 
-const Fee=mongoose.model("Fee", feeSchema)
+const Fee=mongoose.model("Fee", feeSchema);
+export default Fee;

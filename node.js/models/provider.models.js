@@ -27,11 +27,27 @@ const providerSchema= new mongoose.Schema({
         return v?.length > 0}
       }
   },
+  state:{
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "State"
+    }],
+    required: true,
+    validate: {
+      validator: 
+      function (v){
+        return v?.length === 1}
+      }
+  },
   rating:{
     type: Number,
     min: 0,
     max: 5,
     default: 0
+  },
+  ratingCount: {
+  type: Number,
+  default: 0
   },
   services_offered: {
   type: [
@@ -96,5 +112,6 @@ const providerSchema= new mongoose.Schema({
 },
 {timestamps: true}
 )
-
+providerSchema.index({ categories: 1, is_deleted: 1 });
 const Provider=mongoose.model("Provider", providerSchema)
+export default Provider;
