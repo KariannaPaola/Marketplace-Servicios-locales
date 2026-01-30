@@ -18,7 +18,8 @@ import MyRequestProvider from "../pages/proveedores/MisSolicitudes";
 import MyRequestClient from "../pages/clientes/MisSolicitudes";
 import MyFees from "../pages/proveedores/Pagos";
 import ListAllFees from "../pages/administrador/Pagos";
-
+import PayFee from "../pages/proveedores/PagarTarifa";
+import VerifyFee from "../pages/administrador/RevisarPago";
 
 function ClientDashboard() {
   return <h1>holaa</h1>;
@@ -48,7 +49,9 @@ export default function AppRouter() {
         <Route path="/provider/request" element={<PrivateRoute><MyRequestProvider/></PrivateRoute>} /> 
         <Route path="/client/request" element={<PrivateRoute><MyRequestClient/></PrivateRoute>} /> 
         <Route path="/provider/myfees" element={<PrivateRoute><MyFees/></PrivateRoute>} /> 
-        <Route path="/admin/fees" element={<PrivateRoute><ListAllFees/></PrivateRoute>} /> 
+        <Route path="/admin/fees" element={<AdminRoute><ListAllFees/></AdminRoute>} /> 
+        <Route path="/admin/fee/:id" element={<AdminRoute><VerifyFee/></AdminRoute>} /> 
+        <Route path="/provider/payfee/:id" element={<PrivateRoute><PayFee/></PrivateRoute>} /> 
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

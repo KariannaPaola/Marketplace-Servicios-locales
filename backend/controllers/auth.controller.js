@@ -9,6 +9,7 @@ import jwt from "jsonwebtoken"
 export const registerUser = async (req, res) => {
   const {name, lastname, email: rawEmail, phone_number, password, password_repeat, user_type} =req.body;
   const email = rawEmail.toLowerCase();
+
   try {
     let user= await User.findOne({ email });
     if (user) return res.status(400).json({ msg: 'Usuario ya existe' });
@@ -38,6 +39,7 @@ export const registerUser = async (req, res) => {
 
 export const verifyEmail = async (req, res) => {
   const {token} =req.params;
+
   try {
     let user= await User.findOne({ token_email: token });
     if (!user) {
@@ -47,7 +49,6 @@ export const verifyEmail = async (req, res) => {
       }
       return res.status(400).json({ msg: "Token inválido" });
     }
-
     if (user.token_email_expires < Date.now()) {
       return res.status(400).json({
         msg: "Este enlace ha expirado. Solicita uno nuevo",
@@ -70,6 +71,7 @@ export const verifyEmail = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   const {email, password} = req.body
+
   try{
     let user= await User.findOne({ email});
     if (!user) return res.status(400).json({ msg: 'Usuario no existente' });
@@ -113,7 +115,8 @@ export const changePassword= async (req, res) => {
   const {newPassword}=req.body;
   const {newPassword_repeat}=req.body;
   if (newPassword !==newPassword_repeat) return res.status(400).json({ message: 'Las contraseñas deben ser iguales' });
-  try{
+  
+  try {
     const user = await User.findOne({ token_recover_password: token });
     if (!user) return res.status(400).json({ msg: 'no hay un token asociado a ese usuario' });
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;

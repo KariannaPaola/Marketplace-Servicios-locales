@@ -16,7 +16,7 @@ export const createCategory= async (req, res) => {
     is_deleted: false
     });
     if (exists) {
-    return res.status(409).json({ message: "La categoría ya existe" });
+      return res.status(409).json({ message: "La categoría ya existe" });
     }
     const newCategory = await Category.create({
       name: nameNormalized,
@@ -24,13 +24,13 @@ export const createCategory= async (req, res) => {
       created_by: user._id
     });
     return res.status(201).json({
-    message: "categoria creada exito",
-    category: newCategory
+      message: "categoria creada exito",
+      category: newCategory
     });
   } catch (error) {
-    res.status(500).json({ 
-    message: "Error al crear categoria", 
-    error: error.message || error.toString() 
+      res.status(500).json({ 
+      message: "Error al crear categoria", 
+      error: error.message || error.toString() 
     });
   }
 }
@@ -46,8 +46,8 @@ export const getCategories = async (req, res) => {
       categories
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al listar categorias' });
+      console.error(error);
+      res.status(500).json({ message: 'Error al listar categorias' });
   }
 };
 
@@ -91,9 +91,9 @@ export const editCategory= async (req, res) => {
       category: category
     });
   } catch (error) {
-    res.status(500).json({ 
-    message: "Error al editar categoria", 
-    error: error.message || error.toString() 
+      res.status(500).json({ 
+      message: "Error al editar categoria", 
+      error: error.message || error.toString() 
     });
   }
 }
@@ -121,9 +121,9 @@ export const deleteCategory= async (req, res) => {
       message: "categoria eliminada correctamente"
     });
   } catch (error) {
-    res.status(500).json({ 
-    message: "Error al eliminar categoria", 
-    error: error.message || error.toString() 
+      res.status(500).json({ 
+      message: "Error al eliminar categoria", 
+      error: error.message || error.toString() 
     });
   }
 }

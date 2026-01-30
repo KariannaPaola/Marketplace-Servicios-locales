@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { listAllFees, approveFee, disapproveFee } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function ListAllFees(){
 const [fees, setFees] = useState([]);
+const navigate=useNavigate()
 
 useEffect (()=>{
   const handleGetFees= async()=>{
@@ -21,7 +23,7 @@ useEffect (()=>{
 const handleApproveFee= async(feeId)=>{
   try {
     await approveFee(feeId)
-    setRequests(prev =>
+    setFees(prev =>
         prev.map(p =>
         p._id === feeId
         ? { ...p, status: "aprobado" }
@@ -35,7 +37,7 @@ const handleApproveFee= async(feeId)=>{
 const handleRejectRequest= async(feeId)=>{
   try {
     await disapproveFee(feeId)
-    setRequests(prev =>
+    setFees(prev =>
         prev.map(p =>
         p._id === feeId
         ? { ...p, status: "rechazado" }
@@ -59,13 +61,13 @@ return (
     </div>}
     {fee.status === "pagado" && <div>
     <p>revisar referencia de pago</p>
-    <button>
-      Verificar pago
+    <button onClick={() => navigate(`/admin/fee/${fee._id}`)}>
+      Revisar pago y referencia enviada
     </button>
-    <button  onClick={()=>handleApproveFee(fee._id)}>
+    <button onClick={()=>handleApproveFee(fee._id)}>
       aprobar
     </button>
-    <button  onClick={()=>handleRejectRequest(fee._id)}>
+    <button onClick={()=>handleRejectRequest(fee._id)}>
       rechazar
     </button>
     </div>}

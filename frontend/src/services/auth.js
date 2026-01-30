@@ -128,11 +128,19 @@ export const myFees = async (options = {}) => {
   return res.data; 
 };
 export const approveFee = async (id) => {
-  console.log(`entre a la ruta`)
   const res = await api.patch(`/fees/${id}/approve`) ;
   return res.data; 
 };
 export const disapproveFee = async (id) => {
   const res = await api.patch(`/fees/${id}/disapprove`) ;
+  return res.data; 
+};
+export const payFee = async (id, payment_reference) => {
+  const res = await api.post(`/fees/${id}/pay`, {payment_reference}) ;
+  return res.data; 
+};
+
+export const verifyfee = async (id) => {
+  const res = await api.get(`/fees/admin/fee/${id}`) ;
   return res.data; 
 };

@@ -5,6 +5,7 @@ import Provider from '../models/provider.models.js';
 export const createService= async (req, res) => {
   const user=req.user;
   const { name_service, price} =  req.body;
+
   try{
     if (!name_service || !price) {
     return res.status(400).json({ message: "debe ingresar el nombre y la tarifa del servicio" });
@@ -15,13 +16,13 @@ export const createService= async (req, res) => {
     await provider.save();
     const newService=provider.services_offered[provider.services_offered.length - 1]
     return res.status(201).json({
-    message: "servicio agregado correctamente",
-    provider: newService
-});
+      message: "servicio agregado correctamente",
+      provider: newService
+    });
   } catch (error) {
     res.status(500).json({ 
-    message: "Error al crear servicio", 
-    error: error.message || error.toString() 
+      message: "Error al crear servicio", 
+      error: error.message || error.toString() 
     });
   }
 }
@@ -39,13 +40,13 @@ export const editService= async (req, res) => {
     if (price !== undefined) service.price=price;
     await provider.save();
     return res.status(200).json({
-    message: "servicio actualizado correctamente",
-    service: service
-});
+      message: "servicio actualizado correctamente",
+      service: service
+    });
   } catch (error) {
     res.status(500).json({ 
-    message: "Error al editar servicio", 
-    error: error.message || error.toString() 
+      message: "Error al editar servicio", 
+      error: error.message || error.toString() 
     });
   }
 }
@@ -61,13 +62,13 @@ export const deleteService= async (req, res) => {
     service.remove()
     await provider.save();
     return res.status(200).json({
-    message: "servicio eliminado correctamente",
-    services: provider.services_offered
-});
+      message: "servicio eliminado correctamente",
+      services: provider.services_offered
+    });
   } catch (error) {
     res.status(500).json({ 
-    message: "Error al eliminar servicio", 
-    error: error.message || error.toString() 
+      message: "Error al eliminar servicio", 
+      error: error.message || error.toString() 
     });
   }
 }

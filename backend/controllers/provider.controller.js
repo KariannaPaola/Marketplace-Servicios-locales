@@ -6,10 +6,8 @@ import User from '../models/user.model.js';
 
 export const registerProvider= async (req, res) => {
   const user=req.user;
-  console.log("Cuerpo recibido del frontend:", req.body);
-  console.log("Usuario autenticado:", user);
-
   const { profession, description, categories, state, services_offered} =  req.body;
+
   try{
     if (!user) {
     return res.status(401).json({ message: "No autenticado" });
@@ -39,7 +37,7 @@ export const editProfileProvider= async (req, res) => {
   const id=req.params.id;
   try{
     if (id !== user._id.toString()) {
-    return res.status(403).json({ message: "acceso denegado" });
+      return res.status(403).json({ message: "acceso denegado" });
     }
     const profileProvider = await Provider.findOne({ user_Id: id, is_deleted: false  });
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
@@ -53,19 +51,19 @@ export const editProfileProvider= async (req, res) => {
     const updates = {};
     allowedFields.forEach(field => {
     if (req.body[field] !== undefined) {
-    updates[field] = req.body[field];
+      updates[field] = req.body[field];
     }
     });
     Object.assign(profileProvider, updates);
     await profileProvider.save();
     return res.status(200).json({
-    message: "Perfil actualizado correctamente",
-    profile: profileProvider
-});
+      message: "Perfil actualizado correctamente",
+      profile: profileProvider
+    });
   } catch (error) {
     res.status(500).json({ 
-    message: "Error al registrar proveedor", 
-    error: error.message || error.toString() 
+      message: "Error al registrar proveedor", 
+      error: error.message || error.toString() 
     });
   }
 }
@@ -78,15 +76,16 @@ export const readMyProfileProvider= async (req, res) => {
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
     return res.status(200).json(profileProvider);
   } catch (error) {
-    res.status(500).json({ 
-    message: "Error al obtener perfil", 
-    error: error.message || error.toString() 
-    });
+      res.status(500).json({ 
+        message: "Error al obtener perfil", 
+        error: error.message || error.toString() 
+      });
   }
 }
 
 export const readProfileProvider= async (req, res) => {
   const id= req.params.id
+
   try{
     const profileProvider = await Provider.findOne({ user_Id: id, profile_visible: true, is_deleted:false })
     .populate("categories", "name")
@@ -94,15 +93,16 @@ export const readProfileProvider= async (req, res) => {
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
     return res.status(200).json(profileProvider);
   } catch (error) {
-    res.status(500).json({ 
-    message: "Error al obtener perfil", 
-    error: error.message || error.toString() 
-    });
+      res.status(500).json({ 
+        message: "Error al obtener perfil", 
+        error: error.message || error.toString() 
+      });
   }
 }
 
 export const deletedMyProfileProvider= async (req, res) => {
   const user=req.user;
+
   try{
     const profileProvider = await Provider.findOne({ user_Id: user._id, is_deleted: false });
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
@@ -114,8 +114,8 @@ export const deletedMyProfileProvider= async (req, res) => {
     await user.save();
     await profileProvider.save();
     return res.status(200).json({
-    message: "Perfil eliminado correctamente"
-});
+      message: "Perfil eliminado correctamente"
+    });
   } catch (error) {
     res.status(500).json({ message: "Error al registrar proveedor" });
   }
@@ -132,7 +132,7 @@ export const getProviders = async (req, res) => {
       .populate('categories', 'name')
       .populate('state', 'name')
       .select('profession description rating services_offered membership_premium user_Id categories state status')
-      return res.status(200).json({
+    return res.status(200).json({
       total: providers.length,
       providers
     });
@@ -154,13 +154,13 @@ export const getProvidersAdmin = async (req, res) => {
       .populate('categories', 'name')
       .populate('state', 'name')
       .select('profession description rating services_offered membership_premium profile_visible status user_Id categories state')
-      return res.status(200).json({
+    return res.status(200).json({
       total: providers.length,
       providers
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al listar prestadores' });
+      console.error(error);
+      res.status(500).json({ message: 'Error al listar prestadores' });
   }
 };
 
@@ -176,9 +176,9 @@ export const disapproveProvider = async (req, res) => {
     provider.status="rejected";
     await provider.save()
     return res.status(200).json({
-    message: "proveedor no aprobado"})
+      message: "proveedor no aprobado"})
   } catch (error) {
-    res.status(500).json({ message: 'Error al desaprobar proveedor' });
+      res.status(500).json({ message: 'Error al desaprobar proveedor' });
   }
 };
 
@@ -193,8 +193,8 @@ export const approveProvider = async (req, res) => {
     provider.status="rejected";
     await provider.save()
     return res.status(200).json({
-    message: "Proveedor aprobado"})
+      message: "Proveedor aprobado"})
   } catch (error) {
-    res.status(500).json({ message: 'Error al aprobar' });
+      res.status(500).json({ message: 'Error al aprobar' });
   }
 };

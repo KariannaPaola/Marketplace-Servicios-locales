@@ -35,6 +35,6 @@ export const linkChatToRequest = async (req, res) => {
       await chat.save();
     }
   } catch (error) {
-    console.error("Error vinculando chat a solicitud:", error.message);
+      console.error("Error vinculando chat a solicitud:", error.message);
   }
 };

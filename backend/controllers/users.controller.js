@@ -22,7 +22,7 @@ export const getUsers = async (req, res) => {
       users
     });
   } catch (error) {
-    res.status(500).json({ message: 'Error al listar usuarios' });
+      res.status(500).json({ message: 'Error al listar usuarios' });
   }
 };
 
@@ -42,7 +42,6 @@ export const getUsersId = async (req, res) => {
   }
 };
 
-
 export const deleteUser = async (req, res) => {
   const {id} = req.params;
   const admin=req.user;
@@ -57,7 +56,6 @@ export const deleteUser = async (req, res) => {
     user.deleted_at= new Date();
     user.deleted_by=admin._id
     await user.save()
-  
     if (user.user_type === "proveedor") {
       const provider = await Provider.findOne({ user_Id: user._id});
       if (provider) {
@@ -69,9 +67,9 @@ export const deleteUser = async (req, res) => {
       }
     }
     return res.status(200).json({
-    message: "usuario eliminado correctamente"})
+      message: "usuario eliminado correctamente"})
   } catch (error) {
-    res.status(500).json({ message: 'Error al eliminar usuario' });
+      res.status(500).json({ message: 'Error al eliminar usuario' });
   }
 };
 
@@ -89,7 +87,6 @@ export const unDeleteUser = async (req, res) => {
     user.deleted_by=null;
     user.updated_by=admin._id;
     await user.save()
-
     if (user.user_type === "proveedor") {
       const provider = await Provider.findOne({ user_Id: user._id });
       if (provider) {
@@ -102,7 +99,7 @@ export const unDeleteUser = async (req, res) => {
       }
     }
     return res.status(200).json({
-    message: "usuario recuperado correctamente"})
+      message: "usuario recuperado correctamente"})
   } catch (error) {
     res.status(500).json({ message: 'Error al recuperar usuario' });
   }
