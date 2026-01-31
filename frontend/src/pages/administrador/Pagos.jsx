@@ -4,20 +4,23 @@ import { useNavigate } from "react-router-dom";
 
 export default function ListAllFees(){
 const [fees, setFees] = useState([]);
-const navigate=useNavigate()
+const [page, setPage] = useState(1);
+const [total, setTotal] = useState(0);
+const navigate=useNavigate();
+const limit = 10
 
 useEffect (()=>{
   const handleGetFees= async()=>{
     try {
-      const data= await listAllFees();
-      setFees(data.fees)
-      console.log(fees)
+      const data= await listAllFees({page, limit});
+      setFees(data.fees);
+      setTotal(data.total)
     } catch (error) {
       console.log (error, "Error al mostrar tarifas")
     }
 }
- handleGetFees()
-},[])
+  handleGetFees()
+},[page])
 
 
 const handleApproveFee= async(feeId)=>{
@@ -79,6 +82,13 @@ return (
     </div>}
   </div>
   )}
+  <div>
+  </div>
+   <div>
+    <button disabled={page === 1} onClick={() => setPage(p => p - 1)}>Anterior</button>
+    <button disabled={page * limit >= total}  onClick={()=>setPage(p => p + 1)}>Siguiente</button>
+   </div>
+    
 </div>
 
 )

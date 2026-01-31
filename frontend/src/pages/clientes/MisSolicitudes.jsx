@@ -2,20 +2,23 @@ import { useState, useEffect } from "react";
 import { getRequestClient,  cancelRequest, confirmRequest } from "../../services/auth";
 
 export default function MyRequestClient(){
-const [requests, setRequests] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const limit=10;
 
 useEffect (()=>{
   const handleGetRequest= async()=>{
     try {
       const data= await getRequestClient();
       setRequests(data.requests)
-      console.log(requests)
+      setTotal(data.total)
     } catch (error) {
       console.log (error, "Error al mostrar solicitudes")
     }
 }
 handleGetRequest()
-},[])
+},[page])
 
 const handleCancelRequest= async(requestId)=>{
   try {
@@ -74,6 +77,10 @@ return (
     </div>}
   </div>
   )}
+  <div>
+        <button disabled={page===1}  onClick={()=>setPage(p=> p - 1)} >Anterior</button>
+        <button disabled={page * limit >= total} onClick={()=>setPage(p=> p + 1)}>Siguiente</button>
+      </div>
 </div>
 
 )

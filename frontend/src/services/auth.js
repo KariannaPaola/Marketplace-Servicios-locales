@@ -39,9 +39,9 @@ export const deleteCategory = async (id) => {
   const res = await api.delete(`/categories/${id}`) ;
   return res.data; 
 };
-export const usersAdmin = async (options = {}) => {
+export const usersAdmin = async ({page=1, limit=10, user_type, is_deleted , is_email_verified} = {}) => {
   const res = await api.get(`/users/admin/users`, {
-  params: options}) 
+  params:{ page, limit, user_type, is_deleted , is_email_verified}}) 
   return res.data; 
 };
 export const deleteUser = async (id) => {
@@ -52,14 +52,14 @@ export const unDeleteUser = async (id) => {
   const res = await api.patch(`/users/restore/${id}`) ;
   return res.data; 
 };
-export const getProviders = async (options = {}) => {
-  const res = await api.get(`/providers/`, {
-  params: options}) ;
+export const getProviders = async ({page = 1, limit = 10, category, state} = {}) => {
+  const res = await api.get(`/providers`, { 
+  params: {page,limit,category, state}}) ;
   return res.data; 
 };
-export const getProvidersAdmin = async (options = {}) => {
+export const getProvidersAdmin = async ({page = 1, limit = 10, category, state} = {}) => {
   const res = await api.get(`/providers/admin/providers`, {
-  params: options}) ;
+  params:{ page, limit , category, state}} ) ;
   return res.data; 
 };
 export const approveProvider = async (id) => {
@@ -107,24 +107,24 @@ export const submitForm = async (Id_request, name_service, description, date) =>
   const res = await api.patch(`/requests/requests/${Id_request}`, {name_service, description, date}) ;
   return res.data; 
 };
-export const getRequestProvider = async (options = {}) => {
+export const getRequestProvider = async ({page=1,limit=10, category, state} = {}) => {
   const res = await api.get(`/requests/provider/getrequests`, {
-  params: options}) ;
+  params: {page,limit,category, state}}) ;
   return res.data; 
 };
-export const getRequestClient = async (options = {}) => {
+export const getRequestClient = async ({page=1,limit=10, category, state} = {}) => {
   const res = await api.get(`/requests/client/getrequests`, {
-  params: options}) ;
+  params: {page,limit, category, state}}) ;
   return res.data; 
 };
-export const listAllFees = async (options = {}) => {
+export const listAllFees = async ({page=1,limit=10, status, provider_Id} = {}) => {
   const res = await api.get(`/fees/admin/fees`, {
-  params: options}) ;
+  params: {page,limit,status,provider_Id}}) ;
   return res.data; 
 };
-export const myFees = async (options = {}) => {
+export const myFees = async ({page=1,limit=10, status} = {}) => {
   const res = await api.get(`/fees/fees/me`, {
-  params: options}) ;
+  params:{page,limit,status}}) ;
   return res.data; 
 };
 export const approveFee = async (id) => {
@@ -142,5 +142,17 @@ export const payFee = async (id, payment_reference) => {
 
 export const verifyfee = async (id) => {
   const res = await api.get(`/fees/admin/fee/${id}`) ;
+  return res.data; 
+};
+export const recoverPassword = async (email) => {
+  const res = await api.post(`/auth/recover-password`, {email}) ;
+  return res.data; 
+};
+export const changePassword = async (token, newPassword, newPassword_repeat) => {
+  const res = await api.post(`/auth/change-password/${token}`, {newPassword, newPassword_repeat}) ;
+  return res.data; 
+};
+export const readMyProfileProvider = async () => {
+  const res = await api.get(`/providers/me`) ;
   return res.data; 
 };

@@ -38,7 +38,9 @@ export const paymentRegister= async (req, res) => {
 
 export const listAllFees= async (req, res) => {
   const {status, provider_Id} = req.query;
-
+  const page= parseInt(req.query.page || 1)
+  const limit= parseInt(req.query.limit || 10)
+  const skip= (page - 1) * limit;
   try {
     const filter={};
     if (status && !["pendiente", "aprobado", "rechazado", "pagado"].includes(status)) {
@@ -48,12 +50,15 @@ export const listAllFees= async (req, res) => {
       return res.status(400).json({ message: 'id invalido' })
     if (status) filter.status= status;
     if (provider_Id) filter.provider_Id= provider_Id;
-
     const fee=await Fee.find(filter)
+      .sort ({ _id: -1 })
+      .limit (limit)
+      .skip (skip)
       .populate('provider_Id', 'name lastname') 
       .select('provider_Id amount_bs payment_reference status expiration_date date_payment')
     if (fee.length === 0) return res.status(404).json({message:'no se encontraron tarifas'});
-    return res.status(200).json({ fees: fee });
+    const total= await Fee.countDocuments(filter)
+    return res.status(200).json({total, limit, page, fees: fee });
   } catch (error) {
     res.status(500).json({ 
     message: "Error al mostrar tarifas", 
@@ -65,7 +70,9 @@ export const listAllFees= async (req, res) => {
 export const myFees= async (req, res) => {
   const {status} = req.query;
   const user=req.user;
-
+  const page= parseInt(req.query.page || 1)
+  const limit= parseInt(req.query.limit || 10)
+  const skip= (page - 1) * limit;
   try {
     const filter={provider_Id:user._id};
     if (status && !["pendiente", "aprobado", "rechazado", "pagado"].includes(status)) {
@@ -73,10 +80,14 @@ export const myFees= async (req, res) => {
     }
     if (status) filter.status= status;
     const fee=await Fee.find(filter)
+      .sort ({ _id: -1 })
+      .limit (limit)
+      .skip (skip)
       .populate('request_Id', 'details') 
       .select('amount_bs payment_reference status expiration_date date_payment')
-    if (fee.length === 0) return res.status(404).json({message:'no se encontraron tarifas'});
-    return res.status(200).json({ fees: fee });
+      if (fee.length === 0) return res.status(404).json({message:'no se encontraron tarifas'});
+      const total= await Fee.countDocuments(filter)
+    return res.status(200).json({total, limit, page, fees: fee });
   } catch (error) {
     res.status(500).json({ 
     message: "Error al mostrar tarifas", 

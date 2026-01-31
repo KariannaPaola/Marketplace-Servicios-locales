@@ -3,20 +3,23 @@ import { getRequestProvider } from "../../services/auth";
 import { cancelRequest, confirmRequest } from "../../services/auth";
 
 export default function MyRequestProvider(){
-const [requests, setRequests] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const limit=10;
 
 useEffect (()=>{
   const handleGetRequest= async()=>{
     try {
-      const data= await getRequestProvider();
+      const data= await getRequestProvider({page, limit});
       setRequests(data.requests)
-      console.log(requests)
+      setTotal(data.total)
     } catch (error) {
       console.log (error, "Error al mostrar solicitudes")
     }
 }
 handleGetRequest()
-},[])
+},[page])
 
 const handleCancelRequest= async(requestId)=>{
   try {
@@ -31,7 +34,7 @@ const handleCancelRequest= async(requestId)=>{
   } catch (error) {
     console.log (error, "Error al cancelar solicitud")  
   }
- } 
+  } 
 const handleConfirmRequest= async(requestId)=>{
   try {
     await confirmRequest(requestId)
@@ -76,6 +79,10 @@ return (
     </div>}
   </div>
   )}
+  <div>
+        <button disabled={page===1}  onClick={()=>setPage(p=> p - 1)} >Anterior</button>
+        <button disabled={page * limit >= total} onClick={()=>setPage(p=> p + 1)}>Siguiente</button>
+      </div>
 </div>
 
 )

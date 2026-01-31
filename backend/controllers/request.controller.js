@@ -183,19 +183,28 @@ export const completeRequest= async (req, res) => {
 
 export const getRequestProvider = async (req, res) => {
   const user=req.user;
+  const page= parseInt(req.query.page || 1)
+  const limit= parseInt(req.query.limit || 10)
+  const skip= (page - 1) * limit;
 
   try {
-    //const { category, state } = req.query;
+    const { category, state } = req.query;
     const filter = {provider_Id: user._id};
-    //if (category) filter.categories = category;
-    //if (state) filter.state = state;
+    if (category) filter.categories = category;
+    if (state) filter.state = state;
     const requests = await Request.find(filter)
+      .sort ({ _id: -1 })
+      .limit (limit)
+      .skip (skip)
       .populate('client_Id', 'name lastname') 
       .populate('provider_Id', 'name lastname')
       .select('client_Id provider_Id status details hiring_date')
+      const total= await Request.countDocuments(filter)
       return res.status(200).json({
-        total: requests.length,
+        total,
         requests,
+        page,
+        limit
     });
   } catch (error) {
     console.error(error);
@@ -204,19 +213,28 @@ export const getRequestProvider = async (req, res) => {
 };
 
 export const getRequestClient = async (req, res) => {
+  const page= parseInt(req.query.page || 1)
+  const limit= parseInt(req.query.limit || 10)
+  const skip= (page - 1) * limit;
   const user=req.user;
   try {
-    //const { category, state } = req.query;
+    const { category, state } = req.query;
     const filter = {client_Id: user._id};
-    //if (category) filter.categories = category;
-    //if (state) filter.state = state;
+    if (category) filter.categories = category;
+    if (state) filter.state = state;
     const requests = await Request.find(filter)
+      .sort ({ _id: -1 })
+      .limit (limit)
+      .skip (skip)
       .populate('client_Id', 'name lastname') 
       .populate('provider_Id', 'name lastname')
       .select('client_Id provider_Id status details hiring_date')
+      const total= await Request.countDocuments(filter)
       return res.status(200).json({
-        total: requests.length,
+        total,
         requests,
+        page,
+        limit
       });
   } catch (error) {
     console.error(error);

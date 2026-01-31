@@ -34,11 +34,7 @@ export const registerProvider= async (req, res) => {
 
 export const editProfileProvider= async (req, res) => {
   const user=req.user;
-  const id=req.params.id;
   try{
-    if (id !== user._id.toString()) {
-      return res.status(403).json({ message: "acceso denegado" });
-    }
     const profileProvider = await Provider.findOne({ user_Id: id, is_deleted: false  });
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
     const allowedFields = [
@@ -117,24 +113,33 @@ export const deletedMyProfileProvider= async (req, res) => {
       message: "Perfil eliminado correctamente"
     });
   } catch (error) {
-    res.status(500).json({ message: "Error al registrar proveedor" });
+    res.status(500).json({ message: "Error al eliminar perfil proveedor" });
   }
 }
 
 export const getProviders = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;      
+    const limit = Math.min(parseInt(req.query.limit) || 10, 100); 
+    const skip = (page - 1) * limit;   
     const { category, state } = req.query;
     const filter = { is_deleted: false, profile_visible: true, status:"approved"};
     if (category) filter.categories = category;
     if (state) filter.state = state;
     const providers = await Provider.find(filter)
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(limit)
       .populate('user_Id', 'name lastname') 
       .populate('categories', 'name')
       .populate('state', 'name')
       .select('profession description rating services_offered membership_premium user_Id categories state status')
-    return res.status(200).json({
-      total: providers.length,
-      providers
+      const total = await Provider.countDocuments(filter); 
+      return res.status(200).json({
+      total,
+      providers,
+      page,
+      limit
     });
   } catch (error) {
     console.error(error);
@@ -145,18 +150,27 @@ export const getProviders = async (req, res) => {
 
 export const getProvidersAdmin = async (req, res) => {
   try {
-    //const { category, state } = req.query;
+    const page = parseInt(req.query.page) || 1;      
+    const limit = Math.min(parseInt(req.query.limit) || 10, 100); 
+    const skip = (page - 1) * limit;   
+    const { category, state } = req.query;
     const filter = {};
-    //if (category) filter.categories = category;
-    //if (state) filter.state = state;
+    if (category) filter.categories = category;
+    if (state) filter.state = state;
     const providers = await Provider.find(filter)
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(limit)
       .populate('user_Id', 'name lastname') 
       .populate('categories', 'name')
       .populate('state', 'name')
       .select('profession description rating services_offered membership_premium profile_visible status user_Id categories state')
+      const total = await Provider.countDocuments(filter);
     return res.status(200).json({
-      total: providers.length,
-      providers
+      total,
+      providers,
+      page,
+      limit
     });
   } catch (error) {
       console.error(error);

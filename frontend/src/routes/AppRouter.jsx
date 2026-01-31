@@ -20,6 +20,9 @@ import MyFees from "../pages/proveedores/Pagos";
 import ListAllFees from "../pages/administrador/Pagos";
 import PayFee from "../pages/proveedores/PagarTarifa";
 import VerifyFee from "../pages/administrador/RevisarPago";
+import RecoverPassword from "../pages/auth/RecuperarContraseña";
+import ChangePassword from "../pages/auth/CambiarContraseña";
+import MyProfileProvider from "../pages/proveedores/MiPerfil";
 
 function ClientDashboard() {
   return <h1>holaa</h1>;
@@ -37,6 +40,8 @@ export default function AppRouter() {
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/dashboard" element={<ClientDashboard />} />
         <Route path="/home" element={<Home/>} />
+        <Route path="/recoverPassword" element={<RecoverPassword/>} />
+        <Route path="/ChangePassword/:token" element={<ChangePassword/>} />
         <Route path="/Chat/:Id_provider" element={<PrivateRoute><Chat/></PrivateRoute>} />
         <Route path="/request/:Id_request" element={<PrivateRoute><FormRequest/></PrivateRoute>} />
         <Route path="/profileProvider/:id" element={<PrivateRoute><ProfileProvider/></PrivateRoute>} />
@@ -49,6 +54,7 @@ export default function AppRouter() {
         <Route path="/provider/request" element={<PrivateRoute><MyRequestProvider/></PrivateRoute>} /> 
         <Route path="/client/request" element={<PrivateRoute><MyRequestClient/></PrivateRoute>} /> 
         <Route path="/provider/myfees" element={<PrivateRoute><MyFees/></PrivateRoute>} /> 
+        <Route path="/provider/profile" element={<PrivateRoute><MyProfileProvider/></PrivateRoute>} /> 
         <Route path="/admin/fees" element={<AdminRoute><ListAllFees/></AdminRoute>} /> 
         <Route path="/admin/fee/:id" element={<AdminRoute><VerifyFee/></AdminRoute>} /> 
         <Route path="/provider/payfee/:id" element={<PrivateRoute><PayFee/></PrivateRoute>} /> 

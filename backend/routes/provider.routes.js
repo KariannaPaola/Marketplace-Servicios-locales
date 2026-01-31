@@ -1,4 +1,4 @@
-import { registerProvider, editProfileProvider, readMyProfileProvider, readProfileProvider, getProviders, getProvidersAdmin, approveProvider, disapproveProvider} from "../controllers/provider.controller.js";
+import { registerProvider, editProfileProvider, readMyProfileProvider, readProfileProvider, getProviders, getProvidersAdmin, approveProvider, disapproveProvider, deletedMyProfileProvider} from "../controllers/provider.controller.js";
 import { Router } from "express";
 import authMiddleware from "../middlewares/auth.js";
 import { authRoleProvider} from "../middlewares/role.js";
@@ -10,9 +10,9 @@ const router = Router();
 
 router.post("/register",authMiddleware, registerProvider);
 router.patch("/providers/:id",authMiddleware,  authRoleProvider, editProfileProvider);
-router.get("/providers/me",authMiddleware, authRoleProvider, readMyProfileProvider);
+router.get("/me",authMiddleware, authRoleProvider, readMyProfileProvider);
 router.get("/:id", authCheckProviderFees, authMiddleware, readProfileProvider);
-router.delete("/providers/me",authMiddleware, authRoleProvider, readProfileProvider);
+router.delete("/deleteProfile/me",authMiddleware, authRoleProvider, deletedMyProfileProvider);
 router.get('/', authCheckProviderFees, authMiddleware, getProviders);
 router.get('/providersPublic', getProviders);
 router.get('/admin/providers',authMiddleware, authRoleAdmin, getProvidersAdmin);

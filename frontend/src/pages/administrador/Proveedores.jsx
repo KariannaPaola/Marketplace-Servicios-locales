@@ -5,20 +5,23 @@ import { getProvidersAdmin, approveProvider, disapproveProvider } from "../../se
 
 export default function GetProvidersAdmin (){
   const [providers, setProviders] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const limit=10;
+
   
   useEffect ( () => {
     const handleGetProviderAdmin= async()=>{
       try {
-        const data= await getProvidersAdmin();
+        const data= await getProvidersAdmin({page, limit});
+        setTotal(data.total)
         setProviders(data.providers)
       } catch (error) {
         console.log (error, "Error al obtener provedores")
         }
       }
     handleGetProviderAdmin ()
-  },[])
-
-  console.log(providers)
+  },[page])
   
   const handleApproveProvider= async (providerId)=>{
     try {
@@ -72,6 +75,10 @@ return(
         </button>
       </div>)}
     </div>)) }
+    <div>
+      <button disabled={page===1}  onClick={()=>setPage(p=> p - 1)} >Anterior</button>
+      <button disabled={page * limit >= total} onClick={()=>setPage(p=> p + 1)}>Siguiente</button>
+    </div>
   </div>
 )
 }

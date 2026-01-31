@@ -98,7 +98,7 @@ export const recoverPassword= async (req, res) => {
     const token_recoverPassword= crypto.randomBytes(32).toString('hex');
     user.token_recover_password= token_recoverPassword;
     await user.save();
-    const link_recoverPassword=`http://localhost:3000/users/changePassword/${token_recoverPassword}`;
+    const link_recoverPassword=`http://localhost:5173/ChangePassword/${token_recoverPassword}`;
     await sendEmail ({ to:email, subject:"Recupera tu cotraseña", html: `<a href="${link_recoverPassword}">cambiar contraseña</a>` })
     res.json({ message:'revisa tu correo y entra al enlace para cambiar tu contraseña' })
 

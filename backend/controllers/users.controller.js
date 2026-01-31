@@ -6,20 +6,30 @@ import Provider from '../models/provider.models.js';
 
 export const getUsers = async (req, res) => {
   try {
-    const { user_type, is_email_verified } = req.query;
+    
+    const page= parseInt(req.query.page|| 1);
+    const limit= parseInt(req.query.limit|| 10);
+    const skip= (page - 1) * limit
+    const { user_type, is_email_verified, is_deleted } = req.query;
     if (user_type && user_type !=="cliente"  && user_type !=="proveedor") {
       return res.status(400).json({ message: 'tipo de usuario invalido' });
     }
     const filter = {user_type: { $in: ['proveedor', 'cliente'] }};
     if (user_type) filter.user_type = user_type;
+    if (is_deleted) filter.is_deleted= is_deleted;
     if (is_email_verified !== undefined) filter.is_email_verified = is_email_verified==="true";
     const users = await User.find(filter)
-      .select('name lastname email phone_number membership_premium user_type is_email_verified is_deleted')
       .sort({ 'name': 1})
+      .skip (skip)
+      .limit (limit)
+      .select('name lastname email phone_number membership_premium user_type is_email_verified is_deleted')
     if (!users.length) return res.status(404).json({message:'ningun usuario encontrado',});
+    const total= await User.countDocuments(filter);
     return res.status(200).json({
-      total: users.length,
-      users
+      total,
+      users,
+      page,
+      limit
     });
   } catch (error) {
       res.status(500).json({ message: 'Error al listar usuarios' });
