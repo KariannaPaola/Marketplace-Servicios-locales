@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { verifyEmail } from "../../services/auth";
 
 export default function useVerifyEmail(){
-   const { token } = useParams();
+  const { token } = useParams();
   const [message, setMessage] = useState("Verificando...");
 
   useEffect(() => {
@@ -20,6 +20,6 @@ export default function useVerifyEmail(){
     verify();
   }, []);
 
-return{message}
+  return{message}
 
 }

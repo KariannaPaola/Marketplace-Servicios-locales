@@ -14,8 +14,8 @@ if (!fs.existsSync(uploadDir)) {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);  // Obtener la extensión del archivo
-    cb(null, Date.now() + ext);  // Nombre único con la fecha actual
+    const ext = path.extname(file.originalname); 
+    cb(null, Date.now() + ext); 
   }
 });
 

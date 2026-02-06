@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-export default function ProvidersList ({providers,page, setPage, total, limit, approve, rejected}){
+export default function ProvidersList ({providers,page, setPage, total, limit, approve, rejected, loading}){
 
+  
 return (
   <div className="p-4">
     <h1 className="text-2xl font-semibold text-gray-800 mb-6">
@@ -22,22 +23,15 @@ return (
         <div
           key={provider._id}
           className="grid grid-cols-9 gap-4 px-4 py-3 text-sm border-b hover:bg-gray-50 transition">
-          <p>{provider.user_Id.name}</p>
+            {console.log("Rendering provider:", provider)}
+          <p>{provider?.user_Id.name}</p>
           {console.log(provider)}
           <p>{provider.user_Id.lastname}</p>
           <p>{provider.categories.name}</p>
           <p>{provider.profession}</p>
           <p className="truncate">{provider.description}</p>
           <p>
-            {provider.profile_visible===true ? (
-              <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                Visible
-              </span>
-            ) : (
-              <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
-                No visible
-              </span>
-            )}
+            {provider.profile_visible===true ? (<span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">Visible</span>) : (<span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">No visible</span>)}
           </p>
           <div className="space-y-1">
             {provider.services_offered.map((ser) => (
@@ -77,6 +71,7 @@ return (
             )}
           </div>
           <div>
+            
           <Link to={`/admin/file/${provider.user_Id._id}`}>
               Ver documentos
           </Link>
@@ -96,11 +91,7 @@ return (
           <p className="text-sm text-gray-600">{provider.description}</p>
           <p>
             <strong>Perfil:</strong>{" "}
-            {provider.profile_visible ? (
-              <span className="text-green-600 font-medium">Visible</span>
-            ) : (
-              <span className="text-red-600 font-medium">No visible</span>
-            )}
+            {provider.profile_visible ? (<span className="text-green-600 font-medium">Visible</span>) : (<span className="text-red-600 font-medium">No visible</span>)}
           </p>
           <div>
             <strong>Servicios:</strong>

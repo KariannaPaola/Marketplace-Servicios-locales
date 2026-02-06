@@ -25,12 +25,7 @@ export const getUsers = async (req, res) => {
       .select('name lastname email phone_number membership_premium user_type is_email_verified is_deleted')
     if (!users.length) return res.status(404).json({message:'ningun usuario encontrado',});
     const total= await User.countDocuments(filter);
-    return res.status(200).json({
-      total,
-      users,
-      page,
-      limit
-    });
+    return res.status(200).json({total,users,page,limit});
   } catch (error) {
       res.status(500).json({ message: 'Error al listar usuarios' });
   }

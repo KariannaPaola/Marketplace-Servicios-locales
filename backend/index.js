@@ -25,7 +25,6 @@ app.use(express.json());
 app.use(corsInstance);
 app.use('/uploads', express.static("uploads"));
 
-
 await connection();
 
 app.use("/users", usersRoutes);
@@ -40,10 +39,6 @@ app.use("/states", statesRoutes);
 app.use("/chats", chatRoutes);
 app.use("/messages", messagesRoutes);
 app.use("/file", filesRoutes);
-
-
-
-
 
 
 app.listen(port, () => {

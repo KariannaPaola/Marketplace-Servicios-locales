@@ -25,19 +25,10 @@ return (
           <p>{u.phone_number}</p>
           <p>{u.user_type}</p>
           <p>
-            {u.is_deleted ? (
-              <span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
-                Suspendido
-              </span>
-            ) : (
-              <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                Activo
-              </span>
-            )}
+            {u.is_deleted ? (<span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">Suspendido</span>) : (<span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">Activo</span>)}
           </p>
           <button
-            onClick={() =>
-              u.is_deleted ? unDelete(u._id) : remove(u._id)}
+            onClick={() =>u.is_deleted ? unDelete(u._id) : remove(u._id)} 
             className={`px-3 py-1 text-xs rounded-md text-white ${u.is_deleted ? "bg-green-600 hover:bg-green-700": "bg-red-600 hover:bg-red-700"}`}>
             {u.is_deleted ? "Activar" : "Suspender"}
           </button>
@@ -56,11 +47,7 @@ return (
           <p><strong>Tipo:</strong> {u.user_type}</p>
           <p>
             <strong>Estado:</strong>{" "}
-            {u.is_deleted ? (
-              <span className="text-red-600 font-medium">Suspendido</span>
-            ) : (
-              <span className="text-green-600 font-medium">Activo</span>
-            )}
+            {u.is_deleted ? (<span className="text-red-600 font-medium">Suspendido</span>) : (<span className="text-green-600 font-medium">Activo</span>)}
           </p>
           <button
             onClick={() =>u.is_deleted ? unDelete(u._id) : remove(u._id)}

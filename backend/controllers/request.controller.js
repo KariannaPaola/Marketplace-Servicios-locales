@@ -19,7 +19,6 @@ export const pendingRequest= async (req, res) => {
     request.hiring_date=null;
     request.updated_by = user._id;
     await request.save();
-    console.log("entrandooo a pending")
     return res.status(200).json({
       message: "Solicitud en estado pendiente",
       request: request
@@ -117,7 +116,7 @@ export const cancelRequest= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
       message: "Error al cancelar servicio", 
-      error: error.message || error.toString() 
+      error: error.message 
     });
   }
 }
@@ -133,21 +132,15 @@ export const completeRequest= async (req, res) => {
     if (!request) return res.status(404).json({message:'solictiud no encontrada'});
     const isClient = request.client_Id.toString() === user._id.toString();
     const isProvider = request.provider_Id.toString() === user._id.toString();
-    if (!isClient && !isProvider) {
-      return res.status(403).json({
-        message: "No estás autorizado para completar esta solicitud",
-      });
-    }
+    if (!isClient && !isProvider) return res.status(403).json({message: "No estás autorizado para completar esta solicitud"});
     request.status="completado";
     request.updated_by = user._id;
     await request.save();
-    return res.status(200).json({
-      message: "Solicitud completada con exito",
-    });
+    return res.status(200).json({message: "Solicitud completada con exito"});
   } catch (error) {
     res.status(500).json({ 
       message: "Error al completar servicio", 
-      error: error.message || error.toString() 
+      error: error.message 
     });
   }
 }
@@ -172,14 +165,8 @@ export const getRequestProvider = async (req, res) => {
     .populate("chat_Id")
     .select('client_Id provider_Id status details hiring_date')
     const total= await Request.countDocuments(filter)
-    return res.status(200).json({
-      total,
-      requests,
-      page,
-      limit
-    });
+    return res.status(200).json({total,requests,page,limit});
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error al listar solicitudes' });
   }
 };
@@ -203,14 +190,8 @@ export const getRequestClient = async (req, res) => {
     .populate("chat_Id")
     .select('client_Id provider_Id status details hiring_date')
     const total= await Request.countDocuments(filter)
-    return res.status(200).json({
-      total,
-      requests,
-      page,
-      limit
-    });
+    return res.status(200).json({total,requests,page,limit});
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error al listar solicitudes' });
   }
 };

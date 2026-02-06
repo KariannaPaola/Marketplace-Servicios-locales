@@ -3,7 +3,6 @@ import File from '../models/files.models.js';
 export const uploadImage = async (req, res) => {
 
   try {
-    console.log(req.file)
     if (!req.file) {
       return res.status(400).json({ message: 'No se han subido archivos.' });
     }
@@ -20,9 +19,7 @@ export const uploadImage = async (req, res) => {
     });         
     await document.save();
     res.json({ message: "Documentos subidos correctamente" });
-
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Hubo un error al subir los archivos.', error: error.message });
   }
 

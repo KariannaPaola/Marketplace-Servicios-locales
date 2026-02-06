@@ -4,19 +4,17 @@ import FeesList from "../../components/admin/FeesList";
 export default function FeesAdminPage(){
   const {fees, page, setPage, limit, total,approve, reject} = useFeesAdmin()
 
-return (
-
-<div >
-  <FeesList
-    fees={fees}
-    page={page}
-    limit={limit}
-    total={total}
-    approve={approve}
-    reject={reject} 
-    setPage={setPage}
-  />
-</div>
-
-)
+  return (
+    <div >
+      <FeesList
+        fees={fees}
+        page={page}
+        limit={limit}
+        total={total}
+        approve={approve}
+        reject={reject} 
+        setPage={setPage}
+      />
+    </div>
+  )
 }

@@ -28,7 +28,7 @@ return (
           <p>Bs {fee.amount_bs.$numberDecimal}</p>
           <p>$ {fee.amount_usd.$numberDecimal}</p>
           <p>
-            {new Date(fee.date_payment).toLocaleDateString("es-VE")}
+            {fee.date_payment!==null? <p>{new Date(fee.date_payment).toLocaleDateString("es-VE")}</p> : ""}
           </p>
           <p>
             {new Date(fee.expiration_date).toLocaleDateString("es-VE")}
@@ -84,10 +84,10 @@ return (
           <p><strong>Apellido:</strong> {fee.provider_Id.lastname}</p>
           <p><strong>Monto Bs:</strong> Bs {fee.amount_bs.$numberDecimal}</p>
           <p><strong>Monto USD:</strong> $ {fee.amount_usd.$numberDecimal}</p>
-          <p>
+          <div>
             <strong>Fecha de pago:</strong>{" "}
-            {new Date(fee.date_payment).toLocaleDateString("es-VE")}
-          </p>
+            {fee.date_payment!==null? <p>{new Date(fee.date_payment).toLocaleDateString("es-VE")}</p> : ""}
+          </div>
           <p>
             <strong>Vencimiento:</strong>{" "}
             {new Date(fee.expiration_date).toLocaleDateString("es-VE")}
@@ -125,21 +125,17 @@ return (
         </div>
       ))}
     </div>
-
-    {/* Paginación */}
     <div className="flex justify-between items-center mt-6">
       <button
         disabled={page === 1}
         onClick={() => setPage((p) => p - 1)}
-        className="px-4 py-2 border rounded-md disabled:opacity-50 hover:bg-gray-100"
-      >
+        className="px-4 py-2 border rounded-md disabled:opacity-50 hover:bg-gray-100">
         Anterior
       </button>
       <button
         disabled={page * limit >= total}
         onClick={() => setPage((p) => p + 1)}
-        className="px-4 py-2 border rounded-md disabled:opacity-50 hover:bg-gray-100"
-      >
+        className="px-4 py-2 border rounded-md disabled:opacity-50 hover:bg-gray-100">
         Siguiente
       </button>
     </div>

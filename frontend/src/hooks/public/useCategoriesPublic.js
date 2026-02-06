@@ -7,16 +7,15 @@ export default function UseCategoriesPublic() {
 
   useEffect(() => {
     const fetchCategories =  async () => {
-        try {
-          const data = await categoriesPublic(); 
-          setCategories(data.categories)
-        } catch (error) {
+      try {
+        const data = await categoriesPublic(); 
+        setCategories(data.categories)
+      } catch (error) {
           console.error("Error cargando categorías", error);
-        } 
-      }
-      fetchCategories()
+      } 
+    }
+    fetchCategories()
   }, []);
-
 
   return {categories}
 }

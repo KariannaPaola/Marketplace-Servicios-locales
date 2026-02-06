@@ -7,6 +7,7 @@ export default function useProvidersAdmin (){
   const [providers, setProviders] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [loading, setloading] = useState(true);
   const limit=10;
 
   
@@ -16,6 +17,7 @@ export default function useProvidersAdmin (){
         const data= await fetchProvidersAdmin({page, limit});
         setTotal(data.total)
         setProviders(data.providers)
+        setloading(data.providers)
       } catch (error) {
         console.log (error, "Error al obtener provedores")
         }
@@ -53,5 +55,5 @@ export default function useProvidersAdmin (){
     }
   }
 
-  return {providers, setProviders,page, setPage, total, setTotal, limit, approve, rejected}
+  return {providers, setProviders,page, setPage, total, setTotal, limit, approve, rejected, loading}
 }

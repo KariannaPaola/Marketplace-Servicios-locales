@@ -12,7 +12,7 @@ export const paymentRegister= async (req, res) => {
   const {payment_reference}=req.body;
 
   try {
-
+    
     if (!id) {
       return res.status(400).json({ message: "no hay una solicitud asociada a eta tarifa" });
     }
@@ -72,6 +72,7 @@ export const listAllFees= async (req, res) => {
 }
 
 export const myFees= async (req, res) => {
+  
   const {status} = req.query;
   const user=req.user;
   const page= parseInt(req.query.page || 1)
@@ -89,13 +90,14 @@ export const myFees= async (req, res) => {
       .skip (skip)
       .populate('request_Id', 'details') 
       .select('amount_bs payment_reference status expiration_date date_payment')
+      console.log(fee)
       if (fee.length === 0) return res.status(404).json({message:'no se encontraron tarifas'});
       const total= await Fee.countDocuments(filter)
-    return res.status(200).json({total, limit, page, fees: fee });
+      return res.status(200).json({total, limit, page, fees: fee });
   } catch (error) {
     res.status(500).json({ 
     message: "Error al mostrar tarifas", 
-    error: error.message || error.toString() 
+    error: error.message
     });
   }
 }
@@ -119,7 +121,7 @@ export const approveFee= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
     message: "Error al aprobar tarifa", 
-    error: error.message || error.toString() 
+    error: error.message 
     });
   }
 }
@@ -142,7 +144,7 @@ export const verifyReference= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
     message: "Error al mostrar pago", 
-    error: error.message || error.toString() 
+    error: error.message
     });
   }
 }
@@ -164,9 +166,9 @@ export const disapproveFee= async (req, res) => {
       await recalcProviderVisibility(fee.provider_Id);
       return res.status(200).json({ fee });
   } catch (error) {
-    res.status(500).json({ 
-    message: "Error al rechazar tarifa", 
-    error: error.message || error.toString() 
-    });
+      res.status(500).json({ 
+        message: "Error al rechazar tarifa", 
+        error: error.message
+      });
   }
 }

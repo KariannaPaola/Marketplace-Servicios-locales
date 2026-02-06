@@ -22,7 +22,7 @@ export const createService= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
       message: "Error al crear servicio", 
-      error: error.message || error.toString() 
+      error: error.message
     });
   }
 }
@@ -46,7 +46,7 @@ export const editService= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
       message: "Error al editar servicio", 
-      error: error.message || error.toString() 
+      error: error.message 
     });
   }
 }
@@ -68,7 +68,7 @@ export const deleteService= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
       message: "Error al eliminar servicio", 
-      error: error.message || error.toString() 
+      error: error.message
     });
   }
 }

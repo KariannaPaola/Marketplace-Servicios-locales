@@ -4,11 +4,6 @@ const categoriesSchema= new mongoose.Schema({
   name:{
     type: String,
     required: true,
-    validate:{
-      validator: function (v){
-        return /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(v)
-      }
-    },
     trim: true,
     uppercase: true
   },
@@ -41,10 +36,7 @@ const categoriesSchema= new mongoose.Schema({
 },
 {timestamps: true}
 )
-categoriesSchema.index(
-  { name: 1, is_deleted: 1 },
-  { unique: true }
-);
+categoriesSchema.index({ name: 1, is_deleted: 1 },{ unique: true });
 const Category=mongoose.model("Category", categoriesSchema);
 export default Category;
 

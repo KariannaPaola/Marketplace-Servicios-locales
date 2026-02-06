@@ -20,10 +20,9 @@ export const registerProvider= async (req, res) => {
       provider: newProvider
     });
   } catch (error) {
-    console.error("Error al registrar proveedor:", error);
     res.status(500).json({ 
     message: "Error al registrar proveedor", 
-    error: error.message || error.toString() 
+    error: error.message
   });
   }
 }
@@ -55,7 +54,7 @@ export const editProfileProvider= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
       message: "Error al registrar proveedor", 
-      error: error.message || error.toString() 
+      error: error.message 
     });
   }
 }
@@ -64,22 +63,26 @@ export const readMyProfileProvider= async (req, res) => {
   const user=req.user;
   try{
     const profileProvider = await Provider.findOne({ user_Id: user._id, is_deleted: false })
+    .populate("user_Id", "name lastname")
+    .populate("categories", "name")
+    .populate("state", "name")
     .select("profession description categories state services_offered rating");
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado'});
     return res.status(200).json(profileProvider);
   } catch (error) {
       res.status(500).json({ 
         message: "Error al obtener perfil", 
-        error: error.message || error.toString() 
+        error: error.message
       });
   }
 }
 
 export const readProfileProvider= async (req, res) => {
   const id= req.params.id
-
+console.log("entreee a profile")
   try{
     const profileProvider = await Provider.findOne({ user_Id: id, profile_visible: true, is_deleted:false })
+    .populate("user_Id", "name lastname")
     .populate("categories", "name")
     .select("profession description categories services_offered rating");
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
@@ -87,7 +90,7 @@ export const readProfileProvider= async (req, res) => {
   } catch (error) {
       res.status(500).json({ 
         message: "Error al obtener perfil", 
-        error: error.message || error.toString() 
+        error: error.message 
       });
   }
 }
@@ -131,14 +134,8 @@ export const getProviders = async (req, res) => {
       .populate('state', 'name')
       .select('profession description rating services_offered membership_premium user_Id categories state status')
       const total = await Provider.countDocuments(filter); 
-      return res.status(200).json({
-      total,
-      providers,
-      page,
-      limit
-    });
+      return res.status(200).json({total,providers,page,limit});
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error al listar prestadores' });
   }
 };
@@ -161,15 +158,9 @@ export const getProvidersAdmin = async (req, res) => {
       .populate('state', 'name')
       .select('profession description rating services_offered membership_premium profile_visible status user_Id categories state')
       const total = await Provider.countDocuments(filter);
-    return res.status(200).json({
-      total,
-      providers,
-      page,
-      limit
-    });
+    return res.status(200).json({total,providers,page,limit});
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al listar prestadores' });
+    res.status(500).json({ message: 'Error al listar prestadores' });
   }
 };
 
@@ -184,8 +175,7 @@ export const disapproveProvider = async (req, res) => {
     if (!provider) return res.status(404).json({message:'Proveedor no encontrado',});
     provider.status="rejected";
     await provider.save()
-    return res.status(200).json({
-      message: "proveedor no aprobado"})
+    return res.status(200).json({message: "proveedor no aprobado"})
   } catch (error) {
       res.status(500).json({ message: 'Error al desaprobar proveedor' });
   }
@@ -207,8 +197,7 @@ export const approveProvider = async (req, res) => {
     console.log("usuariooo: " , user)
     user.user_type="proveedor"
     await user.save()
-    return res.status(200).json({
-      message: "Proveedor aprobado"})
+    return res.status(200).json({message: "Proveedor aprobado"})
   } catch (error) {
       res.status(500).json({ message: 'Error al aprobar' });
   }

@@ -3,7 +3,7 @@ import { Trash2, Pencil } from "lucide-react";
 export default function CategoriesList ({categories, remove,editStart}){
 
 return (
-  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 ml-2 mr-2">
+  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-3 ml-2 mr-2">
     {categories.map((cat) => (
       <div
         key={cat._id}

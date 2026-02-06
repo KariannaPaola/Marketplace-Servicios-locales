@@ -66,8 +66,6 @@ export default function AppRouter() {
         <Route path="/provider/payfee/:id" element={<PrivateRoute><PayFeePage/></PrivateRoute>} /> 
         <Route path="/upload/file" element={<PrivateRoute><SubirCedula/></PrivateRoute>} />
         <Route path="/admin/file/:id" element={<AdminRoute><ReadImages/></AdminRoute>} /> 
-        
-        
         <Route path="*" element={<NotFound />} />
       </Routes>
     </MainLayout>

@@ -18,10 +18,9 @@ useEffect (()=>{
     } catch (error) {
       console.log (error, "Error al mostrar tarifas")
     }
-}
-getMyFees()
+  }
+  getMyFees()
 },[page])
-
 
   return{fees,page, setPage, total, limit}
 }

@@ -17,6 +17,5 @@ const change= async(e)=>{
   }
 }
 
-return{
-password, setPassword,newPassword_repeat, setNewPassword_repeat ,change}
+  return{ password, setPassword,newPassword_repeat, setNewPassword_repeat ,change}
 }

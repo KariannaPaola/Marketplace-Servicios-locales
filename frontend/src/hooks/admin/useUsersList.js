@@ -3,7 +3,7 @@ import { usersAdmin , deleteUser, unDeleteUser} from "../../services/auth";
 
 
 export default function useUsersAdmin (){
-  const   [users, setUsers] = useState([]);
+    const [users, setUsers] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const limit=10
@@ -38,6 +38,6 @@ export default function useUsersAdmin (){
         console.log("error al restaurar usuario", error)
       }
     }
-  return{
-    users, setUsers ,page, setPage, total, setTotal, limit, remove, unDelete}
+    
+  return{users, setUsers ,page, setPage, total, setTotal, limit, remove, unDelete}
 }

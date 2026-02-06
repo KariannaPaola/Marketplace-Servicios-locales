@@ -24,15 +24,12 @@ function ReadImages() {
   }, [id]);
 
   if (loading) return <p>Cargando imágenes...</p>;
-
   if (!images.length) {
     return <p>No se encontraron imágenes.</p>;
   }
-
   if (!images[0].files.length) {
     return <p>No se encontraron archivos.</p>;
   }
-
   return (
     <div>
       <h2>Foto de la Cédula</h2>

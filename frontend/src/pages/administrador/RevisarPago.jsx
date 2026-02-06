@@ -3,18 +3,16 @@ import VerifyFee from "../../components/admin/VerifyFee";
 
 export default function VerifyFeeAdminPage(){
 
-const {fee, approve, reject}= useVerifyFee();
+  const {fee, approve, reject}= useVerifyFee();
 
-return (
-
-<div>
-    <VerifyFee
-          fee={fee}
-          approve={approve}
-          reject={reject}
-        />
-  </div>
-
-)
+  return (
+    <div>
+      <VerifyFee
+        fee={fee}
+        approve={approve}
+        reject={reject}
+      />
+    </div>
+  )
 }
 

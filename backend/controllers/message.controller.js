@@ -27,7 +27,6 @@ export const sendMessage = async (req, res) => {
 };
 
 export const getMessages = async (req, res) => {
-   console.log( "entre a getmessage" )
   const { chatId } = req.params;
   const user = req.user;
   try {

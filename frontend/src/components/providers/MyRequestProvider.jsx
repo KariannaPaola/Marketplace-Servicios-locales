@@ -3,16 +3,13 @@ import { useNavigate } from "react-router-dom"
 export default function MyRequestsProvider ({requests,confirm, cancel,page, setPage, total, limit} ){
 const navigate=useNavigate()
 return (
-  
   <div className="p-5 max-w-3xl mx-auto">
     {console.log(requests)}
     <h1 className="text-2xl font-bold text-center mb-6">Historial de solicitudes</h1>
     {requests.map((req) => {
       const formattedDetailDate = req.details?.date? new Date(req.details.date).toLocaleDateString("es-ES"): "";
       return (
-        <div
-          key={req._id}
-          className="bg-white border border-gray-200 rounded-lg p-5 mb-5 shadow-sm">
+        <div key={req._id} className="bg-white border border-gray-200 rounded-lg p-5 mb-5 shadow-sm">
           <p className="font-medium">
             <span className="font-semibold">Nombre del cliente:</span> {req.client_Id.name}{" "}
             {req.client_Id.lastname}
@@ -74,7 +71,6 @@ return (
         </div>
       );
     })}
-
     <div className="flex justify-between mt-5">
       <button
         disabled={page === 1}

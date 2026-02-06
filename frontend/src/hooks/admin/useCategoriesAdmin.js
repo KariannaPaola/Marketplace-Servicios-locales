@@ -71,5 +71,5 @@ export default function useCategoriesAdmin() {
     setDescription("");
   };
 
-  return{ name, setName,description, categories, setDescription, loadingCategories, create, creatingCategory, editingCategory, setEditingCategory, edit, remove, editStart}
+  return{name, setName,description, categories, setDescription, loadingCategories, create, creatingCategory, editingCategory, setEditingCategory, edit, remove, editStart}
 }

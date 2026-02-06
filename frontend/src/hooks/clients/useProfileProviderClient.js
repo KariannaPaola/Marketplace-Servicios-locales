@@ -7,19 +7,19 @@ export default function useProfileProviderClient (){
   const { id } = useParams();
   const [profileProvider, setProfileProvider]= useState({})
 
-useEffect (()=>{
-  const getProfile = async ()=>{
-    try {
-      const data= await getProfileProvider(id);
-      setProfileProvider(data)
-      console.log (data)
-    } catch (error) {
-      console.log("Error al obtener perfil del proveedor", error)
-    }
-  } 
-getProfile ()
+  useEffect (()=>{
+    const getProfile = async ()=>{
+      try {
+        const data= await getProfileProvider(id);
+        setProfileProvider(data)
+        console.log (data)
+      } catch (error) {
+        console.log("Error al obtener perfil del proveedor", error)
+      }
+    } 
+  getProfile ()
 
-}),[]
+  }),[]
 
   return{profileProvider}
 }

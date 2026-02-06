@@ -6,6 +6,7 @@ import Request from '../models/request.models.js';
 
 
 export const createChat= async (req, res) => {
+  
   const { Id_provider } = req.params;
   const user=req.user;
   try {
@@ -30,6 +31,7 @@ export const createChat= async (req, res) => {
       status: { $in: ["pendiente", "en_curso", "creada"] },
       is_deleted: false,
     });
+
     if (activeRequests >= 3) {
       return res.status(400).json({
       message: "Máximo 3 solicitudes activas permitidas",
@@ -45,10 +47,11 @@ export const createChat= async (req, res) => {
     });
 
     const chat = await Chat.create({
-  client_Id: user._id,        
-  provider_Id: Id_provider,   
-  request_Id: newRequest._id,
-  });
+      client_Id: user._id,        
+      provider_Id: Id_provider,   
+      request_Id: newRequest._id,
+    });
+    
     newRequest.chat_Id = chat._id;
     await newRequest.save();
     return res.status(201).json({

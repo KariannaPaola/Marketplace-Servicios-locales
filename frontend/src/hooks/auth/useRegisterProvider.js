@@ -82,6 +82,7 @@ export default function useRegisterProvider(){
       setError(error.response?.data?.message || error.message || "Error desconocido");
     }
   }
-return{error, message, infoSubmit,profession, setProfession, description,setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, states, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}
+  
+  return{error, message, infoSubmit,profession, setProfession, description,setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, states, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}
 
 }

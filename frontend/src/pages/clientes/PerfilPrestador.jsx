@@ -7,10 +7,9 @@ const {profileProvider}=useProfileProviderClient();
 
 return(
   
- <ProfileProviderClient
+  <ProfileProviderClient
     profileProvider={profileProvider}
   />
-
 )
 
 }

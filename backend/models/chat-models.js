@@ -20,10 +20,7 @@ const chatSchema= new mongoose.Schema({
 }, 
 {timestamps: true}
 )
-chatSchema.index(
-{ userA: 1, userB: 1 },
-{ unique: true }
-);
+chatSchema.index({ userA: 1, userB: 1 },{ unique: true });
 
 const Chat=mongoose.model("Chat", chatSchema)
 export default Chat;

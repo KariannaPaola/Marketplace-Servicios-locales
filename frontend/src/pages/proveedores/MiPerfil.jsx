@@ -4,12 +4,12 @@ import EditMyProfileProvider from "../../components/providers/EditMyProfileProvi
 
 
 export default function MyProfileProviderPage( ){
- const {profile,loading,isEditing,startEdit,cancelEdit,editProfile, categoriesList, statesList}=useMyProfileProvider()
+  const {profile,loading,isEditing,startEdit,cancelEdit,editProfile, categoriesList, statesList}=useMyProfileProvider()
 
 
-if (loading) return <p>Cargando...</p>;
+  if (loading) return <p>Cargando...</p>;
 
-return isEditing ? (
+  return isEditing ? (
     <EditMyProfileProvider
       profile={profile}
       categoriesList={categoriesList}
@@ -17,7 +17,7 @@ return isEditing ? (
       onSave={editProfile}
       onCancel={cancelEdit}
     />
-  ) : (
+    ) : (
     <MyProfileProvider
       profile={profile}
       onEdit={startEdit}

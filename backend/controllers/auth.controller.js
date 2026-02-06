@@ -90,11 +90,11 @@ export const loginUser = async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: 'Contraseña incorrecta' });
     const token= jwt.sign({ id: user._id}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
     res.json({ token, user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        user_type: user.user_type, 
-      } });
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      user_type: user.user_type, 
+    }});
   } catch (error) {
     res.status(500).json({ message: 'Error al iniciar sesión' });
   }

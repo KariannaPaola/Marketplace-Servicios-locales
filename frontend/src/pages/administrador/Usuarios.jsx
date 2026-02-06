@@ -7,15 +7,15 @@ export default function UsersAdminPage() {
     users ,page, setPage, total, limit, remove, unDelete}=useUsersList()
 
   return (
-  <UsersList
-    users={users}
-    remove ={remove}
-    unDelete={unDelete }
-    page={page}
-    setPage={setPage}
-    total={total}
-    limit={limit}
-  />
+    <UsersList
+      users={users}
+      remove ={remove}
+      unDelete={unDelete }
+      page={page}
+      setPage={setPage}
+      total={total}
+      limit={limit}
+    />
   )
 }
 

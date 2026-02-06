@@ -43,7 +43,7 @@ export const createReview= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
     message: "Error al crear reseña", 
-    error: error.message || error.toString() 
+    error: error.message
     });
   }
 }
@@ -66,7 +66,6 @@ export const getReviews = async (req, res) => {
       .sort({ createdAt: -1 });
     res.json(reviews);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error al listar reseñas' });
   }
 };
@@ -89,7 +88,6 @@ export const getReviewsAdmin = async (req, res) => {
       .sort({ createdAt: -1 });
     res.json(reviews);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error al listar reseñas' });
   }
 };
@@ -108,7 +106,6 @@ export const getReviewsReported = async (req, res) => {
       .sort({ createdAt: -1 });
     res.json(reviews);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error al listar reseñas reportadas' });
   }
 };
@@ -139,7 +136,6 @@ export const reportReview = async (req, res) => {
     message: "Reseña reportada exito",
     });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error al reportar la reseña' });
   }
 };
@@ -174,7 +170,6 @@ export const verifyReviewsReportedAdmin = async (req, res) => {
     message: "Reseña revisada con exito",
   });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Error al verifiar reseña' });
   }
 };

@@ -30,7 +30,7 @@ export const createCategory= async (req, res) => {
   } catch (error) {
       res.status(500).json({ 
       message: "Error al crear categoria", 
-      error: error.message || error.toString() 
+      error: error.message 
     });
   }
 }
@@ -92,9 +92,9 @@ export const editCategory= async (req, res) => {
     });
   } catch (error) {
       res.status(500).json({ 
-      message: "Error al editar categoria", 
-      error: error.message || error.toString() 
-    });
+        message: "Error al editar categoria", 
+        error: error.message 
+      });
   }
 }
 
@@ -123,7 +123,7 @@ export const deleteCategory= async (req, res) => {
   } catch (error) {
       res.status(500).json({ 
       message: "Error al eliminar categoria", 
-      error: error.message || error.toString() 
+      error: error.message
     });
   }
 }
