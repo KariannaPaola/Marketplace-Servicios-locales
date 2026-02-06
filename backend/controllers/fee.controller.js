@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import Fee from '../models/fees.models.js';
 import { recalcProviderVisibility } from "../services/providerVisibility.service.js";
+import mongoose from 'mongoose';
+
 
 
 export const paymentRegister= async (req, res) => {
@@ -10,6 +12,7 @@ export const paymentRegister= async (req, res) => {
   const {payment_reference}=req.body;
 
   try {
+
     if (!id) {
       return res.status(400).json({ message: "no hay una solicitud asociada a eta tarifa" });
     }
@@ -24,10 +27,10 @@ export const paymentRegister= async (req, res) => {
     fee.date_payment = new Date();
     fee.updated_by=user._id
     await fee.save();
-
     return res.status(200).json({
       message: "referencia de pago de tarifa enviada con exito, revisaremos el comprobante para validar el pago",
     });
+
   } catch (error) {
     res.status(500).json({ 
     message: "Error al pagar tarifa", 
@@ -42,6 +45,7 @@ export const listAllFees= async (req, res) => {
   const limit= parseInt(req.query.limit || 10)
   const skip= (page - 1) * limit;
   try {
+
     const filter={};
     if (status && !["pendiente", "aprobado", "rechazado", "pagado"].includes(status)) {
       return res.status(400).json({ message: 'status invalido' });
@@ -55,7 +59,7 @@ export const listAllFees= async (req, res) => {
       .limit (limit)
       .skip (skip)
       .populate('provider_Id', 'name lastname') 
-      .select('provider_Id amount_bs payment_reference status expiration_date date_payment')
+      .select('provider_Id amount_bs amount_usd payment_reference status expiration_date date_payment')
     if (fee.length === 0) return res.status(404).json({message:'no se encontraron tarifas'});
     const total= await Fee.countDocuments(filter)
     return res.status(200).json({total, limit, page, fees: fee });
@@ -129,12 +133,11 @@ export const verifyReference= async (req, res) => {
     if (!id) {
       return res.status(400).json({ message: "no existe esta tarifa" });
     }
-      const fee=await Fee.findOne({ _id: id})
-      .populate('provider_Id', 'name lastname')
-      .select('provider_Id payment_reference status expiration_date date_payment');
-      console.log('se guardooo', fee)
-      return res.status(200).json({
-      fee
+    const fee=await Fee.findOne({ _id: id})
+    .populate('provider_Id', 'name lastname')
+    .select('provider_Id payment_reference status expiration_date date_payment');
+    return res.status(200).json({
+    fee
     });
   } catch (error) {
     res.status(500).json({ 

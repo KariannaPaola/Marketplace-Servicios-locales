@@ -1,68 +1,38 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import Provider from '../models/provider.models.js';
 import Request from '../models/request.models.js';
 import Fee from '../models/fees.models.js';
 
-
-export const createRequest= async (req, res) => {
+export const pendingRequest= async (req, res) => {
+  
+  const { id } = req.params;
   const user=req.user;
-  const {provider_Id} = req.params;
+
   try{
-    console.log(provider_Id)
-    if (!provider_Id) {
-      return res.status(400).json({ message: "Proveedor requerido" });
+    if (!id) {
+      return res.status(400).json({ message: "debes ingresar una solicitud" });
     }
-    if (user._id.toString()===provider_Id) {
-      return res.status(400).json({ message: "No puedes contratatarte a ti mismo" });
-    }
-    const provider=await Provider.findOne({ user_Id: provider_Id, is_deleted: false, profile_visible: true  });
-    if (!provider) return res.status(404).json({message:'Proveedor no encontrado'});
-
-    const existingRequest = await Request.findOne({
-      client_Id: user._id,
-      provider_Id,
-      status: { $in: ["pendiente", "en_curso"] },
-      is_deleted: false,
+    const request=await Request.findOne({ provider_Id: id, status: "creada", client_Id: user._id.toString() });
+    if (!request) return res.status(404).json({message:'solictiud no encontrada'});
+    request.details=null;
+    request.status="pendiente";
+    request.hiring_date=null;
+    request.updated_by = user._id;
+    await request.save();
+    console.log("entrandooo a pending")
+    return res.status(200).json({
+      message: "Solicitud en estado pendiente",
+      request: request
     });
-
-    if (existingRequest) {
-      return res.status(200).json({
-        message: "Ya existe una solicitud activa",
-        request: existingRequest,
-      });
-    }
-
-    const activeRequests = await Request.countDocuments({
-      client_Id: user._id,
-      status: { $in: ["pendiente", "en_curso"] },
-      is_deleted: false,
-    });
-
-    if (activeRequests >= 3) {
-      return res.status(400).json({
-        message: "Máximo 3 solicitudes activas permitidas",
-      });
-    }
-
-    const newRequest = await Request.create({
-      client_Id: user._id,
-      provider_Id: provider_Id ,
-      status: "pendiente",
-      details: null,
-      hiring_date: null,
-    });
-    return res.status(201).json({
-      message: "Solicitud creada en estado pendiente",
-      request: newRequest
-    });
+    
   } catch (error) {
     res.status(500).json({ 
-      message: "Error al crear solictud", 
+      message: "Error con la solicitud", 
       error: error.message || error.toString() 
     });
   }
 }
+
 
 export const formRequest= async (req, res) => {
   const {name_service, description, date} = req.body;
@@ -89,7 +59,6 @@ export const formRequest= async (req, res) => {
       description: description || null, 
       date,
     };
-
     request.status="en_curso";
     request.hiring_date=new Date();
     request.updated_by = user._id;
@@ -106,11 +75,13 @@ export const formRequest= async (req, res) => {
       status: "pendiente",
       expiration_date: expirationDate
     });
+
     return res.status(201).json({
       message: "Solicitud confirmada en estado en_curso",
       request: request,
-      fee: newFee,
+      fee: newFee
     });
+
   } catch (error) {
     res.status(500).json({ 
       message: "Error al crear servicio", 
@@ -193,18 +164,19 @@ export const getRequestProvider = async (req, res) => {
     if (category) filter.categories = category;
     if (state) filter.state = state;
     const requests = await Request.find(filter)
-      .sort ({ _id: -1 })
-      .limit (limit)
-      .skip (skip)
-      .populate('client_Id', 'name lastname') 
-      .populate('provider_Id', 'name lastname')
-      .select('client_Id provider_Id status details hiring_date')
-      const total= await Request.countDocuments(filter)
-      return res.status(200).json({
-        total,
-        requests,
-        page,
-        limit
+    .sort ({ _id: -1 })
+    .limit (limit)
+    .skip (skip)
+    .populate('client_Id', 'name lastname') 
+    .populate('provider_Id', 'name lastname')
+    .populate("chat_Id")
+    .select('client_Id provider_Id status details hiring_date')
+    const total= await Request.countDocuments(filter)
+    return res.status(200).json({
+      total,
+      requests,
+      page,
+      limit
     });
   } catch (error) {
     console.error(error);
@@ -223,19 +195,20 @@ export const getRequestClient = async (req, res) => {
     if (category) filter.categories = category;
     if (state) filter.state = state;
     const requests = await Request.find(filter)
-      .sort ({ _id: -1 })
-      .limit (limit)
-      .skip (skip)
-      .populate('client_Id', 'name lastname') 
-      .populate('provider_Id', 'name lastname')
-      .select('client_Id provider_Id status details hiring_date')
-      const total= await Request.countDocuments(filter)
-      return res.status(200).json({
-        total,
-        requests,
-        page,
-        limit
-      });
+    .sort ({ _id: -1 })
+    .limit (limit)
+    .skip (skip)
+    .populate('client_Id', 'name lastname') 
+    .populate('provider_Id', 'name lastname')
+    .populate("chat_Id")
+    .select('client_Id provider_Id status details hiring_date')
+    const total= await Request.countDocuments(filter)
+    return res.status(200).json({
+      total,
+      requests,
+      page,
+      limit
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al listar solicitudes' });

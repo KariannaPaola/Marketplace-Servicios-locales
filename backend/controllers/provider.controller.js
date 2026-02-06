@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
 import Provider from '../models/provider.models.js';
 import User from '../models/user.model.js';
 
@@ -13,27 +12,24 @@ export const registerProvider= async (req, res) => {
     return res.status(401).json({ message: "No autenticado" });
     }
     if (user.user_type==="proveedor") return res.status(400).json({message:'ya estas registrado como proveedor',});
-    const newProvider= new Provider ({ user_Id:user._id , profession, description, categories, state, services_offered});
+    const newProvider= new Provider ({ user_Id:user._id , profession, description, categories, state, services_offered });
     await newProvider.save();
-    console.log("Proveedor guardado correctamente:", newProvider);
-    await User.findByIdAndUpdate(user._id, { user_type: "proveedor" });
-    console.log("Usuario actualizado correctamente en DB");
+    await User.findByIdAndUpdate(user._id, { user_type: "proveedorPendiente" });
     return res.status(201).json({
-    message: "Proveedor registrado correctamente",
-    provider: newProvider
-});
+      message: "Proveedor registrado correctamente",
+      provider: newProvider
+    });
   } catch (error) {
     console.error("Error al registrar proveedor:", error);
-  res.status(500).json({ 
+    res.status(500).json({ 
     message: "Error al registrar proveedor", 
     error: error.message || error.toString() 
   });
   }
 }
 
-
 export const editProfileProvider= async (req, res) => {
-  const user=req.user;
+  const id=req.user._id;
   try{
     const profileProvider = await Provider.findOne({ user_Id: id, is_deleted: false  });
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
@@ -69,7 +65,7 @@ export const readMyProfileProvider= async (req, res) => {
   try{
     const profileProvider = await Provider.findOne({ user_Id: user._id, is_deleted: false })
     .select("profession description categories state services_offered rating");
-    if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
+    if (!profileProvider) return res.status(404).json({message:'perfil no encontrado'});
     return res.status(200).json(profileProvider);
   } catch (error) {
       res.status(500).json({ 
@@ -147,7 +143,6 @@ export const getProviders = async (req, res) => {
   }
 };
 
-
 export const getProvidersAdmin = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;      
@@ -204,11 +199,20 @@ export const approveProvider = async (req, res) => {
     } 
     const provider = await Provider.findOne({_id: id})
     if (!provider) return res.status(404).json({message:'Proveedor no encontrado',});
-    provider.status="rejected";
+    provider.status="approved";
+    provider.profile_visible=true;
+    console.log("probedor aprobadoooo")
     await provider.save()
+    const user= await User.findOne({_id: provider.user_Id})
+    console.log("usuariooo: " , user)
+    user.user_type="proveedor"
+    await user.save()
     return res.status(200).json({
       message: "Proveedor aprobado"})
   } catch (error) {
       res.status(500).json({ message: 'Error al aprobar' });
   }
 };
+
+
+

@@ -1,38 +1,27 @@
-import { useEffect } from "react"
-import { useState } from "react"
-import { readMyProfileProvider } from "../../services/auth"
+import useMyProfileProvider from "../../hooks/providers/useMyProfileProvider"
+import MyProfileProvider from "../../components/providers/MyProfileProvider"
+import EditMyProfileProvider from "../../components/providers/EditMyProfileProvider";
 
 
-export default function MyProfileProvider( ){
-  const [profile, setProfile]=useState({})
-  
-    useEffect(()=>{
-    const myProfile=async () => {
-      try {
-        const data= await readMyProfileProvider()
-        setProfile(data)
-        console.log(data)
-      } catch (error) { 
-      }
-
-    }
-    
-    myProfile()
-    },[])
+export default function MyProfileProviderPage( ){
+ const {profile,loading,isEditing,startEdit,cancelEdit,editProfile, categoriesList, statesList}=useMyProfileProvider()
 
 
+if (loading) return <p>Cargando...</p>;
 
-
-
-
-
-return(
-  <div>
-<h1>Mi perfil</h1>
-
-<p>{profile.profession}</p>
-
-  </div>
-)
+return isEditing ? (
+    <EditMyProfileProvider
+      profile={profile}
+      categoriesList={categoriesList}
+      statesList={statesList}
+      onSave={editProfile}
+      onCancel={cancelEdit}
+    />
+  ) : (
+    <MyProfileProvider
+      profile={profile}
+      onEdit={startEdit}
+    />
+  );
 
 }

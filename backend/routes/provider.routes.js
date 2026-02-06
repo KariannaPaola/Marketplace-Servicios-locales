@@ -5,19 +5,21 @@ import { authRoleProvider} from "../middlewares/role.js";
 import { authRoleAdmin } from "../middlewares/role.js";
 import { authCheckProviderFees } from "../middlewares/checkProviderFees.js";
 
+
 const router = Router();
 
 
 router.post("/register",authMiddleware, registerProvider);
-router.patch("/providers/:id",authMiddleware,  authRoleProvider, editProfileProvider);
-router.get("/me",authMiddleware, authRoleProvider, readMyProfileProvider);
+router.patch("/editProfile", authMiddleware, editProfileProvider);
+router.get("/me",authMiddleware, readMyProfileProvider);
 router.get("/:id", authCheckProviderFees, authMiddleware, readProfileProvider);
-router.delete("/deleteProfile/me",authMiddleware, authRoleProvider, deletedMyProfileProvider);
+router.delete("/deleteProfile/me",authMiddleware, deletedMyProfileProvider);
 router.get('/', authCheckProviderFees, authMiddleware, getProviders);
 router.get('/providersPublic', getProviders);
 router.get('/admin/providers',authMiddleware, authRoleAdmin, getProvidersAdmin);
 router.patch('/admin/approve/:id', authMiddleware,authRoleAdmin, approveProvider);
 router.patch('/admin/disapprove/:id', authMiddleware,authRoleAdmin, disapproveProvider);
+
 
 
 export default router;

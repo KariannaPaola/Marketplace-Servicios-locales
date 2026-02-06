@@ -1,111 +1,144 @@
-import { useEffect, useState } from "react";
-import { createChat, getMessages, sendMessage, createRequest } from "../../services/auth";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { useEffect, useState} from "react";
+import { getChat } from "../../services/auth";
+import { getMessages } from "../../services/auth";
 import { useContext } from "react";
+import { sendMessage } from "../../services/auth";
+import { AuthContext } from "../../context/AuthContext";
+import { pendingRequest } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
+export default function ChatPage ()  {
+  const { chatId } = useParams();;
 
-export default function Chat ()  {
-  const navigate = useNavigate();
-  const { Id_provider } = useParams();
+  const { user } = useContext(AuthContext);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
-  const { user} = useContext(AuthContext);
-  const isProvider = user.id === Id_provider;
-
-  useEffect (()=>{
-    const initChat = async () => {
-    try {
-      const data = await createChat(Id_provider);
-      setChat(data);
-      console.log(data)
-      setLoading(false);
-    } catch (error) {
-      console.error("Error creando chat", error);
-    }
-  };
-    initChat()
-  }, [Id_provider])
-
-  const fetchMessages = async (id) => {
-    try {
-      const data = await getMessages(id);
-      setMessages(data);
-    } catch (error) {
-      console.error("Error obteniendo mensajes", error);
-    }
-  };
-
-  const handleSendMessage = async () => {
-    if (!content.trim()) return;
-    try {
-      await sendMessage(chat._id, content );
-      setContent("");
-    } catch (error) {
-      console.error("Error enviando mensaje", error);
-    }
-  };
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (!chat) return;
-    fetchMessages(chat._id);
-    const interval = setInterval(() => {
-      fetchMessages(chat._id);
-    }, 2000);  
-    return () => clearInterval(interval);
-  }, [chat]);
+    const init = async () => {
+      try {
+        if (chatId) {
+          const chatData = await getChat(chatId);
+          setChat(chatData);
+          const msgs = await getMessages(chatId);
+          setMessages(msgs);
+        }
+      } catch (error) {
+        console.error("Error cargando chat:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    init();
+  }, [chatId]);
 
-  const handleHire = async () => {
+  const handleSendMessage = async () => {
+    if (!content.trim() || !chat) return;
     try {
-      const data= await createRequest(Id_provider); 
-      console.log(data)
-      navigate(`/request/${data.request._id}`); 
+      await sendMessage(chat._id, content);
+      setContent("");
+      const msgs = await getMessages(chat._id);
+      setMessages(msgs);
     } catch (error) {
-      console.error("Error al crear la solicitud", error);
+      console.error("Error enviando mensaje:", error);
     }
   };
+  const handleHire = async (Id_provider) => {
+      try {
+        const data= await pendingRequest(Id_provider); 
+        console.log(data)
+        navigate(`/request/${data.request._id}`); 
+      } catch (error) {
+        console.error("Error al crear la solicitud", error);
+      }
+    };
 
-  if (loading) return <p>Cargando chat...</p>;
+  const isParticipant =
+  chat &&
+  (chat.client_Id._id === user.id ||
+   chat.provider_Id._id === user.id);
+  if (loading) return <p>cargando chat</p>
+ return (
+  <div className="max-w-3xl mx-auto p-5 flex flex-col h-[80vh] bg-white border rounded-lg shadow">
+    
+    <div className="border-b pb-3 mb-3 flex">
+      <h2 className="text-lg font-semibold">
+        Chat con{" "}
+        {chat.client_Id._id === user.id
+          ? `${chat.provider_Id.name} ${chat.provider_Id.lastname}`
+          : `${chat.client_Id.name} ${chat.client_Id.lastname}`}
+      </h2>
+      {chat.client_Id._id ===user.id?
+      <button onClick={() => handleHire(chat.provider_Id._id)}>Contratar</button>: ""
+      }
+      
 
-  return (
-    <div style={{ border: "1px solid #ccc", padding: "1rem", maxWidth: "400px" }}>
-      <h3>Chat</h3>
+    </div>
 
-      {isProvider? "": <button disabled={loading} onClick={handleHire}>
-      {loading ? "Creando..." : "Contratar"}</button> } 
-      <div style={{ height: "300px", overflowY: "auto", marginBottom: "1rem" }}>
-        {messages.map((msg) => (
+    <div className="flex-1 overflow-y-auto px-2 py-3 space-y-3 bg-gray-50 rounded">
+      {messages.length === 0 && (
+        <p className="text-center text-gray-400 text-sm">
+          Sin mensajes aún
+        </p>
+      )}
+
+      {messages.map((msg) => {
+        const isMine = msg.sender_Id === user.id;
+
+        const senderName = isMine
+  ? chat.client_Id._id === user.id
+      ? `${chat.client_Id.name} ${chat.client_Id.lastname}`
+      : `${chat.provider_Id.name} ${chat.provider_Id.lastname}`
+  : chat.client_Id._id === user.id
+      ? `${chat.provider_Id.name} ${chat.provider_Id.lastname}`
+      : `${chat.client_Id.name} ${chat.client_Id.lastname}`;
+
+        return (
           <div
             key={msg._id}
-            style={{
-              margin: "0.5rem 0",
-            }}
+            className={`flex ${isMine ? "justify-end" : "justify-start"}`}
           >
-            <span
-              style={{
-                display: "inline-block",
-                padding: "0.5rem",
-                borderRadius: "5px",
-              }}
+            <div
+              className={`max-w-[75%] px-4 py-2 rounded-2xl text-sm shadow
+                ${isMine
+                  ? "bg-green-500 text-white rounded-br-none"
+                  : "bg-white text-gray-800 rounded-bl-none border"
+                }`}
             >
-              {msg.content}
-            </span>
+              <p className="text-xs font-semibold mb-1 opacity-80">
+                {senderName}
+              </p>
+              <p>{msg.content}</p>
+            </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
+    </div>
 
-      <div style={{ display: "flex", gap: "0.5rem" }}>
+    {isParticipant ? (
+      <div className="mt-3 flex gap-2 border-t pt-3">
         <input
           type="text"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Escribe un mensaje"
-          style={{ flex: 1 }}
+          placeholder="Escribe un mensaje..."
+          className="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
         />
-        <button onClick={handleSendMessage}>Enviar</button>
+        <button
+          onClick={handleSendMessage}
+          className="bg-green-500 hover:bg-green-600 text-white px-5 rounded-full font-medium"
+        >
+          Enviar
+        </button>
       </div>
-    </div>
-  );
+    ) : (
+      <p className="text-red-500 mt-3 text-center text-sm">
+        No autorizado para enviar mensajes en este chat
+      </p>
+    )}
+  </div>
+);
 };

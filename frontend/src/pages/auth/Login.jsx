@@ -1,47 +1,21 @@
-import React, { useState , useContext } from "react";
-import { login as loginApi } from "../../services/auth";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import useLogin from "../../hooks/auth/useLogin";
+import Login from "../../components/auth/Login";
 
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const data = await loginApi(email, password);
-      login(data.user, data.token)
-      navigate("/dashboard/");
-    } catch (err) {
-      setError(err.response?.data?.msg || "Error de login");
-    }
-  };
+export default function LoginPage() {
+
+  const {email, setEmail,password, setPassword, handleSubmit,error, setError} = useLogin();
+
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Correo"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Entrar</button>
-      </form>
-    </div>
+    <Login
+      email={email}
+      setEmail ={setEmail}
+      password={password}
+      setPassword={setPassword}
+      handleSubmit={handleSubmit}
+      error={error}
+      setError={setError}
+      />
   );
 }

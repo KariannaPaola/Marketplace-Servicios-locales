@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { categoriesPublic,  getProviders} from "../../services/auth";
 
 
-
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [providers, setProviders] = useState([]);

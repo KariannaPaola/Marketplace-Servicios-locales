@@ -1,42 +1,19 @@
-import { changePassword } from "../../services/auth"
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import useChangePassword from "../../hooks/auth/useChangePassword";
+import ChangePassword from "../../components/auth/ChangePassword";
 
-export default function ChangePassword(){
-  const {token}=useParams()
-  const [password, setPassword] = useState("");
-  const [newPassword_repeat, setNewPassword_repeat] = useState("");
-
-const handleChangePassword= async(e)=>{
-  e.preventDefault()
-  try {
-    await changePassword(token, password, newPassword_repeat)
-    console.log("Contraseña cambiada con exito")
-  } catch (error) {
-    console.log("Error al cambiar contraseña")
-  }
-}
-
+export default function ChangePasswordPage(){
+  const {password, setPassword,newPassword_repeat, setNewPassword_repeat ,change} = useChangePassword();
+ 
 
 return(
-  <div>
-    <h1>Cambiar contraseña </h1>
-    <form onSubmit={handleChangePassword}>
-      <input type="text" 
-        placeholder="Ingresa la nueva contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <input type="text" 
-        placeholder="Ingresa otra vez la contraseña"
-        value={newPassword_repeat}
-        onChange={(e) => setNewPassword_repeat(e.target.value)}
-        required
-      />
-  <button type="submit">Cambiar contraseña</button>
-    </form>
-  </div>
+ <ChangePassword
+    password={password}
+    setPassword ={setPassword}
+    newPassword_repeat={newPassword_repeat}
+    setNewPassword_repeat={setNewPassword_repeat}
+    change={change}
+    
+  />
 )
 
 }

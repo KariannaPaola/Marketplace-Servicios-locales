@@ -43,7 +43,7 @@ export const userSchema= new mongoose.Schema({
   user_type:{
     type: String,
     enum: {
-    values: ["cliente", "proveedor", "administrador"],
+    values: ["cliente", "proveedorPendiente", "proveedor", "administrador"],
     message: "Tipo de usuario inválido"
   },
     required: true,

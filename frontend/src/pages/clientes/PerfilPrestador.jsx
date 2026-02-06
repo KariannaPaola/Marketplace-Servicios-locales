@@ -1,34 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { getProfileProvider } from "../../services/auth";
-import { useParams } from "react-router-dom";
+import ProfileProviderClient from "../../components/Clients/ProfileProviderClient"
+import useProfileProviderClient from "../../hooks/clients/useProfileProviderClient"
 
-export default function ProfileProvider(){
-const { id } = useParams();
-const [profileProvider, setProfileProvider]= useState({})
+export default function ProfileProviderPage(){
 
-useEffect (()=>{
-  const getProfile = async ()=>{
-    try {
-      const data= await getProfileProvider(id);
-      setProfileProvider(data)
-      console.log (data)
-
-    } catch (error) {
-      console.log("Error al obtener perfil del proveedor", error)
-    }
-
-
-  } 
-
-getProfile ()
-
-}),[]
+const {profileProvider}=useProfileProviderClient();
 
 return(
- <div>
-  <p>{profileProvider.profession}</p>
-
- </div>
+  
+ <ProfileProviderClient
+    profileProvider={profileProvider}
+  />
 
 )
 

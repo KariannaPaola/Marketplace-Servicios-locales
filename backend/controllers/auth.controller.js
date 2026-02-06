@@ -12,7 +12,7 @@ export const registerUser = async (req, res) => {
 
   try {
     let user= await User.findOne({ email });
-    if (user) return res.status(400).json({ msg: 'Usuario ya existe' });
+    if (user) return res.status(400).json({ message: 'Ya estas registrado' });
     if (password) {
       const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
       if (!passwordRegex.test(password)) {
@@ -23,6 +23,12 @@ export const registerUser = async (req, res) => {
       }
     }
     if (password!==password_repeat) return res.status(400).json({ message: 'Las contraseñas deben ser iguales' });
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({
+          message: "Ingrese un correo válido",
+        });
+      }
     const token_email= crypto.randomBytes(32).toString('hex');
     const newUser= new User ({ name, lastname, email, phone_number, password, token_email: token_email, token_email_expires: Date.now() + 1000 * 60 * 60, user_type });
     await newUser.save();
@@ -31,8 +37,7 @@ export const registerUser = async (req, res) => {
     res.json({ message:'Debes verificar tu correo, revisa tu bandeja de entrada' })
   } catch (error) {
     res.status(500).json({ 
-    message: "Error al crear usuario", 
-    error: error.message || error.toString() 
+    message: "Error al registrar usuario", 
     });
   }
 };
@@ -51,7 +56,7 @@ export const verifyEmail = async (req, res) => {
     }
     if (user.token_email_expires < Date.now()) {
       return res.status(400).json({
-        msg: "Este enlace ha expirado. Solicita uno nuevo",
+        message: "Este enlace ha expirado. Solicita uno nuevo",
       });
     }
     user.is_email_verified=true;
@@ -59,25 +64,30 @@ export const verifyEmail = async (req, res) => {
     user.token_email_expires = null;
     await user.save();
     return res.status(200).json({
-      msg: "Email verificado correctamente"
+      message: "Email verificado correctamente"
     });
   } catch (error) {
     res.status(500).json({ 
-    message: "Error al verificar el correo", 
-    error: error.message || error.toString() 
+    message: "Error al verificar el correo"
     });
   }
 };
 
 export const loginUser = async (req, res) => {
-  const {email, password} = req.body
+  const {email: rawEmail, password} = req.body;
+  const email = rawEmail.toLowerCase();
 
   try{
+    if (!email || !password) {
+      return res.status(400).json({
+      message: "Email y contraseña son obligatorios",
+    });
+    }
     let user= await User.findOne({ email});
-    if (!user) return res.status(400).json({ msg: 'Usuario no existente' });
-    if (user.is_deleted) return res.status(400).json({ msg: 'Usuario suspendido, comoiquese con soporte' });
+    if (!user) return res.status(400).json({ message: 'Usuario no existente' });
+    if (user.is_deleted) return res.status(400).json({ message: 'Usuario suspendido, comuniquese con soporte' });
     const isMatch= await user.matchPassword(password);
-    if (!isMatch) return res.status(400).json({ msg: 'Contraseña incorrecta' });
+    if (!isMatch) return res.status(400).json({ message: 'Contraseña incorrecta' });
     const token= jwt.sign({ id: user._id}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
     res.json({ token, user: {
         id: user._id,
@@ -85,27 +95,33 @@ export const loginUser = async (req, res) => {
         email: user.email,
         user_type: user.user_type, 
       } });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al iniciar sesión' });
   }
 }
 
 export const recoverPassword= async (req, res) => {
-  const {email} = req.body;
+  const {email: rawEmail} = req.body;
+  const email = rawEmail.toLowerCase();
+  
   try{
+    if (!email) {
+      return res.status(400).json({
+      message: "Email obligatorio",
+    });
+    }
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: 'No hay un usuario registrado con ese correo' });
+    if (!user) return res.status(400).json({ message: 'No hay un usuario registrado con ese correo' });
     const token_recoverPassword= crypto.randomBytes(32).toString('hex');
     user.token_recover_password= token_recoverPassword;
     await user.save();
     const link_recoverPassword=`http://localhost:5173/ChangePassword/${token_recoverPassword}`;
-    await sendEmail ({ to:email, subject:"Recupera tu cotraseña", html: `<a href="${link_recoverPassword}">cambiar contraseña</a>` })
-    res.json({ message:'revisa tu correo y entra al enlace para cambiar tu contraseña' })
+    await sendEmail ({ to:email, subject:"Recupera tu cotraseña", html: `<a href="${link_recoverPassword}">Cambiar contraseña</a>` })
+    res.json({ message:'Revisa tu correo y entra al enlace para cambiar tu contraseña' })
 
   } catch (error) {
     res.status(500).json({ 
-    message: "Error al recuperar contraseña", 
-    error: error.message || error.toString() 
+    message: "Error al recuperar contraseña" 
     });
   }
 }
@@ -131,8 +147,7 @@ export const changePassword= async (req, res) => {
     res.json({ message:'contraseña cambiada exitosamente' })
   }catch (error) {
     res.status(500).json({ 
-    message: "Error al cambiar contraseña", 
-    error: error.message || error.toString() 
+    message: "Error al cambiar contraseña"
   });
   }
 }

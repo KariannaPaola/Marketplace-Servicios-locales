@@ -75,7 +75,7 @@ const providerSchema= new mongoose.Schema({
   },
   profile_visible:{
     type: Boolean,
-    default: true,
+    default: false,
   },
   status: {
   type: String,

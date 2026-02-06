@@ -30,9 +30,14 @@ const requestSchema= new mongoose.Schema({
   status:{
     type: String,
     required: true,
-    enum: ["pendiente", "en_curso", "completado","cancelado"],
-    default: "pendiente"
+    enum: ["creada","pendiente", "en_curso", "completado","cancelado"],
+    default: "creada"
   },
+  chat_Id: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Chat",
+  default: null,
+},
   hiring_date:{
     type: Date,
     default: null
@@ -58,6 +63,9 @@ const requestSchema= new mongoose.Schema({
 },
 {timestamps: true}
 )
-
+requestSchema.index(
+  { provider_Id: 1, client_Id: 1, status: 1 },
+  { unique: true }
+);
 const Request=mongoose.model("Request", requestSchema);
 export default Request;

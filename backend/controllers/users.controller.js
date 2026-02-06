@@ -14,7 +14,7 @@ export const getUsers = async (req, res) => {
     if (user_type && user_type !=="cliente"  && user_type !=="proveedor") {
       return res.status(400).json({ message: 'tipo de usuario invalido' });
     }
-    const filter = {user_type: { $in: ['proveedor', 'cliente'] }};
+    const filter = {user_type: { $in: ['proveedor', 'cliente', 'proveedorPendiente' ] }};
     if (user_type) filter.user_type = user_type;
     if (is_deleted) filter.is_deleted= is_deleted;
     if (is_email_verified !== undefined) filter.is_email_verified = is_email_verified==="true";

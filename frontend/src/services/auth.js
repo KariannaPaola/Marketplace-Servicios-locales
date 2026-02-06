@@ -19,7 +19,7 @@ export const registerProvider = async ( profession, description, categories, sta
   const res = await api.post(`/providers/register`, {profession, description, categories, state, services_offered} );
   return res.data; 
 };
-export const categoriesAdmin = async () => {
+export const fetchcategoriesAdmin = async () => {
   const res = await api.get(`/categories/admin/categories`) ;
   return res.data; 
 };
@@ -57,7 +57,7 @@ export const getProviders = async ({page = 1, limit = 10, category, state} = {})
   params: {page,limit,category, state}}) ;
   return res.data; 
 };
-export const getProvidersAdmin = async ({page = 1, limit = 10, category, state} = {}) => {
+export const fetchProvidersAdmin = async ({page = 1, limit = 10, category, state} = {}) => {
   const res = await api.get(`/providers/admin/providers`, {
   params:{ page, limit , category, state}} ) ;
   return res.data; 
@@ -83,16 +83,23 @@ export const createChat = async (Id_provider) => {
   const res = await api.post(`/chats/createChat/${Id_provider}`) ;
   return res.data; 
 };
-export const getMessages = async (chat_Id) => {
-  const res = await api.get(`/messages/getMessages/${chat_Id}`) ;
+export const getChat = async (chatId) => {
+   console.log( "entre a getchat" )
+  const res = await api.get(`/chats/chat/${chatId}`) ;
+  return res.data; 
+};
+
+export const getMessages = async (chatId) => {
+   console.log( "entre a getchat" )
+  const res = await api.get(`/messages/getMessages/${chatId}`) ;
   return res.data; 
 };
 export const sendMessage = async (chat_Id, content) => {
   const res = await api.post(`/messages/sendMessage/${chat_Id}`,{content}) ;
   return res.data; 
 };
-export const createRequest = async (provider_Id) => {
-  const res = await api.post(`/requests/requests/${provider_Id}`) ;
+export const pendingRequest = async (provider_Id) => {
+  const res = await api.patch(`/requests/pending/${provider_Id}`) ;
   return res.data; 
 };
 export const cancelRequest = async (id) => {
@@ -104,6 +111,7 @@ export const confirmRequest = async (id) => {
   return res.data; 
 };
 export const submitForm = async (Id_request, name_service, description, date) => {
+  console.log(Id_request, name_service, description, date)
   const res = await api.patch(`/requests/requests/${Id_request}`, {name_service, description, date}) ;
   return res.data; 
 };
@@ -117,7 +125,7 @@ export const getRequestClient = async ({page=1,limit=10, category, state} = {}) 
   params: {page,limit, category, state}}) ;
   return res.data; 
 };
-export const listAllFees = async ({page=1,limit=10, status, provider_Id} = {}) => {
+export const fetchFeesAdmin = async ({page=1,limit=10, status, provider_Id} = {}) => {
   const res = await api.get(`/fees/admin/fees`, {
   params: {page,limit,status,provider_Id}}) ;
   return res.data; 
@@ -152,7 +160,19 @@ export const changePassword = async (token, newPassword, newPassword_repeat) => 
   const res = await api.post(`/auth/change-password/${token}`, {newPassword, newPassword_repeat}) ;
   return res.data; 
 };
-export const readMyProfileProvider = async () => {
+export const myProfileProvider = async () => {
   const res = await api.get(`/providers/me`) ;
   return res.data; 
-};
+};  
+export const editProfileProvider = async (formData) => {
+  const res = await api.patch(`/providers/editProfile`, formData) ;
+  return res.data; 
+}
+export const uploadImage = async (formData) => {
+  const res = await api.post(`/file/upload`, formData) ;
+  return res.data; 
+}
+export const getImagesAdmin = async (id) => {
+  const res = await api.get(`/file/admin/images/${id}`) ;
+  return res.data; 
+}

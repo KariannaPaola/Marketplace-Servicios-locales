@@ -1,12 +1,9 @@
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+
 
 export default function MainLayout({ children }) {
   return (
-    <>
-      <Navbar />
-      <main>{children}</main>
-      <Footer />
-    </>
+    <main className="min-h-screen w-full overflow-x-hidden mb-4">
+      {children}
+    </main>
   );
 }
