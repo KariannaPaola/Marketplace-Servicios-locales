@@ -30,7 +30,17 @@ export default function useLogin(){
     try {
       const data = await loginApi(email, password);
       login(data.user, data.token)
-      navigate("/client/inicio");
+      switch (data.user.user_type) {
+        case "administrador":
+          navigate("/admin/inicio");
+          break;
+        case "proveedor":
+          navigate("/client/inicio");
+          break;
+        default: // cliente normal
+          navigate("/client/inicio");
+          break;
+      }
     } catch (error) {
       setError([error.response?.data?.message || "Error de login"]);
     }

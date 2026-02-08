@@ -1,4 +1,4 @@
-export default function VerifyEmail({message}){
+export default function SuccessfulRequest({message}){
 
 return(
   <div className="min-h-[60vh] flex items-center justify-center bg-gray-50 px-4">
@@ -21,7 +21,7 @@ return(
         {message}
       </h2>
       <p className="text-sm text-gray-500">
-        Tu cuenta ha sido verificada exitosamente. Ya puedes acceder a todas las funcionalidades.
+        Solicitud enviada con éxito. Puede ver los detalles en solicitudes enviadas
       </p>
     </div>
   </div>

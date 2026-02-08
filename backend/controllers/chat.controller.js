@@ -37,13 +37,10 @@ export const createChat= async (req, res) => {
       message: "Máximo 3 solicitudes activas permitidas",
       });
     }
-    
     const newRequest = await Request.create({
       client_Id: user._id,
       provider_Id: Id_provider ,
       status: "creada",
-      details: null,
-      hiring_date: null,
     });
 
     const chat = await Chat.create({
@@ -67,7 +64,6 @@ export const createChat= async (req, res) => {
 }
 
 export const getChat = async (req, res) => {
-  console.log( "entre a getchat" )
   const { chatId } = req.params;
   const user = req.user;
 

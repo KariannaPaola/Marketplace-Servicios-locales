@@ -1,14 +1,15 @@
-import { useContext } from "react";
-import { Navigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
+import NotFound from "../pages/public/NotFound";
+
 
 const AdminRoute = ({ children }) => {
-  const { user, loading } = useContext(AuthContext); 
-  if (loading) return <p>Cargando...</p>; 
-  if (!user) return <Navigate to="/login" />; 
-  if (user.user_type !== "administrador") return <Navigate to="/no-autorizado" />; 
-
-  return children; 
+  
+  const { isAdmin, loading } = useAuth();
+  if (loading) return null;
+  if (!isAdmin) {
+    return <NotFound />;
+  }
+  return children;
 };
 
 export default AdminRoute;

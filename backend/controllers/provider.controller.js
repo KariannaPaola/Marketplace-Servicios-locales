@@ -78,13 +78,14 @@ export const readMyProfileProvider= async (req, res) => {
 }
 
 export const readProfileProvider= async (req, res) => {
-  const id= req.params.id
-console.log("entreee a profile")
+  const {id} = req.params;
+
   try{
     const profileProvider = await Provider.findOne({ user_Id: id, profile_visible: true, is_deleted:false })
     .populate("user_Id", "name lastname")
     .populate("categories", "name")
     .select("profession description categories services_offered rating");
+    console.log("entreee a profile")
     if (!profileProvider) return res.status(404).json({message:'perfil no encontrado',});
     return res.status(200).json(profileProvider);
   } catch (error) {
@@ -194,7 +195,6 @@ export const approveProvider = async (req, res) => {
     console.log("probedor aprobadoooo")
     await provider.save()
     const user= await User.findOne({_id: provider.user_Id})
-    console.log("usuariooo: " , user)
     user.user_type="proveedor"
     await user.save()
     return res.status(200).json({message: "Proveedor aprobado"})

@@ -76,6 +76,7 @@ export const getStates = async (options = {}) => {
   return res.data; 
 };
 export const getProfileProvider = async (id) => {
+  console.log ("Error al obtener perfil del proveedor")
   const res = await api.get(`/providers/${id}`) ;
   return res.data; 
 };

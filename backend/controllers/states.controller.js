@@ -11,7 +11,6 @@ export const getStates= async (req, res) => {
       states
     });
   } catch (error) {
-      console.error(error);
       res.status(500).json({ message: 'Error al listar estados' });
   }
 };

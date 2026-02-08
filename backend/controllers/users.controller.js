@@ -50,7 +50,6 @@ export const getUsersId = async (req, res) => {
 export const deleteUser = async (req, res) => {
   const {id} = req.params;
   const admin=req.user;
-  console.log("holaa", req.user);
   try {
     if (!id) {
       return res.status(400).json({ message: 'ID de usuario inválido' });

@@ -6,20 +6,20 @@ import { useParams } from "react-router-dom";
 export default function useProfileProviderClient (){
   const { id } = useParams();
   const [profileProvider, setProfileProvider]= useState({})
+console.log("🚀 funcion EJECUTADO");
+  useEffect(() => {
+  const getProfile = async () => {     
+    try {
+      console.log("🚀 USEEFFECT EJECUTADO");
+      const data = await getProfileProvider(id);
+      setProfileProvider(data);
+    } catch (error) {
+      console.log("Error al obtener perfil del proveedor", error);
+    }
+  };
 
-  useEffect (()=>{
-    const getProfile = async ()=>{
-      try {
-        const data= await getProfileProvider(id);
-        setProfileProvider(data)
-        console.log (data)
-      } catch (error) {
-        console.log("Error al obtener perfil del proveedor", error)
-      }
-    } 
-  getProfile ()
-
-  }),[]
+  getProfile();
+}, [id]); 
 
   return{profileProvider}
 }

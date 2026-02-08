@@ -1,5 +1,11 @@
-export default function ProfileProviderClient ({profileProvider}){
+import { createChat } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 
+export default function ProfileProviderClient ({profileProvider}){
+  const navigate= useNavigate()
+if (!profileProvider?.user_Id) {
+    return <p>Cargando perfil...</p>;
+  }
 return (
   <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
     <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-6">
@@ -33,13 +39,22 @@ return (
               <span className="text-sm font-semibold text-blue-600">
                 ${service.price}
               </span>
+              <button
+                onClick={async () => {
+                  try {
+                    const data = await createChat(profileProvider.user_Id._id);
+                    navigate(`/Chat/${data.chat._id}`);
+                  } catch (error) {
+                    console.error("Error al crear chat:", error);
+                  }
+                }}
+                className="bg-green-600 hover:bg-green-700  text-xs  text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                Empezar a cotizar
+              </button>
             </div>
           ))}
         </div>
       </div>
-      <button className="mt-2 w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] transition rounded-xl py-3 text-white font-semibold">
-        Empezar a cotizar
-      </button>
     </div>
   </div>
 );

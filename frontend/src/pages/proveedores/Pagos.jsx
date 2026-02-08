@@ -6,11 +6,11 @@ export default function MyFeesPage(){
 
   return (
   <MyFeesProvider
-      fees={fees}
-      page={page}
-      setPage={setPage}
-      total={total}
-      limit={limit}
-    />
+    fees={fees}
+    page={page}
+    setPage={setPage}
+    total={total}
+    limit={limit}
+  />
   )
 }

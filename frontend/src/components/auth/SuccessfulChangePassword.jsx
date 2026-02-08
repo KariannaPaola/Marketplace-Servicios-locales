@@ -1,4 +1,4 @@
-export default function VerifyEmail({message}){
+export default function SuccessfulChangePassword(){
 
 return(
   <div className="min-h-[60vh] flex items-center justify-center bg-gray-50 px-4">
@@ -13,17 +13,17 @@ return(
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M5 13l4 4L19 7"
-          />
+            d="M5 13l4 4L19 7"/>
         </svg>
       </div>
       <h2 className="text-xl font-semibold text-gray-900">
-        {message}
+        Contraseña cambiada
       </h2>
       <p className="text-sm text-gray-500">
-        Tu cuenta ha sido verificada exitosamente. Ya puedes acceder a todas las funcionalidades.
+        Contraseña cambiada exitosamente. Ya puedes inciar sesión
       </p>
     </div>
-  </div>
+</div>
+
 )
 }

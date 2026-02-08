@@ -5,7 +5,6 @@ import { recalcProviderVisibility } from "../services/providerVisibility.service
 import mongoose from 'mongoose';
 
 
-
 export const paymentRegister= async (req, res) => {
   const {id} = req.params;
   const user=req.user;

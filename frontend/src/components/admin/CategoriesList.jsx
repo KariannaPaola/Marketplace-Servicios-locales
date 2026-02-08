@@ -3,35 +3,35 @@ import { Trash2, Pencil } from "lucide-react";
 export default function CategoriesList ({categories, remove,editStart}){
 
 return (
-  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-3 ml-2 mr-2">
+  <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-4 px-2">
     {categories.map((cat) => (
       <div
         key={cat._id}
-        className="bg-white border border-gray-200 rounded-lg shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition">
+        className="group bg-white border border-gray-200 rounded-xl shadow-sm px-4 py-3 flex flex-col justify-between max-w-[260px] w-full mx-auto hover:shadow-md hover:border-gray-300 transition-all">
         <div>
-          <h4 className="text-sm font-semibold text-gray-800 mb-1">
+          <h4 className="text-sm font-semibold text-gray-800 leading-tight">
             {cat.name}
           </h4>
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">
             {cat.description}
           </p>
         </div>
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="flex justify-end gap-1.5 mt-3">
           <button
             onClick={() => editStart(cat)}
-            className="p-2 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100 hover:text-blue-600 transition"
-            title="Editar">
-            <Pencil size={18} />
+            title="Editar"
+            className="p-1.5 rounded-lg border border-gray-200 text-gray-500 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition">
+            <Pencil size={15} />
           </button>
           <button
             onClick={() => remove(cat._id)}
-            className="p-2 rounded-md border border-gray-300 text-gray-600 hover:bg-red-50 hover:text-red-600 transition"
-            title="Eliminar">
-            <Trash2 size={18} />
+            title="Eliminar"
+            className="p-1.5 rounded-lg border border-gray-200 text-gray-500 hover:text-red-600 hover:border-red-300 hover:bg-red-50 transition">
+            <Trash2 size={15} />
           </button>
         </div>
       </div>
-      ))}
-    </div>
-  );
+    ))}
+  </div>
+);
 }

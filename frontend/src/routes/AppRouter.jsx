@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "../components/MainLayout";
+import { AuthProvider } from "../context/AuthContext";
 import PrivateRoute from "./PrivateRoute";
+import ProviderRoute from "./ProviderRoute";
 import AdminRoute from "./AdminRoute";
 import NotFound from "../pages/public/NotFound";
 import LoginPage from "../pages/auth/Login";
@@ -27,48 +29,59 @@ import SubirCedula from "../pages/auth/EnviarArchivos";
 import ReadImages from "../pages/administrador/VerArchivos";
 import HomeClientPage from "../pages/clientes/Inicio";
 import FormRequestPage from "../pages/clientes/FormularioConfirmacion";
+import AdminDashboard from "../pages/administrador/InicioAdmin";
+import SuccessfulRequestPage from "../pages/clientes/SolicitudExitosa";
+import SuccessfulChangePasswordPage from "../pages/auth/ContraseñaCambiada";
 
-function ClientDashboard() {
-  return <h1>holaa</h1>;
-}
-function ProviderDashboard() {
-  return <h1>Dashboard Prestador</h1>;
-}
+
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
+    <AuthProvider>
     <MainLayout>
       <Routes>
+        {/* PUBLICAS */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
-        <Route path="/dashboard" element={<ClientDashboard />} />
-        <Route path="/client/inicio" element={<PrivateRoute><HomeClientPage/></PrivateRoute>}  />
         <Route path="/home" element={<Home/>} />
+        <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
         <Route path="/recoverPassword" element={<RecoverPasswordPage/>} />
         <Route path="/ChangePassword/:token" element={<ChangePasswordPage/>} />
+        <Route path="/contraseñaCambiada" element={<SuccessfulChangePasswordPage/>} />
+
+        {/* CLIENTE (todos los logueados) */}
+        <Route path="/client/inicio" element={<PrivateRoute><HomeClientPage/></PrivateRoute>}  />
         <Route path="/Chat/:chatId" element={<PrivateRoute><ChatPage/></PrivateRoute>} />
         <Route path="/request/:Id_request" element={<PrivateRoute><FormRequestPage/></PrivateRoute>} />
         <Route path="/profileProvider/:id" element={<PrivateRoute><ProfileProviderPage/></PrivateRoute>} />
         <Route path="/getProviders" element={<PrivateRoute><GetProvidersSearch/></PrivateRoute>} />
-        <Route path="/dashboard/provider" element={<ProviderDashboard />} />
-        <Route path="/register/provider" element={<PrivateRoute><RegisterProvider /></PrivateRoute>} />
-        <Route path="/admin/categories" element={<AdminRoute><CategoriesAdminPage /></AdminRoute>} />
-        <Route path="/admin/providers" element={<AdminRoute><GetProvidersAdmin /></AdminRoute>} />
-        <Route path="/admin/users" element={<AdminRoute><UsersAdminPage /></AdminRoute>} />
-        <Route path="/provider/request" element={<PrivateRoute><MyRequestProvider/></PrivateRoute>} /> 
         <Route path="/client/request" element={<PrivateRoute><MyRequestClient/></PrivateRoute>} /> 
-        <Route path="/provider/myfees" element={<PrivateRoute><MyFeesPage/></PrivateRoute>} /> 
-        <Route path="/provider/profile" element={<PrivateRoute><MyProfileProviderPage/></PrivateRoute>} /> 
+        <Route path="/register/provider" element={<PrivateRoute><RegisterProvider /></PrivateRoute>} />
+        <Route path="/client/RequestExitosa" element={<PrivateRoute><SuccessfulRequestPage /></PrivateRoute>} />
+        <Route path="/upload/file" element={<PrivateRoute><SubirCedula/></PrivateRoute>} />
+        
+        
+        {/* PROVEEDOR */}
+        <Route path="/provider/myfees" element={<ProviderRoute><MyFeesPage/></ProviderRoute>} /> 
+        <Route path="/provider/profile" element={<ProviderRoute><MyProfileProviderPage/></ProviderRoute>} /> 
+        <Route path="/provider/request" element={<ProviderRoute><MyRequestProvider/></ProviderRoute>} /> 
+        <Route path="/provider/payfee/:id" element={<ProviderRoute><PayFeePage/></ProviderRoute>} /> 
+
+       {/* ADMIN */}
+        <Route path="/admin/inicio" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+        <Route path="/admin/categories" element={<AdminRoute><CategoriesAdminPage /></AdminRoute>} />
         <Route path="/admin/fees" element={<AdminRoute><FeesAdminPage/></AdminRoute>} /> 
         <Route path="/admin/fee/:id" element={<AdminRoute><VerifyFee/></AdminRoute>} /> 
-        <Route path="/provider/payfee/:id" element={<PrivateRoute><PayFeePage/></PrivateRoute>} /> 
-        <Route path="/upload/file" element={<PrivateRoute><SubirCedula/></PrivateRoute>} />
+        <Route path="/admin/providers" element={<AdminRoute><GetProvidersAdmin /></AdminRoute>} />
+        <Route path="/admin/users" element={<AdminRoute><UsersAdminPage /></AdminRoute>} />
         <Route path="/admin/file/:id" element={<AdminRoute><ReadImages/></AdminRoute>} /> 
+
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
     </MainLayout>
+    </AuthProvider>
     </BrowserRouter>
   );
 }

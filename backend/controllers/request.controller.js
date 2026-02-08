@@ -62,7 +62,7 @@ export const formRequest= async (req, res) => {
     request.hiring_date=new Date();
     request.updated_by = user._id;
     await request.save();
-
+    console.log("holappp")
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + 3);
   
@@ -76,7 +76,7 @@ export const formRequest= async (req, res) => {
     });
 
     return res.status(201).json({
-      message: "Solicitud confirmada en estado en_curso",
+      message: "Solicitud realizada con éxito",
       request: request,
       fee: newFee
     });
@@ -84,7 +84,7 @@ export const formRequest= async (req, res) => {
   } catch (error) {
     res.status(500).json({ 
       message: "Error al crear servicio", 
-      error: error.message || error.toString() 
+      error: error.message
     });
   }
 }

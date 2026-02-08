@@ -10,6 +10,8 @@ export default function useRegister(){
     const [password, setPassword] = useState("");
     const [password_repeat, setPasswordRepeat] = useState("");
     const [error, setError] = useState([]);
+    const [message, setMessage] = useState("");
+
     const navigate = useNavigate();
   
     const handleSubmit = async () => { 
@@ -35,17 +37,13 @@ export default function useRegister(){
       
       try {
         const data = await register(name, lastname, email, phone_number, password, password_repeat);
-        if (data.token) {
-        localStorage.setItem("token", data.token);
-        navigate("/dashboard");
-      } else {
-        setError([data.message]);
-      }
+        setError([]);
+        setMessage(data.message)
       } catch (error) {
         setError([error.response?.data?.message || "Error al registarar usuarios"]);
       }
     }
     
-  return{name, lastname, email,setName, setLastname, setEmail,phone_number, setPhoneNumber, password, setPassword, password_repeat, setPasswordRepeat, handleSubmit, error}
+  return{name, lastname, email,setName, setLastname, setEmail,phone_number, setPhoneNumber, password, setPassword, password_repeat, setPasswordRepeat, handleSubmit, error,message}
 
 }

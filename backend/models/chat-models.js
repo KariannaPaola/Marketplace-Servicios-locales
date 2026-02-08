@@ -14,13 +14,13 @@ const chatSchema= new mongoose.Schema({
   request_Id:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Request",
-    default: null,
+    required: true,
     unique: true
   },
 }, 
 {timestamps: true}
 )
-chatSchema.index({ userA: 1, userB: 1 },{ unique: true });
+
 
 const Chat=mongoose.model("Chat", chatSchema)
 export default Chat;

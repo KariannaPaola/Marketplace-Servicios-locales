@@ -6,55 +6,60 @@ const onSubmit = async (e) => {
     setError([])
     await handleRecoverPassword();
   };
-return(
- <section className="min-h-screen flex flex-col items-center justify-center px-4">
-  <div className="bg-white flex flex-col rounded-xl shadow-lg w-full max-w-md border border-gray-200 p-6 sm:p-8 md:p-10">
-    <div className="flex flex-col">
-      <h2 className="text-base sm:text-lg font-bold mb-2 text-center text-gray-800">
-        Recuperar contraseña
-      </h2>
-      <h6 className="text-gray-600 text-center mb-6 text-xs sm:text-sm">
-        Ingresa tu correo para recibir el enlace
-      </h6>
-    </div>
-    {message && (
-      <p className="text-red-500 text-xs font-medium mb-4">{message}</p>
-    )}
-    {error?.length > 0 && (
-        <ul className="mb-4 space-y-1">
+return (
+  <section className="min-h-screen flex items-center justify-center px-4">
+    <div className="w-full max-w-md rounded-2xl bg-white shadow-xl border border-gray-100 p-6 sm:p-8 md:p-10">
+      <div className="mb-8 text-center">
+        <h2 className="text-xl font-semibold text-gray-800">
+          Recuperar contraseña
+        </h2>
+        <p className="mt-1 text-sm text-gray-500">
+          Ingresa tu correo para recibir el enlace
+        </p>
+      </div>
+      {message && (
+        <p className="text-green-600 text-sm font-medium mb-4 bg-green-50 p-2 rounded-md border border-green-100">
+          {message}
+        </p>
+      )}
+      {error?.length > 0 && (
+        <ul className="mb-5 rounded-lg border border-red-200 bg-red-50 p-3 space-y-1">
           {error.map((err, index) => (
-            <li key={index} className="text-red-500 text-xs font-medium">
-            {err}
+            <li key={index} className="text-xs font-medium text-red-600">
+              {err}
             </li>
           ))}
         </ul>
       )}
-    <form onSubmit={onSubmit} className="flex flex-col gap-4">
-      <div className="flex flex-col">
-        <label className="text-xs font-medium mb-1 text-gray-700">Correo electrónico</label>
-        <input
-          type="text"
-          placeholder="Ingresa tu correo"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="border bg-gray-200 border-gray-300 rounded-md text-xs h-9 p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-      </div>
-      <button
-        type="submit"
-        className="bg-green-500 text-xs text-white font-semibold h-9 rounded-md hover:bg-green-600 transition-colors"
-      >
-        Enviar enlace
-      </button>
-      <div className="flex gap-1 justify-center">
-        <p className="text-xs">¿Ya recuerdas tu contraseña?</p>
-        <Link className="text-xs font-semibold text-green-500" to="/login">Inicia sesión</Link>
-      </div>
-    </form>
-  </div>
-</section>
-
-
-)
+      <form onSubmit={onSubmit} className="space-y-5">
+        <div>
+          <label className="block text-xs font-medium text-gray-700 mb-1">
+            Correo electrónico
+          </label>
+          <input
+            type="email"
+            placeholder="Ingresa tu correo"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full h-10 rounded-lg border border-gray-300 bg-gray-50 px-3 text-sm text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-500/30 transition-all outline-none"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full h-10 rounded-lg bg-green-500 text-sm font-semibold text-white hover:bg-green-600 active:scale-[0.98] transition-all shadow-sm">
+          Enviar enlace
+        </button>
+        <div className="flex justify-center gap-1 text-xs text-gray-600">
+          <span>¿Ya recuerdas tu contraseña?</span>
+          <Link
+            to="/login"
+            className="font-semibold text-green-600 hover:text-green-700 transition-colors">
+            Inicia sesión
+          </Link>
+        </div>
+      </form>
+    </div>
+  </section>
+);
 }

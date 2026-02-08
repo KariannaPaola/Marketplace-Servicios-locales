@@ -3,7 +3,7 @@ export default function MyFeesProvider ({fees,page, setPage, total, limit} ){
 const navigate= useNavigate()
 return (
   <div className="p-5 max-w-3xl mx-auto">
-    <h1 className="text-2xl font-bold text-center mb-6">
+    <h1 className="font-bold text-zinc-300 text-center mb-6">
       Historial de pagos y tarifas
     </h1>
     {fees.map((fee) => {

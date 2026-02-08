@@ -9,7 +9,6 @@ import { pendingRequest } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 export default function ChatPage ()  {
   const { chatId } = useParams();;
-
   const { user } = useContext(AuthContext);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState([]);

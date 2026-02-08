@@ -6,52 +6,60 @@ export default function ProvidersPublic ({providers} ){
   const { scrollRef, scrollLeft, scrollRight } = useHorizontalScroll();
 
   return (
-    <div className="relative w-full flex items-center">
-      <button
-        onClick={scrollLeft}
-        className="absolute left-2 z-10 bg-white shadow-2xl rounded-full p-2 hover:bg-gray-100">
-        ❮
-      </button>
-      <div
-        ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scroll-smooth px-10 py-4">
-        {providers.map((provider) => (
-          <div key={provider._id} className="min-w-[300px] max-w-[300px] h-[300px]  bg-gray-200 rounded-xl shadow-lg p-4 flex flex-col gap-3 justify-between">
-            <div className=" flex-4 bg-gray-100">foto</div>
-            <div className="flex-2 flex flex-col gap-3">
-              <div className="flex flex-col gap-1">
-                <p className="text-sm font-semibold text-gray-800">{provider.user_Id?.name} {provider.user_Id?.lastname}</p>
-                <p className="text-xs text-gray-500">{provider.profession}</p>
-              </div>
-              <div className="flex gap-6">
-                <p className="text-sm text-gray-600">
+  <div className="relative w-full flex items-center">
+    <button
+      onClick={scrollLeft}
+      className="absolute left-3 z-10 bg-white/90 backdrop-blur shadow-xl rounded-full p-3 hover:scale-105 transition-all">
+      ❮
+    </button>
+    <div
+      ref={scrollRef}
+      className="flex gap-6 overflow-x-auto scroll-smooth px-14 py-6 scrollbar-hide">
+      {providers.map((provider) => (
+        <div key={provider._id} className="min-w-[320px] max-w-[320px] h-[340px] bg-white rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 p-5 flex flex-col justify-between">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <p className="text-base font-semibold text-gray-900">
+                {provider.user_Id?.name} {provider.user_Id?.lastname}
+              </p>
+              <p className="text-sm text-green-600 font-medium">
+                {provider.profession}
+              </p>
+            </div>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-1">
+                <svg
+                  className="w-4 h-4 fill-green-500"
+                  viewBox="0 0 24 24">
+                  <path d="M12 2l2.9 6.6L22 9.3l-5 4.8L18.2 22 12 18.6 5.8 22 7 14.1 2 9.3l7.1-0.7L12 2z" />
+                </svg>
+                <span className="text-sm font-medium text-gray-700">
                   {provider.rating}
-                </p>
-                <p className="text-sm text-gray-600">
-                  {provider.state?.name}
-                </p>
+                </span>
               </div>
-              <div>
-                <p className="text-sm text-gray-500  mt-2overflow-hidden[display:-webkit-box][-webkit-line-clamp:3][-webkit-box-orient:vertical]">
-                  {provider.description}
-                </p>
-              </div>
+              <p className="text-sm text-gray-500">
+                {provider.state?.name}
+              </p>
             </div>
-            <div className="flex-2">
-              <button
-              onClick={() => navigate(`/profileProvider/${provider.user_Id._id}`)}
-              className="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-              Ver perfil completo y tarifas
-            </button>
-            </div>
+            <p className="text-sm text-gray-600 line-clamp-3">
+              {provider.description}
+            </p>
           </div>
-        ))}
-      </div>
-      <button
-        onClick={scrollRight}
-        className="absolute right-2 z-10 bg-white shadow-md rounded-full p-2 hover:bg-gray-100">
-        ❯
-      </button>
+          <button
+            onClick={() =>
+              navigate(`/profileProvider/${provider.user_Id._id}`)
+            }
+            className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg">
+            Ver perfil completo y tarifas
+          </button>
+        </div>
+      ))}
     </div>
-  );
+    <button
+      onClick={scrollRight}
+      className="absolute right-3 z-10 bg-white/90 backdrop-blur shadow-xl rounded-full p-3 hover:scale-105 transition-all">
+      ❯
+    </button>
+  </div>
+);
 }

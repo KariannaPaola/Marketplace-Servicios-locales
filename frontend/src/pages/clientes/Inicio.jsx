@@ -10,7 +10,7 @@ const {providers}= UseProvidersPublic();
 return(
 
 <div>
-  <div className="w-full bg-blue-900 px-6 py-16">
+  <div className="w-full bg-gray-950 px-6 py-16">
     <div className="mx-auto max-w-4xl text-center">
       <h1 className="mb-4 text-4xl font-bold text-white">
         Encuentre proveedores de servicios confiables para cualquier trabajo
@@ -42,7 +42,6 @@ return(
   <ProvidersPublic
     providers={providers} 
   />
-  
   <CategoriesPublic
     categories={categories}
   />

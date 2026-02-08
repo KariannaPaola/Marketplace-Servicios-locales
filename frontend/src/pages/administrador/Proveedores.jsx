@@ -7,13 +7,13 @@ export default function ProvidersAdminPage (){
   
   return(
     <ProvidersList
-        providers={providers}
-        page={page}
-        limit={limit}
-        total={total}
-        approve={approve}
-        rejected={rejected} 
-        setPage={setPage}
-      />
+      providers={providers}
+      page={page}
+      limit={limit}
+      total={total}
+      approve={approve}
+      rejected={rejected} 
+      setPage={setPage}
+    />
   )
 }

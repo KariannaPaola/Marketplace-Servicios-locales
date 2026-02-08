@@ -21,7 +21,9 @@ const [message, setMessage] = useState("");
       }
     try {
       const data= await recoverPassword(email)
+      console.log("Contraseña cambiada con exito")
       setMessage(data.message)
+      navigate("/contraseñaCambiada");
     } catch (error) {
       setError([error.response?.data?.message  || "Error al recuperar contraseña"]);
     }

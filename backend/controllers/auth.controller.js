@@ -34,7 +34,9 @@ export const registerUser = async (req, res) => {
     await newUser.save();
     const link_verificationEmail=`http://localhost:5173/verify-email/${token_email}`;
     await sendEmail ({ to:email, subject:"Verifica tu correo", html: `<a href="${link_verificationEmail}">Verificar cuenta</a>` })
-    res.json({ message:'Debes verificar tu correo, revisa tu bandeja de entrada' })
+    return res.status(200).json({
+      message: "Debes verificar tu correo, revisa tu bandeja de entrada"
+    });
   } catch (error) {
     res.status(500).json({ 
     message: "Error al registrar usuario", 
@@ -50,7 +52,7 @@ export const verifyEmail = async (req, res) => {
     if (!user) {
       const alreadyVerified = await User.findOne({ token_email: null, is_email_verified: true });
       if (alreadyVerified) {
-        return res.status(200).json({ msg: "Email verificado correctamente jeje" });
+        return res.status(200).json({ msg: "Email verificado correctamente" });
       }
       return res.status(400).json({ msg: "Token inválido" });
     }
