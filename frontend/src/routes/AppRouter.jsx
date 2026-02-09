@@ -32,6 +32,8 @@ import FormRequestPage from "../pages/clientes/FormularioConfirmacion";
 import AdminDashboard from "../pages/administrador/InicioAdmin";
 import SuccessfulRequestPage from "../pages/clientes/SolicitudExitosa";
 import SuccessfulChangePasswordPage from "../pages/auth/ContraseñaCambiada";
+import SuccessfulRegisterProviderPage from "../pages/auth/RegistroProveedorExitoso";
+import SuccessfulPayMyFeePage from "../pages/proveedores/PagoExitoso";
 
 
 
@@ -59,6 +61,7 @@ export default function AppRouter() {
         <Route path="/client/request" element={<PrivateRoute><MyRequestClient/></PrivateRoute>} /> 
         <Route path="/register/provider" element={<PrivateRoute><RegisterProvider /></PrivateRoute>} />
         <Route path="/client/RequestExitosa" element={<PrivateRoute><SuccessfulRequestPage /></PrivateRoute>} />
+        <Route path="/client/RegistroProveedorExitoso" element={<PrivateRoute><SuccessfulRegisterProviderPage /></PrivateRoute>} />
         <Route path="/upload/file" element={<PrivateRoute><SubirCedula/></PrivateRoute>} />
         
         
@@ -67,6 +70,7 @@ export default function AppRouter() {
         <Route path="/provider/profile" element={<ProviderRoute><MyProfileProviderPage/></ProviderRoute>} /> 
         <Route path="/provider/request" element={<ProviderRoute><MyRequestProvider/></ProviderRoute>} /> 
         <Route path="/provider/payfee/:id" element={<ProviderRoute><PayFeePage/></ProviderRoute>} /> 
+        <Route path="/provider/succefullPay" element={<ProviderRoute><SuccessfulPayMyFeePage/></ProviderRoute>} /> 
 
        {/* ADMIN */}
         <Route path="/admin/inicio" element={<AdminRoute><AdminDashboard /></AdminRoute>} />

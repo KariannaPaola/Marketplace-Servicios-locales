@@ -22,6 +22,7 @@ export const createChat= async (req, res) => {
       status: { $in: ["pendiente", "en_curso", "creada"] },
       is_deleted: false,
     });
+    
     if (existingRequest) {
       const existingChat = await Chat.findOne({ request_Id: existingRequest._id });
       return res.status(200).json({ chat: existingChat, request: existingRequest, message: "Ya existe una solicitud activa" });
@@ -42,6 +43,20 @@ export const createChat= async (req, res) => {
       provider_Id: Id_provider ,
       status: "creada",
     });
+
+    const existingChatPrevious = await Chat.findOne({
+      client_Id: user._id,
+      provider_Id: Id_provider,
+    });
+
+    if (existingChatPrevious) {
+      newRequest.chat_Id = existingChatPrevious._id;
+      await newRequest.save();
+      return res.status(201).json({
+      chat: existingChatPrevious,
+      request: newRequest
+    });
+    }
 
     const chat = await Chat.create({
       client_Id: user._id,        

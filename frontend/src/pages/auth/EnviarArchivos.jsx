@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { uploadImage } from '../../services/auth';
+import { useNavigate } from 'react-router-dom';
 
 function SubirCedula() {
   const [files, setFiles] = useState(null);
   const [message, setMessage] = useState('');
+  const navigate=useNavigate()
   
   const handleFilesChange = (e) => {
     setFiles(e.target.files[0]);
@@ -15,6 +17,7 @@ function SubirCedula() {
       alert("Selecciona al menos un archivo");
       return;
     }
+    
 
     const formData = new FormData();
     formData.append('documents', files); 
@@ -22,8 +25,8 @@ function SubirCedula() {
 
     try {
       await uploadImage(formData);
-      setMessage("Documento subido correctamente");
       setFiles(null);
+      navigate("/client/RegistroProveedorExitoso");
     } catch (error) {
       console.error("Error en la subida:", error);
       setMessage('Error al subir imagen'); 
@@ -37,7 +40,7 @@ function SubirCedula() {
         <h6 className="text-lg font-semibold text-gray-800 mb-2">
           Paso 3: Identificación
         </h6>
-        <p>{message}</p>
+        <p className='text-semibold text-red-600'>{message}</p>
         <h5 className="text-sm text-gray-600 mb-6">
           Para finalizar envía una foto de tu cédula de identidad y una foto de frente
           para comprobar tu identidad.

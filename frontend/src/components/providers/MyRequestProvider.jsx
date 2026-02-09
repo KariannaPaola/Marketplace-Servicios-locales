@@ -4,7 +4,6 @@ export default function MyRequestsProvider ({requests,confirm, cancel,page, setP
 const navigate=useNavigate()
 return (
   <div className="p-5 max-w-3xl mx-auto">
-    {console.log(requests)}
     <h1 className="font-bold text-zinc-300 text-center mb-6">Historial de solicitudes</h1>
     {requests.map((req) => {
       const formattedDetailDate = req.details?.date? new Date(req.details.date).toLocaleDateString("es-ES"): "";

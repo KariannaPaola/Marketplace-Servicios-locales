@@ -7,12 +7,14 @@ import { sendMessage } from "../../services/auth";
 import { AuthContext } from "../../context/AuthContext";
 import { pendingRequest } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
+
 export default function ChatPage ()  {
   const { chatId } = useParams();;
   const { user } = useContext(AuthContext);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [content, setContent] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
 
@@ -48,10 +50,9 @@ export default function ChatPage ()  {
   const handleHire = async (Id_provider) => {
       try {
         const data= await pendingRequest(Id_provider); 
-        console.log(data)
         navigate(`/request/${data.request._id}`); 
       } catch (error) {
-        console.error("Error al crear la solicitud", error);
+        setError("Ya tienes una solictud en curso con este proveedor")
       }
     };
 
@@ -60,6 +61,8 @@ export default function ChatPage ()  {
   if (loading) return <p>cargando chat</p>
 
   return (
+    <div>
+      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
     <div className="max-w-3xl mx-auto mt-4 p-5 flex flex-col h-[80vh] bg-white border border-white rounded-lg shadow">
       <div className="border-b border-gray-300 pb-3 mb-3 flex item-center gap-6">
         <h2 className="text-lg font-semibold">
@@ -132,5 +135,6 @@ export default function ChatPage ()  {
         </p>
       )}
     </div>
+  </div>
   );
 };

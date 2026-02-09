@@ -1,8 +1,13 @@
-export default function PayMyFeeProvider ({payMyFee, reference, setreference} ){
+export default function PayMyFeeProvider ({payMyFee, reference, setreference, error} ){
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await payMyFee();
+  };
 
 return (
   <div className="min-h-screen flex items-center justify-center px-4">
     <div className="w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       <h1 className="text-2xl font-bold text-center mb-4">
         Detalles de pago
       </h1>
@@ -20,7 +25,7 @@ return (
           <span className="font-semibold">Teléfono:</span> 0414341785
         </p>
       </div>
-      <form onSubmit={payMyFee} className="space-y-4">
+      <form onSubmit={onSubmit} className="space-y-4">
         <input
           type="text"
           placeholder="Ingresa el número de referencia completo"

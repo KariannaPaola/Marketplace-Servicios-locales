@@ -1,14 +1,15 @@
 import { createChat } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 
-export default function ProfileProviderClient ({profileProvider}){
+export default function ProfileProviderClient ({profileProvider, error}){
   const navigate= useNavigate()
-if (!profileProvider?.user_Id) {
+  if (!profileProvider?.user_Id) {
     return <p>Cargando perfil...</p>;
   }
 return (
   <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
     <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-6">
+      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       <div className="text-center border-b pb-4">
         <h2 className="text-xl font-semibold text-gray-900">
           {console.log(profileProvider)}
