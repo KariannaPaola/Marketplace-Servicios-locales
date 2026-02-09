@@ -1,3 +1,24 @@
+/**
+ * Middleware de carga de archivos usando Multer.
+ *
+ * Este módulo:
+ * - Configura almacenamiento en disco para archivos subidos
+ * - Define un directorio de destino para documentos/imágenes
+ * - Crea el directorio automáticamente si no existe
+ * - Genera nombres de archivo únicos basados en timestamp
+ * - Restringe la subida solo a archivos de tipo imagen
+ * - Limita el tamaño máximo del archivo a 2MB
+ *
+ * Directorio de subida:
+ *   /uploads/documents
+ *
+ * Uso típico en Express:
+ *   import { uploadDocs } from "./uploadDocs.js";
+ *   app.post("/upload", uploadDocs.single("file"), controller);
+ *
+ * @module uploadDocs
+ */
+
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';

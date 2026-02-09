@@ -1,3 +1,26 @@
+/**
+ * Controladores para la gestión de mensajes en chats.
+ *
+ * Este módulo permite:
+ * - Enviar mensajes dentro de un chat
+ * - Listar todos los mensajes de un chat
+ *
+ * Reglas y consideraciones:
+ * - Solo los participantes del chat pueden enviar o leer mensajes
+ * - Los mensajes se asocian al usuario que los envía y al chat correspondiente
+ * - Los mensajes se ordenan por fecha de creación ascendente al listar
+ *
+ * Dependencias:
+ * - Modelo Chat (MongoDB / Mongoose)
+ * - Modelo Message (MongoDB / Mongoose)
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import { sendMessage, getMessages } from "./messages.controller.js";
+ *
+ * @module messagesController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Chat from '../models/chat-models.js';

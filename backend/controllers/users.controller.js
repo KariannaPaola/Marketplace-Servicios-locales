@@ -1,3 +1,33 @@
+/**
+ * Controladores para la gestión de usuarios del sistema.
+ *
+ * Este módulo permite:
+ * - Listar usuarios con filtros y paginación
+ * - Obtener la información de un usuario por su ID
+ * - Eliminar usuarios (marcarlos como eliminados)
+ * - Recuperar usuarios eliminados
+ *
+ * Reglas y consideraciones:
+ * - Solo administradores pueden eliminar o recuperar usuarios
+ * - Al eliminar un proveedor, su perfil asociado también se marca como eliminado y no visible
+ * - Los filtros permitidos para listar usuarios incluyen tipo de usuario, verificación de email y estado eliminado
+ * - La paginación se realiza mediante query params `page` y `limit`
+ *
+ * Dependencias:
+ * - Modelos User y Provider (MongoDB / Mongoose)
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import {
+ *     getUsers,
+ *     getUsersId,
+ *     deleteUser,
+ *     unDeleteUser
+ *   } from './users.controller.js';
+ *
+ * @module usersController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 

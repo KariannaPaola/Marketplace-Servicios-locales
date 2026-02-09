@@ -1,3 +1,36 @@
+/**
+ * Controladores para la gestión de tarifas y pagos de proveedores.
+ *
+ * Este módulo permite:
+ * - Registrar el pago de una tarifa por parte del proveedor
+ * - Listar todas las tarifas con filtros y paginación
+ * - Listar las tarifas propias del proveedor autenticado
+ * - Aprobar o rechazar tarifas pagadas
+ * - Verificar referencias de pago
+ *
+ * Reglas de negocio:
+ * - Solo el proveedor dueño de la tarifa puede registrarla como pagada
+ * - Una tarifa debe estar en estado "pagado" para ser aprobada o rechazada
+ * - La visibilidad del proveedor se recalcula al aprobar o rechazar una tarifa
+ *
+ * Dependencias:
+ * - Modelo Fee (MongoDB / Mongoose)
+ * - Servicio recalcProviderVisibility
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import {
+ *     paymentRegister,
+ *     listAllFees,
+ *     myFees,
+ *     approveFee,
+ *     verifyReference,
+ *     disapproveFee
+ *   } from "./fees.controller.js";
+ *
+ * @module feesController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Fee from '../models/fees.models.js';

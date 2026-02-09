@@ -1,3 +1,39 @@
+/**
+ * Controladores para la gestión de reseñas (reviews) de proveedores.
+ *
+ * Este módulo permite:
+ * - Crear una reseña para un proveedor asociado a una solicitud completada
+ * - Listar reseñas visibles de un proveedor
+ * - Listar reseñas para administración (incluyendo no visibles)
+ * - Listar reseñas reportadas
+ * - Reportar reseñas inapropiadas
+ * - Verificar reseñas reportadas (aprobación/rechazo de reporte)
+ *
+ * Reglas y consideraciones:
+ * - Solo clientes que completaron la solicitud pueden crear una reseña
+ * - Cada solicitud solo puede ser reseñada una vez
+ * - La puntuación debe estar entre 1 y 5
+ * - Reportes no pueden ser realizados por el autor de la reseña
+ * - Se recalcula la reputación del proveedor al crear una reseña
+ *
+ * Dependencias:
+ * - Modelos Provider, Request, Review (MongoDB / Mongoose)
+ * - Servicio recalculateProviderReputation
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import {
+ *     createReview,
+ *     getReviews,
+ *     getReviewsAdmin,
+ *     getReviewsReported,
+ *     reportReview,
+ *     verifyReviewsReportedAdmin
+ *   } from './reviews.controller.js';
+ *
+ * @module reviewsController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Provider from '../models/provider.models.js';

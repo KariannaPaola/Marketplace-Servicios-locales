@@ -1,3 +1,30 @@
+/**
+ * Middleware de autorización por rol de usuario.
+ *
+ * Este módulo permite:
+ * - Restringir el acceso a rutas según el tipo de usuario
+ * - Validar que el usuario esté autenticado (`req.user`) antes de comprobar el rol
+ *
+ * Reglas y consideraciones:
+ * - `authRoleClient`: solo permite acceso a usuarios con `user_type` = "cliente"
+ * - `authRoleProvider`: solo permite acceso a usuarios con `user_type` = "proveedor"
+ * - `authRoleAdmin`: solo permite acceso a usuarios con `user_type` = "administrador"
+ * - Si el usuario no está autenticado, retorna 401
+ * - Si el usuario no tiene el rol requerido, retorna 403
+ *
+ * Dependencias:
+ * - Variables de entorno cargadas con dotenv
+ * - Se asume que `req.user` ya fue definido por un middleware de autenticación previo
+ *
+ * Uso típico en Express:
+ *   import { authRoleClient, authRoleProvider, authRoleAdmin } from './roles.middleware.js';
+ *   app.get('/ruta-cliente', authRoleClient, controladorCliente);
+ *   app.get('/ruta-proveedor', authRoleProvider, controladorProveedor);
+ *   app.get('/ruta-admin', authRoleAdmin, controladorAdmin);
+ *
+ * @module rolesMiddleware
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 

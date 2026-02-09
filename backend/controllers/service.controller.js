@@ -1,3 +1,31 @@
+/**
+ * Controladores para la gestión de servicios ofrecidos por proveedores.
+ *
+ * Este módulo permite:
+ * - Crear un nuevo servicio para un proveedor
+ * - Editar un servicio existente
+ * - Eliminar un servicio ofrecido por el proveedor
+ *
+ * Reglas y consideraciones:
+ * - Solo proveedores registrados y no eliminados pueden gestionar servicios
+ * - Cada servicio requiere un nombre y un precio
+ * - El precio puede ser modificado al editar el servicio
+ * - Los servicios se almacenan como subdocumentos dentro del documento Provider
+ *
+ * Dependencias:
+ * - Modelo Provider (MongoDB / Mongoose)
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import {
+ *     createService,
+ *     editService,
+ *     deleteService
+ *   } from './services.controller.js';
+ *
+ * @module servicesController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Provider from '../models/provider.models.js';

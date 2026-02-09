@@ -1,3 +1,40 @@
+/**
+ * Controladores para la gestión de proveedores.
+ *
+ * Este módulo permite:
+ * - Registrar un usuario como proveedor
+ * - Editar perfil de proveedor
+ * - Leer perfil propio o de otro proveedor visible
+ * - Eliminar perfil de proveedor
+ * - Listar proveedores con paginación y filtros (clientes y admins)
+ * - Aprobar o desaprobar proveedores (administradores)
+ *
+ * Reglas y consideraciones:
+ * - Solo usuarios no proveedores pueden registrarse como proveedores
+ * - Los perfiles eliminados se marcan como invisibles y se actualiza user_type a "cliente"
+ * - Solo proveedores con profile_visible=true y status="approved" se muestran a clientes
+ * - Los administradores pueden ver todos los proveedores y controlar su estado
+ *
+ * Dependencias:
+ * - Modelos Provider y User (MongoDB / Mongoose)
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import {
+ *     registerProvider,
+ *     editProfileProvider,
+ *     readMyProfileProvider,
+ *     readProfileProvider,
+ *     deletedMyProfileProvider,
+ *     getProviders,
+ *     getProvidersAdmin,
+ *     disapproveProvider,
+ *     approveProvider
+ *   } from "./provider.controller.js";
+ *
+ * @module providerController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Provider from '../models/provider.models.js';

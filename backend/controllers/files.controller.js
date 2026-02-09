@@ -1,3 +1,26 @@
+/**
+ * Controladores para la gestión de archivos e imágenes.
+ *
+ * Este módulo permite:
+ * - Subir imágenes usando Multer y almacenarlas en el servidor
+ * - Registrar la información del archivo en la base de datos
+ * - Generar URLs públicas para acceder a los archivos subidos
+ * - Obtener imágenes asociadas a un usuario específico
+ *
+ * Reglas y consideraciones:
+ * - Se requiere un archivo en `req.file`
+ * - Los archivos se almacenan en `/uploads/documents`
+ * - Cada archivo se asocia al usuario autenticado
+ *
+ * Dependencias:
+ * - Modelo File (MongoDB / Mongoose)
+ *
+ * Uso típico en Express:
+ *   import { uploadImage, readImage } from "./files.controller.js";
+ *
+ * @module filesController
+ */
+
 import File from '../models/files.models.js';
 
 export const uploadImage = async (req, res) => {

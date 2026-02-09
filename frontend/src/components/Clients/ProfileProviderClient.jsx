@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { createChat } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 
-export default function ProfileProviderClient ({profileProvider, error}){
+export default function ProfileProviderClient ({profileProvider}){
+  const [error, setError]= useState("")
   const navigate= useNavigate()
   if (!profileProvider?.user_Id) {
     return <p>Cargando perfil...</p>;
@@ -46,7 +48,8 @@ return (
                     const data = await createChat(profileProvider.user_Id._id);
                     navigate(`/Chat/${data.chat._id}`);
                   } catch (error) {
-                    console.error("Error al crear chat:", error);
+                    const status= error.response?.data?.message
+                    setError(status)
                   }
                 }}
                 className="bg-green-600 hover:bg-green-700  text-xs  text-white font-semibold py-2 px-4 rounded-lg transition-colors">
@@ -59,4 +62,4 @@ return (
     </div>
   </div>
 );
-}
+} 

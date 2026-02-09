@@ -1,3 +1,36 @@
+/**
+ * Controladores para la gestión de solicitudes (requests).
+ *
+ * Este módulo permite:
+ * - Poner una solicitud en estado pendiente
+ * - Completar el formulario de la solicitud (formRequest)
+ * - Cancelar solicitudes por cliente o proveedor
+ * - Completar solicitudes en curso
+ * - Listar solicitudes de un proveedor o de un cliente con paginación
+ *
+ * Reglas y consideraciones:
+ * - Solo clientes o proveedores involucrados pueden modificar la solicitud
+ * - Al completar el formulario, se genera automáticamente una tarifa asociada
+ * - Se manejan estados: "creada", "pendiente", "en_curso", "cancelado", "completado"
+ * - Se soporta paginación y filtrado por categoría o estado
+ *
+ * Dependencias:
+ * - Modelos Request y Fee (MongoDB / Mongoose)
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import {
+ *     pendingRequest,
+ *     formRequest,
+ *     cancelRequest,
+ *     completeRequest,
+ *     getRequestProvider,
+ *     getRequestClient
+ *   } from "./request.controller.js";
+ *
+ * @module requestController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Request from '../models/request.models.js';

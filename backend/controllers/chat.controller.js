@@ -1,3 +1,28 @@
+/**
+ * Controladores para la gestión de chats entre clientes y proveedores.
+ *
+ * Este módulo permite:
+ * - Crear un chat asociado a una solicitud entre un cliente y un proveedor
+ * - Reutilizar chats existentes si ya hubo interacción previa
+ * - Limitar la cantidad de solicitudes activas por cliente
+ * - Obtener un chat validando que el usuario sea participante
+ *
+ * Reglas de negocio:
+ * - Solo se permite crear chat con proveedores visibles y activos
+ * - Un cliente puede tener máximo 3 solicitudes activas
+ * - No se duplican chats para una misma relación cliente-proveedor
+ *
+ * Dependencias:
+ * - Modelos Chat, Provider y Request (MongoDB / Mongoose)
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import { createChat, getChat } from "./chat.controller.js";
+ *
+ * @module chatController
+ */
+
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Chat from '../models/chat-models.js';

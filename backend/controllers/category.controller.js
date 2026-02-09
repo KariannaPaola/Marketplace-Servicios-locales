@@ -1,3 +1,34 @@
+/**
+ * Controladores para la gestión de categorías.
+ *
+ * Este módulo permite:
+ * - Crear categorías con validación de nombre único
+ * - Listar categorías activas (usuario y admin)
+ * - Editar categorías existentes
+ * - Eliminar categorías de forma lógica (soft delete)
+ *
+ * Consideraciones:
+ * - Los nombres de categoría se normalizan a mayúsculas
+ * - No se permite eliminar categorías con proveedores asociados
+ * - Se registra el usuario que crea, edita o elimina la categoría
+ *
+ * Dependencias:
+ * - Modelo Category (MongoDB / Mongoose)
+ * - Modelo Provider para validaciones de integridad
+ * - Variables de entorno cargadas con dotenv
+ *
+ * Uso típico en Express:
+ *   import {
+ *     createCategory,
+ *     getCategories,
+ *     getCategoriesAdmin,
+ *     editCategory,
+ *     deleteCategory
+ *   } from "./categories.controller.js";
+ *
+ * @module categoriesController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import Provider from '../models/provider.models.js';

@@ -1,3 +1,19 @@
+/**
+ * Middleware CORS configurado para restringir los orígenes permitidos.
+ *
+ * Este módulo:
+ * - Define una whitelist de orígenes permitidos
+ * - Valida dinámicamente el origen de cada solicitud
+ * - Permite solicitudes sin origen (Postman, curl, etc.)
+ * - Rechaza cualquier origen que no esté en la whitelist
+ *
+ * Uso típico en Express:
+ *   import corsInstance from "./cors.js";
+ *   app.use(corsInstance);
+ *
+ * @module corsInstance
+ */
+
 import cors from "cors";
 
 const whitelist = ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "http://localhost:4000" ];

@@ -1,3 +1,36 @@
+/**
+ * Controladores de autenticación y gestión de usuarios.
+ *
+ * Este módulo maneja:
+ * - Registro de usuarios con validaciones de email y contraseña
+ * - Verificación de correo electrónico mediante token
+ * - Inicio de sesión con JWT
+ * - Recuperación de contraseña vía email
+ * - Cambio de contraseña usando token de recuperación
+ *
+ * Dependencias principales:
+ * - MongoDB (Mongoose)
+ * - JSON Web Tokens (JWT)
+ * - Crypto para generación de tokens seguros
+ * - Servicio de envío de correos
+ * - Variables de entorno configuradas con dotenv
+ *
+ * Variables de entorno requeridas:
+ * - JWT_SECRET
+ * - JWT_EXPIRES_IN
+ *
+ * Uso típico en Express:
+ *   import {
+ *     registerUser,
+ *     verifyEmail,
+ *     loginUser,
+ *     recoverPassword,
+ *     changePassword
+ *   } from "./auth.controller.js";
+ *
+ * @module authController
+ */
+
 import dotenv from 'dotenv';
 dotenv.config();
 import User from "../models/user.model.js";
