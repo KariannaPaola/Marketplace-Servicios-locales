@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useHorizontalScroll } from "../../hooks/useHorizontalScroll";
 
-export default function ProvidersPublic ({providers} ){
+export default function GetProvidersPublic ({providers} ){
   const navigate = useNavigate()
   const { scrollRef, scrollLeft, scrollRight } = useHorizontalScroll();
 
@@ -49,7 +49,7 @@ export default function ProvidersPublic ({providers} ){
           </div>
           <button
             onClick={() =>
-              navigate(`/profileProvider/${provider.user_Id._id}`)
+              navigate(`/login`)
             }
             className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg">
             Ver perfil completo y tarifas

@@ -28,6 +28,9 @@ import Provider from "../models/provider.models.js";
 export const authCheckProviderFees = async (req, res, next) => {
   try {
     const providerId = req.user?._id || req.params.id;
+    if (!providerId || !mongoose.Types.ObjectId.isValid(providerId)) {
+    return next();
+    }
     const expiredFee = await Fee.findOne({
       provider_Id: providerId,
       status: { $ne: "verificado" },

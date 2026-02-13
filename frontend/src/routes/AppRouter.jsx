@@ -34,6 +34,8 @@ import SuccessfulRequestPage from "../pages/clientes/SolicitudExitosa";
 import SuccessfulChangePasswordPage from "../pages/auth/ContraseñaCambiada";
 import SuccessfulRegisterProviderPage from "../pages/auth/RegistroProveedorExitoso";
 import SuccessfulPayMyFeePage from "../pages/proveedores/PagoExitoso";
+import ProviderSearchFilter from "../pages/clientes/ProvidersFilter";
+import PublicRoute from "./PublicRoute";
 
 
 
@@ -44,13 +46,13 @@ export default function AppRouter() {
     <MainLayout>
       <Routes>
         {/* PUBLICAS */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<Home/>} />
-        <Route path="/verify-email/:token" element={<VerifyEmailPage />} />
-        <Route path="/recoverPassword" element={<RecoverPasswordPage/>} />
-        <Route path="/ChangePassword/:token" element={<ChangePasswordPage/>} />
-        <Route path="/contraseñaCambiada" element={<SuccessfulChangePasswordPage/>} />
+        <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><Register/></PublicRoute>} />
+        <Route path="/home" element={<PublicRoute><Home/></PublicRoute>} />
+        <Route path="/verify-email/:token" element={<PublicRoute><VerifyEmailPage /></PublicRoute>} />
+        <Route path="/recoverPassword" element={<PublicRoute><RecoverPasswordPage/></PublicRoute>} />
+        <Route path="/ChangePassword/:token" element={<PublicRoute><ChangePasswordPage/></PublicRoute>} />
+        <Route path="/contraseñaCambiada" element={<PublicRoute><SuccessfulChangePasswordPage/></PublicRoute>} />
 
         {/* CLIENTE (todos los logueados) */}
         <Route path="/client/inicio" element={<PrivateRoute><HomeClientPage/></PrivateRoute>}  />
@@ -63,6 +65,7 @@ export default function AppRouter() {
         <Route path="/client/RequestExitosa" element={<PrivateRoute><SuccessfulRequestPage /></PrivateRoute>} />
         <Route path="/client/RegistroProveedorExitoso" element={<PrivateRoute><SuccessfulRegisterProviderPage /></PrivateRoute>} />
         <Route path="/upload/file" element={<PrivateRoute><SubirCedula/></PrivateRoute>} />
+        <Route path="/search" element={<PrivateRoute><ProviderSearchFilter/></PrivateRoute>} />
         
         
         {/* PROVEEDOR */}

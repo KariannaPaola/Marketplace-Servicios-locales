@@ -64,6 +64,18 @@ return (
                   className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                   Llenar formulario
                 </button>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  <button
+                    onClick={() => confirm(req._id)}
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                    Marcar la solicitud como completada
+                  </button>
+                  <button
+                    onClick={() => cancel(req._id)}
+                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                    Cancelar solicitud
+                  </button>
+                </div>
               </div>
             )}
             {req.status === "cancelado" && (

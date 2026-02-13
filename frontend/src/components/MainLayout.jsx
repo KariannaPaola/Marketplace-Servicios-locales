@@ -27,7 +27,7 @@ export default function MainLayout({ children }) {
 
   return (
     <div className="min-h-screen w-full flex flex-col md:flex-row">
-      {isAuthenticated && !isAdmin && <ClientSidebar />}
+      
       <div className="flex-1 flex flex-col min-h-screen">
         {showNavbar && (
           <>

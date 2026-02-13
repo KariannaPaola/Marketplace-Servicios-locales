@@ -149,6 +149,12 @@ const providerSchema= new mongoose.Schema({
 },
 {timestamps: true}
 )
-providerSchema.index({ categories: 1, is_deleted: 1 });
+providerSchema.index({
+  categories: 1,
+  state: 1,
+  is_deleted: 1,
+  profile_visible: 1,
+  status: 1
+});
 const Provider=mongoose.model("Provider", providerSchema)
 export default Provider;

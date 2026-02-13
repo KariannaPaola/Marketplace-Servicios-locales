@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import api from "../services/api";
 
 
 export const AuthContext = createContext();
@@ -9,40 +10,36 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); 
   
 
-  useEffect(() => {
+ useEffect(() => {
   const savedToken = localStorage.getItem("token");
   const savedUser = localStorage.getItem("user");
 
-  if (savedToken && savedUser) {
-    fetch("http://localhost:4000/auth/validateToken", {
-      headers: { Authorization: `Bearer ${savedToken}` },
-    })
-      .then(res => {
-        if (!res.ok) throw new Error("Token inválido");
-        setUser(JSON.parse(savedUser));
-        setToken(savedToken);
-      })
-      .catch(() => {
-        // Si el token es inválido → limpiar auth
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        setUser(null);
-        setToken(null);
-      })
-      .finally(() => setLoading(false));
-  } else {
+  if (!savedToken || !savedUser) {
     setLoading(false);
+    return;
   }
+
+  api
+    .get("/auth/me")
+    .then(() => {
+      setUser(JSON.parse(savedUser));
+      setToken(savedToken);
+    })
+    .catch(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+      setToken(null);
+    })
+    .finally(() => setLoading(false));
 }, []);
 
-  const login = (user, token, navigate) => {
-    setUser(user);
-    setToken(token);
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-
-    
-  }; 
+  const login = (user, token) => {
+  setUser(user);
+  setToken(token);
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(user));
+};
 
   const logout = () => {
     setUser(null);

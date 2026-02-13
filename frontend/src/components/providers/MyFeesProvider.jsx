@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-export default function MyFeesProvider ({fees,page, setPage, total, limit} ){
+export default function MyFeesProvider ({fees,page, setPage, total, limit, feeApi, loading} ){
 const navigate= useNavigate()
+if (loading) return <p>Cargando....</p>
 return (
   <div className="p-5 max-w-3xl mx-auto">
     <h1 className="font-bold text-zinc-300 text-center mb-6">
@@ -14,7 +15,7 @@ return (
         <div key={fee._id} className="bg-white border border-gray-200 rounded-lg p-5 mb-5 shadow-sm">
           <p className="font-medium">
             <span className="font-semibold">Monto en Bs:</span>{" "}
-            {fee.amount_bs.$numberDecimal}
+            {Math.ceil(feeApi?.data.promedio*5) }
           </p>
           <p className="font-medium">
             <span className="font-semibold">Fecha de expiración:</span>{" "}

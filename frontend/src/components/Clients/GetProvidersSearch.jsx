@@ -41,7 +41,6 @@ return (
               onClick={async () => {
                 try {
                   const data = await createChat(provider.user_Id._id);
-                  console.log(data)
                   navigate(`/Chat/${data.chat._id}`);
                 } catch (error) {
                   console.error("Error al crear chat:", error);

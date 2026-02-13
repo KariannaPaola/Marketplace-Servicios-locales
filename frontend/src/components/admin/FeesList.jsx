@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
 
-export default function FeesList({fees, approve, reject, page, setPage, limit, total }){
+export default function FeesList({fees, approve, reject, page, setPage, limit, total, feeApi, loading }){
 const navigate=useNavigate();
+
+if (loading) return <p>Cargando...</p>
 
 return (
   <div className="p-6 max-w-7xl mx-auto">
@@ -26,7 +28,7 @@ return (
           <p className="font-medium">{fee.provider_Id.name}</p>
           <p className="font-medium">{fee.provider_Id.lastname}</p>
           <p className="text-gray-600">
-            Bs {fee.amount_bs.$numberDecimal}
+            Bs {Math.ceil(feeApi?.data.promedio*5) }
           </p>
           <p className="text-gray-600">
             $ {fee.amount_usd.$numberDecimal}
@@ -117,7 +119,7 @@ return (
             )}
           </div>
           <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-            <p>Bs {fee.amount_bs.$numberDecimal}</p>
+            <p>Bs {Math.ceil(feeApi?.data.promedio*5) }</p>
             <p>$ {fee.amount_usd.$numberDecimal}</p>
             {fee.date_payment && (
               <p className="col-span-2">

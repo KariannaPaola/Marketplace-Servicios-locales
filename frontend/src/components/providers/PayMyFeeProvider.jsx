@@ -1,9 +1,9 @@
-export default function PayMyFeeProvider ({payMyFee, reference, setreference, error} ){
+export default function PayMyFeeProvider ({payMyFee, reference, setreference, error, feeApi, loading } ){
   const onSubmit = async (e) => {
     e.preventDefault();
     await payMyFee();
   };
-
+if (loading) return <p>Cargando...</p>
 return (
   <div className="min-h-screen flex items-center justify-center px-4">
     <div className="w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-sm p-6">
@@ -14,6 +14,7 @@ return (
       <p className="text-gray-600 text-sm mb-4 text-center">
         Por favor realice el pago del monto establecido a los siguientes datos:
       </p>
+      <p>Monto: {Math.ceil(feeApi?.data.promedio*5) }</p>
       <div className="bg-gray-50 border border-gray-200 rounded-md p-4 mb-5 text-sm">
         <p>
           <span className="font-semibold">Banco:</span> Banca Amiga

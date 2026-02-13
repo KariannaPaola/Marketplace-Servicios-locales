@@ -7,14 +7,14 @@ export default function MyRequestClientPage(){
 return (
 
 <MyRequestClient
-        requests={requests}
-        confirm ={confirm}
-       cancel={cancel}
-        page={page}
-        setPage={setPage}
-        total={total}
-        limit={limit}
-        />
+  requests={requests}
+  confirm ={confirm}
+  cancel={cancel}
+  page={page}
+  setPage={setPage}
+  total={total}
+  limit={limit}
+/>
 
 )
 }

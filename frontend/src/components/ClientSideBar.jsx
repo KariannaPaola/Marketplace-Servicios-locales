@@ -45,7 +45,7 @@ export default function ClientSidebar() {
         {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
       </button>
       <aside
-        className={`hidden md:flex fixed top-30  bg-white shadow-md transition-transform z-50  duration-300
+        className={`hidden md:flex fixed w-64 top-[120px] z-50  bg-white shadow-md transition-transform z-50  duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-64"} rounded-md`}>
         <nav className="flex flex-col space-y-1 px-2 py-4">
           {links.map((link) => (

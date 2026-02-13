@@ -14,7 +14,6 @@ return (
       {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       <div className="text-center border-b pb-4">
         <h2 className="text-xl font-semibold text-gray-900">
-          {console.log(profileProvider)}
           {profileProvider.user_Id.name} {profileProvider.user_Id.lastname}
         </h2>
         <p className="text-sm text-gray-500 mt-1">
@@ -46,6 +45,7 @@ return (
                 onClick={async () => {
                   try {
                     const data = await createChat(profileProvider.user_Id._id);
+                    console.log(data.chat._id)
                     navigate(`/Chat/${data.chat._id}`);
                   } catch (error) {
                     const status= error.response?.data?.message

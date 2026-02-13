@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { fetchFeesAdmin, approveFee, disapproveFee } from "../../services/auth";
+import axios from "axios";
 
 export default function useFeesAdmin(){
   const [fees, setFees] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [feeApi, setFeeApi] = useState(null);
+  const [loading, setloading] = useState(true);
   const limit = 10
 
   useEffect (()=>{
@@ -51,5 +54,20 @@ export default function useFeesAdmin(){
   }
 
 
-  return{fees, setFees,page, setPage , limit, total, setTotal, approve, reject}
+  useEffect (()=>{
+      try {
+        axios.get("https://ve.dolarapi.com/v1/dolares/oficial")
+        .then(resp => {
+        setFeeApi(resp)})
+        setloading(false)
+      } catch(error) {
+    console.error(err);
+    };
+
+  },[])
+
+  
+  
+
+  return{fees, setFees,page, setPage , limit, total, setTotal, approve, reject, feeApi, loading}
 }

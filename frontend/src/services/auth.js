@@ -57,6 +57,11 @@ export const getProviders = async ({page = 1, limit = 10, category, state} = {})
   params: {page,limit,category, state}}) ;
   return res.data; 
 };
+export const getProvidersPublic = async () => {
+  console.log(`/providers/providersPublic`)
+  const res = await api.get(`/providers/providersPublic`);
+  return res.data; 
+};
 export const fetchProvidersAdmin = async ({page = 1, limit = 10, category, state} = {}) => {
   const res = await api.get(`/providers/admin/providers`, {
   params:{ page, limit , category, state}} ) ;
@@ -177,3 +182,4 @@ export const getImagesAdmin = async (id) => {
   const res = await api.get(`/file/admin/images/${id}`) ;
   return res.data; 
 }
+

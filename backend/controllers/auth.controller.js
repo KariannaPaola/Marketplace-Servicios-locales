@@ -39,6 +39,14 @@ import crypto from 'crypto';
 import jwt from "jsonwebtoken"
 
 
+export const auth = async (req, res) => {
+  res.json({
+    id: req.user.id,
+    email: req.user.email,
+    user_type: req.user.user_type,
+  });
+}
+
 export const registerUser = async (req, res) => {
   const {name, lastname, email: rawEmail, phone_number, password, password_repeat, user_type} =req.body;
   const email = rawEmail.toLowerCase();

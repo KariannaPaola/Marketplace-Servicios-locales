@@ -37,7 +37,7 @@ export default function ClientNavbar() {
   }
   return (
     <nav className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className=" mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0">
             <Link
@@ -46,20 +46,15 @@ export default function ClientNavbar() {
               Servi<span className="font-black">Ya</span>
             </Link>
           </div>
-          <div className="hidden lg:flex space-x-6 items-center">
+          <div className="flex lg:space-x-6 items-center">
             {isProviderPending && (
               <span className="text-gray-500 italic">
                 Proveedor en revisión
               </span>
             )}
-            <button
-              onClick={handleLogout}
-              className="flex items-center space-x-1 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 font-medium">
-              <FiLogOut />
-              <span>Cerrar sesión</span>
-            </button>
+          
           </div>
-          <div className="md:hidden">
+          <div className="">
             <button
               onClick={toggleMenu}
               className="text-gray-700 hover:text-blue-600">
@@ -69,7 +64,7 @@ export default function ClientNavbar() {
         </div>
       </div>
       {isOpen && (
-        <div className="md:hidden bg-white px-2 pt-2 pb-3 space-y-1 shadow-md">
+        <div className="bg-white px-2 pt-2 pb-3 space-y-1 shadow-md">
           {links.map((link) => (
             <Link
               key={link.to}

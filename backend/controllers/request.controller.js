@@ -129,7 +129,7 @@ export const cancelRequest= async (req, res) => {
     if (!id) {
       return res.status(400).json({ message: "debes ingresar una solicitud" });
     }
-    const request=await Request.findOne({ _id: id, status: { $in: ["pendiente", "en_curso"] } });
+    const request=await Request.findOne({ _id: id, status: { $in: ["pendiente", "en_curso", "creada"] } });
     if (!request) return res.status(404).json({message:'solictiud no encontrada'});
     const isClient = request.client_Id.toString() === user._id.toString();
     const isProvider = request.provider_Id.toString() === user._id.toString();

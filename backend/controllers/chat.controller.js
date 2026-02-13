@@ -50,6 +50,7 @@ export const createChat= async (req, res) => {
     
     if (existingRequest) {
       const existingChat = await Chat.findOne({ request_Id: existingRequest._id });
+      console.log( existingChat)
       return res.status(200).json({ chat: existingChat, request: existingRequest, message: "Ya existe una solicitud activa" });
     }
     const activeRequests = await Request.countDocuments({
@@ -75,6 +76,8 @@ export const createChat= async (req, res) => {
     });
 
     if (existingChatPrevious) {
+      existingChatPrevious.request_Id = newRequest._id;
+      await existingChatPrevious.save();
       newRequest.chat_Id = existingChatPrevious._id;
       await newRequest.save();
       return res.status(201).json({
@@ -124,3 +127,4 @@ export const getChat = async (req, res) => {
     res.status(500).json({ message: "Error obteniendo chat" });
   }
 };
+

@@ -39,6 +39,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import Provider from '../models/provider.models.js';
 import User from '../models/user.model.js';
+import mongoose from 'mongoose';
 
 export const registerProvider= async (req, res) => {
   const user=req.user;
@@ -161,8 +162,18 @@ export const getProviders = async (req, res) => {
     const skip = (page - 1) * limit;   
     const { category, state } = req.query;
     const filter = { is_deleted: false, profile_visible: true, status:"approved"};
-    if (category) filter.categories = category;
-    if (state) filter.state = state;
+    
+    if (category && mongoose.Types.ObjectId.isValid(category)) {
+      filter.categories = category; 
+    } else if (category) {
+      console.log("Category ID inválido:", category);
+    }
+
+    if (state && mongoose.Types.ObjectId.isValid(state)) {
+      filter.state = state;
+    } else if (state) {
+      console.log("State ID inválido:", state);
+    }
     const providers = await Provider.find(filter)
       .sort({ _id: -1 })
       .skip(skip)
@@ -171,11 +182,14 @@ export const getProviders = async (req, res) => {
       .populate('categories', 'name')
       .populate('state', 'name')
       .select('profession description rating services_offered membership_premium user_Id categories state status')
+      .lean()
       const total = await Provider.countDocuments(filter); 
+      console.log({total,providers,page,limit})
       return res.status(200).json({total,providers,page,limit});
   } catch (error) {
-    res.status(500).json({ message: 'Error al listar prestadores' });
-  }
+  console.error("Error getProviders:", error);
+  res.status(500).json({ message: 'Error al listar prestadores', error: error.message });
+}
 };
 
 export const getProvidersAdmin = async (req, res) => {
@@ -242,3 +256,21 @@ export const approveProvider = async (req, res) => {
 
 
 
+export const getProvidersPublic = async (req, res) => {
+  console.log('holssss')
+  try {
+    const filter = { is_deleted: false, profile_visible: true, status:"approved"}; 
+    const providers = await Provider.find(filter)
+      .sort({ _id: -1 })
+      .populate('user_Id', 'name lastname') 
+      .populate('categories', 'name')
+      .populate('state', 'name')
+      .select('profession description rating services_offered membership_premium user_Id categories state status')
+      .lean()
+      const total = await Provider.countDocuments(filter); 
+      return res.status(200).json({total,providers});
+  } catch (error) {
+  console.error("Error getProviders:", error);
+  res.status(500).json({ message: 'Error al listar prestadores', error: error.message });
+}
+};
