@@ -1,3 +1,25 @@
+/**
+ * RecoverPassword
+ * ------------------------------------------------------------
+ * Componente para la recuperación de contraseña. Permite al usuario ingresar su correo electrónico
+ * para recibir un enlace de recuperación de contraseña.
+ * 
+ * Props:
+ * @param {string} email - El correo electrónico ingresado por el usuario.
+ * @param {Function} setEmail - Setter para actualizar el valor del correo electrónico.
+ * @param {Function} handleRecoverPassword - Función que maneja la recuperación de la contraseña.
+ * @param {Array<string>} error - Lista de errores de validación (si existen).
+ * @param {Function} setError - Setter para actualizar los errores de validación.
+ * @param {string} message - Mensaje de éxito que se muestra después de enviar el enlace de recuperación.
+ * 
+ * Comportamiento:
+ * - Muestra un formulario donde el usuario ingresa su correo electrónico.
+ * - Si el correo es válido, el sistema enviará un enlace de recuperación.
+ * - Si hay errores, los muestra en una lista.
+ * - Si el enlace se envió correctamente, muestra un mensaje de éxito.
+ * - Al enviar el formulario, ejecuta la función `handleRecoverPassword` para gestionar la recuperación.
+ */
+
 import { Link } from "react-router-dom"
 
 export default function RecoverPassword ({email,setEmail,handleRecoverPassword, error, setError, message}){

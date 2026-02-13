@@ -1,3 +1,26 @@
+/**
+ * Login
+ * ------------------------------------------------------------
+ * Componente de inicio de sesión. Permite al usuario ingresar su correo electrónico y contraseña
+ * para acceder a su cuenta. También gestiona la validación de errores y la recuperación de contraseñas.
+ * 
+ * Props:
+ * @param {string} email - El correo electrónico ingresado por el usuario.
+ * @param {Function} setEmail - Setter para actualizar el valor del correo electrónico.
+ * @param {string} password - La contraseña ingresada por el usuario.
+ * @param {Function} setPassword - Setter para actualizar el valor de la contraseña.
+ * @param {Function} handleSubmit - Función que maneja el envío del formulario de inicio de sesión.
+ * @param {Array<string>} error - Lista de errores de validación (si existen).
+ * @param {Function} setError - Setter para actualizar los errores de validación.
+ * 
+ * Comportamiento:
+ * - Muestra un formulario con campos para el correo electrónico y la contraseña.
+ * - Si hay errores, los muestra en una lista.
+ * - Incluye un enlace para recuperar la contraseña en caso de olvido.
+ * - Ofrece un enlace para crear una nueva cuenta si el usuario no tiene una.
+ * - Al enviar el formulario, ejecuta la función `handleSubmit` para realizar el inicio de sesión.
+ */
+
 import { Link } from "react-router-dom";
 
 export default function Login ({email, setEmail,password, setPassword, handleSubmit, setError, error}){

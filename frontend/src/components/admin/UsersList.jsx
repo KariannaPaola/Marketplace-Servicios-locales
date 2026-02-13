@@ -1,3 +1,41 @@
+/**
+ * UsersList
+ * ------------------------------------------------------------
+ * Componente administrativo para la gestión de usuarios.
+ * Permite visualizar usuarios, suspenderlos o reactivarlos,
+ * y navegar entre páginas de resultados.
+ *
+ * Incluye diseño responsive:
+ * - Tabla para pantallas medianas/grandes
+ * - Tarjetas para dispositivos móviles
+ *
+ * Props:
+ * @param {Array<Object>} users - Lista de usuarios a mostrar.
+ * @param {string} users[].\_id - Identificador único del usuario.
+ * @param {string} users[].name - Nombre del usuario.
+ * @param {string} users[].lastname - Apellido del usuario.
+ * @param {string} users[].email - Correo electrónico.
+ * @param {string} users[].phone_number - Número de teléfono.
+ * @param {string} users[].user_type - Tipo de usuario.
+ * @param {boolean} users[].is_deleted - Indica si el usuario está suspendido.
+ *
+ * @param {Function} remove - Función para suspender un usuario.
+ * Recibe como argumento el id del usuario.
+ *
+ * @param {Function} unDelete - Función para reactivar un usuario suspendido.
+ * Recibe como argumento el id del usuario.
+ *
+ * @param {number} page - Página actual de la paginación.
+ * @param {Function} setPage - Setter para cambiar la página.
+ * @param {number} total - Total de registros disponibles.
+ * @param {number} limit - Cantidad de registros por página.
+ *
+ * Comportamiento:
+ * - Muestra estado "Activo" o "Suspendido".
+ * - Permite suspender o reactivar usuarios.
+ * - Incluye controles de paginación.
+ */
+
 export default function UsersList ({users, remove ,unDelete, page, setPage, total, limit}){
 
 return (

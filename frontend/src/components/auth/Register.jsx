@@ -1,3 +1,37 @@
+/**
+ * Register
+ * ------------------------------------------------------------
+ * Componente de registro de usuarios. Permite crear una nueva cuenta
+ * ingresando datos personales y credenciales.
+ *
+ * Props:
+ * @param {string} name - Nombre del usuario.
+ * @param {string} lastname - Apellido del usuario.
+ * @param {string} email - Correo electrónico del usuario.
+ * @param {string} phone_number - Número telefónico del usuario.
+ * @param {string} password - Contraseña ingresada.
+ * @param {string} password_repeat - Confirmación de la contraseña.
+ * @param {string} message - Mensaje de éxito tras el registro.
+ * @param {Array<string>} error - Lista de errores de validación.
+ *
+ * Setters:
+ * @param {Function} setName - Actualiza el nombre.
+ * @param {Function} setLastname - Actualiza el apellido.
+ * @param {Function} setEmail - Actualiza el correo electrónico.
+ * @param {Function} setPhoneNumber - Actualiza el teléfono.
+ * @param {Function} setPassword - Actualiza la contraseña.
+ * @param {Function} setPasswordRepeat - Actualiza la confirmación de contraseña.
+ *
+ * Actions:
+ * @param {Function} handleSubmit - Función que gestiona el envío del formulario.
+ *
+ * Comportamiento:
+ * - Muestra un formulario de registro con validaciones básicas.
+ * - Ejecuta `handleSubmit` al enviar el formulario.
+ * - Muestra errores si existen.
+ * - Muestra un mensaje de éxito si el registro es correcto.
+ */
+
 import { Link } from "react-router-dom";
 
 export default function Register ({name, lastname, message, email,setName, setLastname, setEmail,phone_number, setPhoneNumber, password, setPassword, password_repeat, setPasswordRepeat, handleSubmit, error}){

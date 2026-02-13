@@ -1,3 +1,22 @@
+/**
+ * ChangePassword
+ * ------------------------------------------------------------
+ * Componente para cambiar la contraseña del usuario.
+ * Permite ingresar y confirmar la nueva contraseña.
+ * 
+ * Props:
+ * @param {string} password - La nueva contraseña ingresada por el usuario.
+ * @param {Function} setPassword - Setter para actualizar la nueva contraseña.
+ * @param {string} newPassword_repeat - Confirmación de la nueva contraseña.
+ * @param {Function} setNewPassword_repeat - Setter para actualizar la confirmación de la nueva contraseña.
+ * @param {Function} change - Función a ejecutar al enviar el formulario, para cambiar la contraseña.
+ * 
+ * Comportamiento:
+ * - Muestra dos campos de entrada de contraseña: uno para la nueva y otro para la confirmación.
+ * - Ambos campos deben coincidir para poder enviar el formulario.
+ * - Al enviar, ejecuta la función `change` que gestiona el cambio de contraseña.
+ */
+
 export default function ChangePassword ({password, setPassword,newPassword_repeat, setNewPassword_repeat ,change}){
 
 return (

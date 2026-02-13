@@ -1,3 +1,30 @@
+/**
+ * CategoriesList
+ * ------------------------------------------------------------
+ * Componente encargado de renderizar la lista de categorías
+ * en formato de tarjetas.
+ *
+ * Props:
+ * @param {Array<Object>} categories - Lista de categorías a mostrar.
+ * @param {string} categories[].\_id - Identificador único de la categoría.
+ * @param {string} categories[].name - Nombre de la categoría.
+ * @param {string} categories[].description - Descripción de la categoría.
+ *
+ * @param {Function} remove - Función para eliminar una categoría.
+ * Recibe como argumento el id de la categoría.
+ *
+ * @param {Function} editStart - Función para iniciar la edición
+ * de una categoría. Recibe el objeto categoría completo.
+ *
+ * Comportamiento:
+ * - Renderiza una grilla responsive de tarjetas.
+ * - Cada tarjeta muestra nombre y descripción de la categoría.
+ * - Incluye acciones para editar y eliminar.
+ *
+ * Dependencias externas:
+ * - lucide-react (íconos Trash2 y Pencil)
+ */
+
 import { Trash2, Pencil } from "lucide-react";
 
 export default function CategoriesList ({categories, remove,editStart}){

@@ -1,3 +1,30 @@
+/**
+ * VerifyFee
+ * ------------------------------------------------------------
+ * Componente encargado de verificar una tarifa de pago.
+ * Muestra los detalles de la tarifa y permite aprobar o rechazar el pago.
+ *
+ * Props:
+ * @param {Object} fee - La tarifa de pago a verificar.
+ * @param {string} fee._id - ID de la tarifa.
+ * @param {string} fee.payment_reference - Referencia de pago.
+ * @param {string} fee.status - Estado de la tarifa ("pagado", "aprobado", "rechazado").
+ * @param {Object} fee.provider_Id - Información del proveedor.
+ * @param {string} fee.provider_Id.name - Nombre del proveedor.
+ * @param {string} fee.provider_Id.lastname - Apellido del proveedor.
+ * @param {string} fee.date_payment - Fecha de pago (si existe).
+ * 
+ * @param {Function} approve - Función para aprobar la tarifa de pago.
+ * Recibe el ID de la tarifa.
+ * 
+ * @param {Function} reject - Función para rechazar la tarifa de pago.
+ * Recibe el ID de la tarifa.
+ * 
+ * Comportamiento:
+ * - Muestra información detallada de la tarifa, incluyendo referencia, fecha de pago y proveedor.
+ * - Permite aprobar o rechazar la tarifa según su estado.
+ * - Muestra mensajes de éxito o error dependiendo del estado de la tarifa.
+ */
 
 export default function VerifyFee({fee, approve, reject}){
 

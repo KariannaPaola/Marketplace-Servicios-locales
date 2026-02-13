@@ -1,3 +1,56 @@
+/**
+ * ProvidersList
+ * ------------------------------------------------------------
+ * Componente administrativo para la gestión de proveedores.
+ * Renderiza una lista responsive con información del proveedor,
+ * sus servicios, estado de aprobación y acceso a documentos.
+ *
+ * Soporta dos vistas:
+ * - Tabla para pantallas medianas y grandes
+ * - Tarjetas para dispositivos móviles
+ *
+ * Props:
+ * @param {Array<Object>} providers - Lista de proveedores a mostrar.
+ * @param {string} providers[].\_id - Identificador único del proveedor.
+ * @param {Object} providers[].user_Id - Usuario asociado al proveedor.
+ * @param {string} providers[].user_Id._id - ID del usuario.
+ * @param {string} providers[].user_Id.name - Nombre del usuario.
+ * @param {string} providers[].user_Id.lastname - Apellido del usuario.
+ * @param {Object} providers[].categories - Categoría del proveedor.
+ * @param {string} providers[].categories.name - Nombre de la categoría.
+ * @param {string} providers[].profession - Profesión del proveedor.
+ * @param {string} providers[].description - Descripción del proveedor.
+ * @param {boolean} providers[].profile_visible - Indica si el perfil es visible.
+ * @param {Array<Object>} providers[].services_offered - Servicios ofrecidos.
+ * @param {string} providers[].services_offered[].\_id - ID del servicio.
+ * @param {string} providers[].services_offered[].name_service - Nombre del servicio.
+ * @param {number|string} providers[].services_offered[].price - Precio del servicio.
+ * @param {string} providers[].status - Estado del proveedor
+ * ("approved" | "rejected" | "pending").
+ *
+ * @param {number} page - Página actual de la paginación.
+ * @param {Function} setPage - Setter para cambiar la página.
+ * @param {number} total - Total de registros disponibles.
+ * @param {number} limit - Cantidad de registros por página.
+ *
+ * @param {Function} approve - Función para aprobar un proveedor.
+ * Recibe como argumento el id del proveedor.
+ *
+ * @param {Function} rejected - Función para rechazar un proveedor.
+ * Recibe como argumento el id del proveedor.
+ *
+ * @param {boolean} loading - Indica si los datos están cargando.
+ *
+ * Comportamiento:
+ * - Muestra información detallada del proveedor y sus servicios.
+ * - Permite aprobar o rechazar proveedores en estado "pending".
+ * - Incluye navegación a documentos del proveedor.
+ * - Incluye controles de paginación.
+ *
+ * Dependencias externas:
+ * - react-router-dom (Link)
+ */
+
 import { Link } from "react-router-dom";
 export default function ProvidersList ({providers,page, setPage, total, limit, approve, rejected, loading}){
 

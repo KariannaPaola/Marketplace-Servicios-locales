@@ -1,3 +1,34 @@
+/**
+ * CategoryForm
+ * ------------------------------------------------------------
+ * Componente de formulario para la gestión de categorías.
+ * Permite crear y editar categorías de servicios mediante
+ * un formulario controlado.
+ *
+ * Props:
+ * @param {string} name - Nombre actual de la categoría.
+ * @param {Function} setName - Setter para actualizar el nombre de la categoría.
+ *
+ * @param {string} description - Descripción actual de la categoría.
+ * @param {Function} setDescription - Setter para actualizar la descripción.
+ *
+ * @param {boolean} creatingCategory - Indica si la categoría se está creando (estado de carga).
+ *
+ * @param {Object|null} editingCategory - Categoría en edición o null si se está creando una nueva.
+ * @param {Function} setEditingCategory - Setter para definir o limpiar la categoría en edición.
+ *
+ * @param {Function} edit - Función que se ejecuta al enviar el formulario en modo edición.
+ * @param {Function} create - Función que se ejecuta al enviar el formulario en modo creación.
+ *
+ * Comportamiento:
+ * - Si `editingCategory` existe, el formulario entra en modo edición.
+ * - Si no existe, el formulario crea una nueva categoría.
+ * - El botón "Cancelar" limpia el estado y sale del modo edición.
+ *
+ * Dependencias externas:
+ * - lucide-react (íconos Save y X)
+ */
+
 import { Save, X } from "lucide-react";
 
 export default function CategoryForm({name, setName,description, setDescription, creatingCategory, editingCategory, setEditingCategory, edit, create}){

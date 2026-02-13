@@ -1,3 +1,36 @@
+/**
+ * RegisterProviderForm
+ * ------------------------------------------------------------
+ * Formulario para que los usuarios se registren como proveedores de servicios.
+ * Permite ingresar información profesional, seleccionar categorías y estados,
+ * y agregar múltiples servicios con sus respectivos precios.
+ *
+ * Props:
+ * @param {string} error - Mensaje de error general.
+ * @param {string} message - Mensaje de éxito o confirmación.
+ * @param {Function} infoSubmit - Función que se ejecuta al enviar el formulario.
+ * @param {string} profession - Nombre del oficio/profesión del proveedor.
+ * @param {Function} setProfession - Setter para actualizar la profesión.
+ * @param {string} description - Breve descripción del proveedor.
+ * @param {Function} setDescription - Setter para actualizar la descripción.
+ * @param {Array<Object>} categories - Lista de categorías disponibles.
+ * @param {string} categoriaSeleccionada - ID de la categoría seleccionada.
+ * @param {Function} setCategoriaSeleccionada - Setter para actualizar la categoría seleccionada.
+ * @param {Array<Object>} states - Lista de estados disponibles.
+ * @param {string} estadoSeleccionado - ID del estado seleccionado.
+ * @param {Function} setEstadoSeleccionado - Setter para actualizar el estado seleccionado.
+ * @param {Array<Object>} services - Lista de servicios agregados por el proveedor.
+ * @param {Function} handleServiceChange - Función para actualizar nombre o precio de un servicio.
+ * @param {Function} removeService - Función para eliminar un servicio de la lista.
+ * @param {Function} addService - Función para agregar un nuevo servicio.
+ *
+ * Comportamiento:
+ * - Permite ingresar información profesional y descripción del proveedor.
+ * - Permite seleccionar categoría y estado.
+ * - Permite agregar, modificar y eliminar servicios con precios.
+ * - Ejecuta `infoSubmit` al enviar el formulario.
+ */
+
 export default function RegisterProviderForm ({error, message, infoSubmit,profession, setProfession, description,setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, states, estadoSeleccionado, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}){
 const onSubmit = async (e) => {
     e.preventDefault();

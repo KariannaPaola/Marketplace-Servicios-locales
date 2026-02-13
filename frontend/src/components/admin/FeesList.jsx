@@ -1,6 +1,55 @@
+/**
+ * FeesList
+ * ------------------------------------------------------------
+ * Componente para la gestión y visualización de pagos (fees)
+ * en el panel administrativo.
+ *
+ * Soporta vista responsive:
+ * - Tabla para pantallas medianas/grandes
+ * - Tarjetas para dispositivos móviles
+ *
+ * Props:
+ * @param {Array<Object>} fees - Lista de pagos a mostrar.
+ * @param {string} fees[].\_id - Identificador único del pago.
+ * @param {Object} fees[].provider_Id - Proveedor asociado al pago.
+ * @param {string} fees[].provider_Id.name - Nombre del proveedor.
+ * @param {string} fees[].provider_Id.lastname - Apellido del proveedor.
+ * @param {Object} fees[].amount_usd - Monto en dólares (Decimal).
+ * @param {string} fees[].amount_usd.$numberDecimal - Valor del monto en USD.
+ * @param {string|null} fees[].date_payment - Fecha de pago (si existe).
+ * @param {string} fees[].expiration_date - Fecha de vencimiento.
+ * @param {string} fees[].status - Estado del pago
+ * ("pendiente" | "pagado" | "rechazado" | "aprobado").
+ *
+ * @param {Function} approve - Función para aprobar un pago.
+ * Recibe como argumento el id del pago.
+ *
+ * @param {Function} reject - Función para rechazar un pago.
+ * Recibe como argumento el id del pago.
+ *
+ * @param {number} page - Página actual de la paginación.
+ * @param {Function} setPage - Setter para cambiar la página.
+ *
+ * @param {number} limit - Cantidad de registros por página.
+ * @param {number} total - Total de registros disponibles.
+ *
+ * @param {Object} feeApi - Información adicional de la API de pagos.
+ * @param {Object} feeApi.data - Datos devueltos por la API.
+ * @param {number} feeApi.data.promedio - Valor promedio usado para el cálculo en Bs.
+ *
+ * @param {boolean} loading - Indica si los datos están cargando.
+ *
+ * Comportamiento:
+ * - Muestra un estado de carga mientras `loading` es true.
+ * - Permite navegar al detalle del pago.
+ * - Permite aprobar o rechazar pagos en estado "pagado".
+ * - Incluye controles de paginación.
+ *
+ * Dependencias externas:
+ * - react-router-dom (useNavigate)
+ */
+
 import { useNavigate } from "react-router-dom";
-
-
 export default function FeesList({fees, approve, reject, page, setPage, limit, total, feeApi, loading }){
 const navigate=useNavigate();
 
