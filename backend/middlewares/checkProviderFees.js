@@ -24,7 +24,7 @@
 
 import Fee from "../models/fees.models.js";
 import Provider from "../models/provider.models.js";
-
+import mongoose from "mongoose";
 export const authCheckProviderFees = async (req, res, next) => {
   try {
     const providerId = req.user?._id || req.params.id;

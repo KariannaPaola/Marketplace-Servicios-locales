@@ -43,14 +43,14 @@ import mongoose from 'mongoose';
 
 export const registerProvider= async (req, res) => {
   const user=req.user;
-  const { profession, description, categories, state, services_offered} =  req.body;
+  const { profession, description, direction, categories, state, services_offered} =  req.body;
 
   try{
     if (!user) {
     return res.status(401).json({ message: "No autenticado" });
     }
     if (user.user_type==="proveedor") return res.status(400).json({message:'ya estas registrado como proveedor',});
-    const newProvider= new Provider ({ user_Id:user._id , profession, description, categories, state, services_offered });
+    const newProvider= new Provider ({ user_Id:user._id , profession, description, direction, categories, state, services_offered });
     await newProvider.save();
     await User.findByIdAndUpdate(user._id, { user_type: "proveedorPendiente" });
     return res.status(201).json({

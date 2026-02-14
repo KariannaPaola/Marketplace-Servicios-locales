@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FiMenu, FiX, FiHome, FiLogIn, FiUserPlus} from "react-icons/fi";
-import { RiLockPasswordFill } from "react-icons/ri";
+
 
 export default function PublicNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,8 +10,7 @@ export default function PublicNavbar() {
   const links = [
     { to: "/home", label: "Home", icon: <FiHome /> },
     { to: "/login", label: "Login", icon: <FiLogIn /> },
-    { to: "/register", label: "Registro", icon: <FiUserPlus /> },
-    { to: "/recoverPassword", label: "Recuperar contraseña", icon: <RiLockPasswordFill />}
+    { to: "/register", label: "Registro", icon: <FiUserPlus /> }
   ];
 
   return (

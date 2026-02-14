@@ -31,7 +31,7 @@
  * - Ejecuta `infoSubmit` al enviar el formulario.
  */
 
-export default function RegisterProviderForm ({error, message, infoSubmit,profession, setProfession, description,setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, states, estadoSeleccionado, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}){
+export default function RegisterProviderForm ({error, message, infoSubmit,profession, setProfession, description,setDescription, direction, setDirection, categories, categoriaSeleccionada, setCategoriaSeleccionada, states, estadoSeleccionado, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}){
 const onSubmit = async (e) => {
     e.preventDefault();
     await infoSubmit();
@@ -89,6 +89,17 @@ return (
             placeholder="Ingresa una breve descripción de tu perfil profesional"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
+            className="w-full text-xs border border-gray-300 rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <label className="block text-xs font-medium text-gray-700 mb-1">
+            Direction
+          </label>
+          <input
+            type="text"
+            placeholder="Ingresa tu dirección"
+            value={direction}
+            onChange={(e) => setDirection(e.target.value)}
             required
             className="w-full text-xs border border-gray-300 rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />

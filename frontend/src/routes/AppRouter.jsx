@@ -36,6 +36,8 @@ import SuccessfulRegisterProviderPage from "../pages/auth/RegistroProveedorExito
 import SuccessfulPayMyFeePage from "../pages/proveedores/PagoExitoso";
 import ProviderSearchFilter from "../pages/clientes/ProvidersFilter";
 import PublicRoute from "./PublicRoute";
+import ProviderSearchFilterPublic from "../pages/public/ProvidersFilter";
+import ProfileProviderPagePublic from "../pages/public/PerfilPrestadorPublic";
 
 
 
@@ -53,6 +55,8 @@ export default function AppRouter() {
         <Route path="/recoverPassword" element={<PublicRoute><RecoverPasswordPage/></PublicRoute>} />
         <Route path="/ChangePassword/:token" element={<PublicRoute><ChangePasswordPage/></PublicRoute>} />
         <Route path="/contraseñaCambiada" element={<PublicRoute><SuccessfulChangePasswordPage/></PublicRoute>} />
+        <Route path="/searchPublic" element={<PublicRoute><ProviderSearchFilterPublic/></PublicRoute>} />
+        <Route path="/profileProviderPublic/:id" element={<PublicRoute><ProfileProviderPagePublic/></PublicRoute>} />
 
         {/* CLIENTE (todos los logueados) */}
         <Route path="/client/inicio" element={<PrivateRoute><HomeClientPage/></PrivateRoute>}  />

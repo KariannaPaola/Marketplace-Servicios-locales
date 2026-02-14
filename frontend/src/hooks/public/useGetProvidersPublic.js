@@ -6,7 +6,6 @@ export default function UseGetProvidersPublic() {
   const [providers, setProviders] = useState([]);
   
   useEffect(() => {
-   console.log("goood")
     const fetchProviders =  async () => {
       try {
         const data = await getProvidersPublic();

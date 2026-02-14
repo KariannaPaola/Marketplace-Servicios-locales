@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function useRegisterProvider(){
   const [profession, setProfession] = useState("");
   const [description, setDescription] = useState("");
+  const [direction, setDirection] = useState("");
   const [categories, setCategories] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
   const [states, setStates] = useState([]);
@@ -57,7 +58,7 @@ export default function useRegisterProvider(){
   const infoSubmit = async () => {
     setError("");
     setMessage("");
-    if (!profession || !description || !categoriaSeleccionada || !estadoSeleccionado) {
+    if (!profession || !description || !direction || !categoriaSeleccionada || !estadoSeleccionado) {
       setError("Todos los campos son obligatorios");
       return;
     }
@@ -69,6 +70,7 @@ export default function useRegisterProvider(){
       const data = await registerProvider(
         profession,
         description,
+        direction,
         categoriaSeleccionada,
         estadoSeleccionado,
         services.map(s => ({
@@ -83,6 +85,6 @@ export default function useRegisterProvider(){
     }
   }
   
-  return{error, message, infoSubmit,profession, setProfession, description,setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, states, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}
+  return{error, message, infoSubmit,profession, setProfession, description, direction, setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, states, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}
 
 }

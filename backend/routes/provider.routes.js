@@ -61,10 +61,10 @@ router.get('/providersPublic', getProvidersPublic);
 router.post("/register",authMiddleware, registerProvider);
 router.patch("/editProfile", authMiddleware, editProfileProvider);
 router.get("/me",authMiddleware, readMyProfileProvider);
-router.get("/:id", authCheckProviderFees, authMiddleware, readProfileProvider);
+router.get("/:id", authCheckProviderFees, readProfileProvider);
 router.delete("/deleteProfile/me",authMiddleware, deletedMyProfileProvider);
 
-router.get('/', authCheckProviderFees, authMiddleware, getProviders);
+router.get('/', authCheckProviderFees, getProviders);
 router.get('/admin/providers',authMiddleware, authRoleAdmin, getProvidersAdmin);
 router.patch('/admin/approve/:id', authMiddleware,authRoleAdmin, approveProvider);
 router.patch('/admin/disapprove/:id', authMiddleware,authRoleAdmin, disapproveProvider);

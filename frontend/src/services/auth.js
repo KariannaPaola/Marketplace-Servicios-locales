@@ -15,8 +15,8 @@ export const verifyEmail = async (token) => {
   const res = await axios.get(`${API_URL}/auth/verify-email/${token}`);
   return res.data;
 };
-export const registerProvider = async ( profession, description, categories, state, services_offered) => {
-  const res = await api.post(`/providers/register`, {profession, description, categories, state, services_offered} );
+export const registerProvider = async ( profession, description, categories, direction, state, services_offered) => {
+  const res = await api.post(`/providers/register`, {profession, description, direction, categories, state, services_offered} );
   return res.data; 
 };
 export const fetchcategoriesAdmin = async () => {
