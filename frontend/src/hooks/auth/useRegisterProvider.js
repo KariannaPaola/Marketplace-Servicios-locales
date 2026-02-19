@@ -85,6 +85,6 @@ export default function useRegisterProvider(){
     }
   }
   
-  return{error, message, infoSubmit,profession, setProfession, description, direction, setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, states, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}
+  return{error, message, infoSubmit,profession, setProfession, description, direction, setDirection, setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, states, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}
 
 }

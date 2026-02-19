@@ -64,12 +64,16 @@ return (
         {providers.map((p) => (
           <div
             key={p._id}
-            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 p-6 flex flex-col justify-between"
-          >
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 p-6 flex flex-col justify-between">
+           
             <div>
+             
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
                 {p.profession}
               </h3>
+              <h5 className="text-ms font-semibold text-gray-800 mb-2">
+                {p.user_Id.name} {p.user_Id.lastname}
+              </h5>
 
               <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                 {p.description}

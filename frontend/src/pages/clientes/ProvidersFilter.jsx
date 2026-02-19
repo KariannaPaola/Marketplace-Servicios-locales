@@ -70,7 +70,9 @@ return (
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
                 {p.profession}
               </h3>
-
+              <h5 className="text-ms font-semibold text-gray-800 mb-2">
+                {p.user_Id.name} {p.user_Id.lastname}
+              </h5>
               <p className="text-gray-600 text-sm mb-4 line-clamp-3">
                 {p.description}
               </p>

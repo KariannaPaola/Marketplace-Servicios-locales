@@ -16,17 +16,22 @@ export default function ClientNavbar() {
   const links = [
     { to: "/client/inicio", label: "Inicio", icon: <FiHome /> },
     { to: "/client/request", label: "Solicitudes realizadas", icon: <FiClipboard /> },
+    
   ];
  if (isProvider) {
     links.push({
-      to: "/provider/request",
+      to: "/provider/request", 
       label: "Solicitudes recibidas",
       icon: <FiUser />,
     }, {
       to: "/provider/myfees",
       label: "Historial de tarifas",
       icon: <FiUser />,
-    });
+    }, {
+          to: "/provider/profile",
+          label: "Mi perfil",
+          icon: <FiUser />,
+        });
   }
   if (!isProvider) {
     links.push({

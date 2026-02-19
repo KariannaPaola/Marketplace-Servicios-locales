@@ -44,6 +44,7 @@ import mongoose from 'mongoose';
 export const registerProvider= async (req, res) => {
   const user=req.user;
   const { profession, description, direction, categories, state, services_offered} =  req.body;
+  console.log({ profession, description, direction, categories, state, services_offered})
 
   try{
     if (!user) {
