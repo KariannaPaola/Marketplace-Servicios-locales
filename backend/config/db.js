@@ -17,6 +17,7 @@
  * @module databaseConnection
  */
 
+
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
@@ -24,11 +25,17 @@ dotenv.config();
 
 const connection = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("Conectado a la base de datos");
+    // Elegir la URI según el entorno
+    const dbUri =
+      process.env.NODE_ENV === "production"
+        ? process.env.MONGO_URI_PROD
+        : process.env.MONGO_URI;
+
+    await mongoose.connect(dbUri);
+    console.log(`Conectado a MongoDB en ${dbUri}`);
   } catch (error) {
     console.error("Error de conexión:", error.message);
-    process.exit(1);
+    process.exit(1); // Termina el proceso si hay fallo crítico
   }
 };
 
