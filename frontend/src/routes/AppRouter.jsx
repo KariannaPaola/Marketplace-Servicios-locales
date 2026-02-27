@@ -47,6 +47,7 @@ export default function AppRouter() {
     <MainLayout>
       <Routes>
         {/* PUBLICAS */}
+        <Route path="/" element={<PublicRoute><Home/></PublicRoute>} />
         <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><Register/></PublicRoute>} />
         <Route path="/home" element={<PublicRoute><Home/></PublicRoute>} />
