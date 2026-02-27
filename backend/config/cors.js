@@ -16,7 +16,7 @@
 
 import cors from "cors";
 
-const whitelist = ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "http://localhost:4000", "https://marketplace-servicios-locales.vercel.app/" ];
+const whitelist = ["http://localhost:3000", "http://localhost:5173", "http://localhost:4000", "https://marketplace-servicios-locales.vercel.app" ];
 
 const corsOptions = {
   origin: function (origin, callback) {
