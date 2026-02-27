@@ -25,7 +25,6 @@ import VerifyFee from "../pages/administrador/RevisarPago";
 import RecoverPasswordPage from "../pages/auth/RecuperarContraseña";
 import ChangePasswordPage from "../pages/auth/CambiarContraseña";
 import MyProfileProviderPage from "../pages/proveedores/MiPerfil";
-import SubirCedula from "../pages/auth/EnviarArchivos";
 import ReadImages from "../pages/administrador/VerArchivos";
 import HomeClientPage from "../pages/clientes/Inicio";
 import FormRequestPage from "../pages/clientes/FormularioConfirmacion";
@@ -68,7 +67,6 @@ export default function AppRouter() {
         <Route path="/register/provider" element={<PrivateRoute><RegisterProvider /></PrivateRoute>} />
         <Route path="/client/RequestExitosa" element={<PrivateRoute><SuccessfulRequestPage /></PrivateRoute>} />
         <Route path="/client/RegistroProveedorExitoso" element={<PrivateRoute><SuccessfulRegisterProviderPage /></PrivateRoute>} />
-        <Route path="/upload/file" element={<PrivateRoute><SubirCedula/></PrivateRoute>} />
         <Route path="/search" element={<PrivateRoute><ProviderSearchFilter/></PrivateRoute>} />
         
         
