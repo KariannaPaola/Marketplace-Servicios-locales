@@ -85,7 +85,6 @@ export default function AppRouter() {
         <Route path="/admin/providers" element={<AdminRoute><GetProvidersAdmin /></AdminRoute>} />
         <Route path="/admin/users" element={<AdminRoute><UsersAdminPage /></AdminRoute>} />
         <Route path="/admin/file/:id" element={<AdminRoute><ReadImages/></AdminRoute>} /> 
-
         <Route path="*" element={<NotFound />} />
       </Routes>
       
