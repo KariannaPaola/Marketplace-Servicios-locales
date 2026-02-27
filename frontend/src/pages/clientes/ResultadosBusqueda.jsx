@@ -5,7 +5,6 @@ export default function GetProvidersSearchPage(){
 const {providers,page, setPage, total, limit,loading}=useGetProvidersSearchClient()
 
 
-
 return (
 
 <GetProvidersSearch

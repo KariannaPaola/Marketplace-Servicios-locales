@@ -3,7 +3,7 @@ import RegisterProviderForm from "../../components/auth/RegisterProviderForm";
 
 
 export default function RegisterProviderPage (){
-const {error, message, infoSubmit,profession, setProfession, description,setDescription, direction, setDirection, categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, setEstadoSeleccionado, states, services, handleServiceChange, removeService, addService}=useRegisterProvider()
+const {error, message, infoSubmit,profession, setProfession, description,setDescription, direction, setDirection, categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, setEstadoSeleccionado, states, services, handleServiceChange, removeService, addService, handleFilesChange}=useRegisterProvider()
 
   return(
     <RegisterProviderForm
@@ -26,6 +26,7 @@ const {error, message, infoSubmit,profession, setProfession, description,setDesc
       handleServiceChange={handleServiceChange}
       removeService={removeService}
       addService={addService}
+      handleFilesChange= {handleFilesChange}
       />
   ); 
 }

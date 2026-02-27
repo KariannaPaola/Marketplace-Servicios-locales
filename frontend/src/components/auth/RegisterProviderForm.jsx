@@ -31,7 +31,7 @@
  * - Ejecuta `infoSubmit` al enviar el formulario.
  */
 
-export default function RegisterProviderForm ({error, message, infoSubmit,profession, setProfession, description,setDescription, direction, setDirection, categories, categoriaSeleccionada, setCategoriaSeleccionada, states, estadoSeleccionado, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}){
+export default function RegisterProviderForm ({error, message, infoSubmit,profession, setProfession, description,setDescription, direction, setDirection, categories, categoriaSeleccionada, setCategoriaSeleccionada, states, estadoSeleccionado, setEstadoSeleccionado, services, handleServiceChange, removeService, addService, handleFilesChange}){
 const onSubmit = async (e) => {
     e.preventDefault();
     await infoSubmit();
@@ -162,6 +162,40 @@ return (
               Agregar Servicio
             </button>
           </div>
+          <div className="w-full max-w-xl">
+      <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h6 className="text-lg font-semibold text-gray-800 mb-2">
+          Paso 3: Identificación
+        </h6>
+        <p className='text-semibold text-red-600'>{message}</p>
+        <h5 className="text-sm text-gray-600 mb-6">
+          Para finalizar envía una foto de tu cédula de identidad y una foto de frente
+          para comprobar tu identidad.
+        </h5>
+        
+          <label className="block text-xs font-medium text-gray-700 mb-1">
+            Foto de tu cédula
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFilesChange}
+            className="w-full mb-4 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          />
+          <div className="flex items-start gap-2 mb-6">
+            <input
+              type="checkbox"
+              className="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <p className="text-sm text-gray-600">
+              Acepto los{" "}
+              <span className="text-blue-600 hover:underline cursor-pointer">
+                términos y condiciones
+              </span>
+            </p>
+          </div>
+      </div>
+    </div>
           <div className="md:col-span-2">
             <button
               type="submit"

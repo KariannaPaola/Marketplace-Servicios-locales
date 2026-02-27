@@ -5,13 +5,13 @@ export default function ProfileProviderPage(){
 
 const {profileProvider}=useProfileProviderClient();
 
-return(
-  <div>
-  <ProfileProviderClient
-    profileProvider={profileProvider}
-  />
-  </div>
-)
+  return(
+    <div>
+    <ProfileProviderClient
+      profileProvider={profileProvider}
+    />
+    </div>
+  )
 
 }
 

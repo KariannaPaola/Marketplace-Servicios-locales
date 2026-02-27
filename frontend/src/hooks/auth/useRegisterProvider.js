@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { registerProvider, getStates, categoriesPublic } from "../../services/auth";
+import { registerProvider, getStates, categoriesPublic, uploadImage } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 
 
@@ -11,10 +11,15 @@ export default function useRegisterProvider(){
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
   const [states, setStates] = useState([]);
   const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
+  const [files, setFiles] = useState(null);
   const [message, setMessage] = useState("");
   const [services, setServices] = useState([{ name_service: "", price: ""}]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const handleFilesChange = (e) => {
+    setFiles(e.target.files[0]);
+  };
 
   useEffect(() => {
     const fetchCategories =  async () => {
@@ -66,8 +71,13 @@ export default function useRegisterProvider(){
       setError("Todos los servicios deben tener nombre y precio válido");
       return;
     }
+    if (!files) {
+      alert("Selecciona al menos un archivo");
+      return;
+    }
+
     try {
-      const data = await registerProvider(
+      await registerProvider(
         profession,
         description,
         direction,
@@ -78,13 +88,20 @@ export default function useRegisterProvider(){
           price: Number(s.price),
         }))
       );
-      setMessage(data.message)
-      navigate(`/upload/file`);
+      try {
+      const formData = new FormData();
+      formData.append("documents", files);
+      formData.append("type", "cedula");
+      await uploadImage(formData);
+      } catch (error) {
+        setError("Error al subir documento");
+      }
+      navigate("/client/RegistroProveedorExitoso");
     } catch (error) {
-      setError(error.response?.data?.message || error.message || "Error desconocido");
+      setError(error.response?.data?.message || error.message || "Error al registar proveedor");
     }
   }
   
-  return{error, message, infoSubmit,profession, setProfession, description, direction, setDirection, setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, states, setEstadoSeleccionado, services, handleServiceChange, removeService, addService}
+  return{error, message, infoSubmit,profession, setProfession, description, direction, setDirection, setDescription,categories, categoriaSeleccionada, setCategoriaSeleccionada, estadoSeleccionado, states, setEstadoSeleccionado, services, handleServiceChange, removeService, addService, handleFilesChange}
 
 }
