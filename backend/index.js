@@ -25,7 +25,19 @@ app.use(express.json());
 app.use(corsInstance);
 app.use('/uploads', express.static("uploads"));
 
-await connection();
+const startServer = async () => {
+  try {
+    await connection();
+
+    app.listen(port, () => {
+      console.log(`Servidor corriendo en puerto ${port}`);
+    });
+  } catch (error) {
+    console.error("Error al iniciar servidor:", error);
+  }
+};
+
+startServer();
 
 app.use("/users", usersRoutes);
 app.use("/auth", authRoutes);

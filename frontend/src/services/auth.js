@@ -1,18 +1,17 @@
 import axios from "axios";
 import api from "./api";
 
-const API_URL = "http://localhost:4000"; 
 
 export const login = async (email, password) => {
-  const res = await axios.post(`${API_URL}/auth/login`, { email, password });
+  const res = await api.post(`/auth/login`, { email, password });
   return res.data; 
 };
 export const register = async (name, lastname, email, phone_number, password, password_repeat) => {
-  const res = await axios.post(`${API_URL}/auth/register`, { name, lastname, email, phone_number, password, password_repeat });
+  const res = await api.post(`/auth/register`, { name, lastname, email, phone_number, password, password_repeat });
   return res.data; 
 };
 export const verifyEmail = async (token) => {
-  const res = await axios.get(`${API_URL}/auth/verify-email/${token}`);
+  const res = await api.get(`/auth/verify-email/${token}`);
   return res.data;
 };
 export const registerProvider = async ( profession, description,direction, categories,  state, services_offered) => {
