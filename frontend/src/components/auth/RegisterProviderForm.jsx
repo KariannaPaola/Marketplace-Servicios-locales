@@ -30,12 +30,14 @@
  * - Permite agregar, modificar y eliminar servicios con precios.
  * - Ejecuta `infoSubmit` al enviar el formulario.
  */
+import { useNavigate } from "react-router-dom";
 
-export default function RegisterProviderForm ({error, message, infoSubmit,profession, setProfession, description,setDescription, direction, setDirection, categories, categoriaSeleccionada, setCategoriaSeleccionada, states, estadoSeleccionado, setEstadoSeleccionado, services, handleServiceChange, removeService, addService, handleFilesChange}){
+export default function RegisterProviderForm ({error, message, infoSubmit,profession, setProfession, description,setDescription, direction, setDirection, categories, categoriaSeleccionada, setCategoriaSeleccionada, states, estadoSeleccionado, setEstadoSeleccionado, services, handleServiceChange, removeService, addService,handleFilesChange }){
 const onSubmit = async (e) => {
     e.preventDefault();
     await infoSubmit();
   };
+const navigate=useNavigate()
 return (
   <section className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
     <div className="w-full max-w-5xl">
@@ -202,8 +204,14 @@ return (
               className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
               Registrarse como proveedor
             </button>
+            
           </div>
       </form>
+      <button
+              onClick={() => navigate(`/client/inicio`)}
+              className="w-full bg-red-600 mt-2 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition">
+              Cancelar registro
+            </button>
     </div>
   </section>
 );
