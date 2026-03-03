@@ -163,9 +163,8 @@ export const recoverPassword= async (req, res) => {
     res.json({ message:'Revisa tu correo y entra al enlace para cambiar tu contraseña' })
 
   } catch (error) {
-    res.status(500).json({ 
-    message: "Error al recuperar contraseña" 
-    });
+      console.error('Error interno al recuperar contraseña:', error); // Log explícito del error
+  res.status(500).json({ message: "Error al recuperar contraseña", error: error.message });
   }
 }
 
