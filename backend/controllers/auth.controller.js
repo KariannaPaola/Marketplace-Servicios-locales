@@ -146,7 +146,7 @@ export const loginUser = async (req, res) => {
 export const recoverPassword= async (req, res) => {
   const {email: rawEmail} = req.body;
   const email = rawEmail.toLowerCase();
-  
+  const link=import.meta.env.FRONT_URL
   try{
     if (!email) {
       return res.status(400).json({
@@ -158,7 +158,7 @@ export const recoverPassword= async (req, res) => {
     const token_recoverPassword= crypto.randomBytes(32).toString('hex');
     user.token_recover_password= token_recoverPassword;
     await user.save();
-    const link_recoverPassword=`http://localhost:5173/ChangePassword/${token_recoverPassword}`;
+    const link_recoverPassword=`${link}/ChangePassword/${token_recoverPassword}`;
     await sendEmail ({ to:email, subject:"Recupera tu cotraseña", html: `<a href="${link_recoverPassword}">Cambiar contraseña</a>` })
     res.json({ message:'Revisa tu correo y entra al enlace para cambiar tu contraseña' })
 
