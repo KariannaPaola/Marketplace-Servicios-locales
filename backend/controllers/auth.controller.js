@@ -146,7 +146,7 @@ export const loginUser = async (req, res) => {
 export const recoverPassword= async (req, res) => {
   const {email: rawEmail} = req.body;
   const email = rawEmail.toLowerCase();
-  const link=import.meta.env.FRONT_URL
+  const link=process.env.FRONT_URL
   try{
     if (!email) {
       return res.status(400).json({
