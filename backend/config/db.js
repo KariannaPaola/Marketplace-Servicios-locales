@@ -25,7 +25,7 @@ dotenv.config();
 
 const connection = async () => {
   try {
-    // Elegir la URI según el entorno
+    
     const dbUri =
       process.env.NODE_ENV === "production"
         ? process.env.MONGO_URI_PROD
@@ -35,7 +35,7 @@ const connection = async () => {
     console.log(`Conectado a MongoDB en ${dbUri}`);
   } catch (error) {
     console.error("Error de conexión:", error.message);
-    process.exit(1); // Termina el proceso si hay fallo crítico
+    process.exit(1); 
   }
 };
 

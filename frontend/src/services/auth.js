@@ -158,6 +158,7 @@ export const verifyfee = async (id) => {
   return res.data; 
 };
 export const recoverPassword = async (email) => {
+  console.log(email)
   const res = await api.post(`/auth/recover-password`, {email}) ;
   return res.data; 
 };

@@ -21,15 +21,14 @@
 
 
 import nodemailer from 'nodemailer';
-
-const transporterEmail = nodemailer.createTransport({
-  host: process.env.MAIL_HOST,
-  port: Number(process.env.MAIL_PORT),
-  secure: false, 
+console.log (process.env.SENDGRID_API_KEY)
+const transporter = nodemailer.createTransport({
+  host: 'smtp.sendgrid.net',
+  port: 587,
   auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS
+    user: 'apikey',                 
+    pass: process.env.SENDGRID_API_KEY
   }
 });
 
-export default transporterEmail;
+export default transporter;
