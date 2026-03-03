@@ -144,6 +144,7 @@ export const loginUser = async (req, res) => {
 }
 
 export const recoverPassword= async (req, res) => {
+  console.log( "Email obligatorio")
   const {email: rawEmail} = req.body;
   const email = rawEmail.toLowerCase();
   const link=process.env.FRONT_URL

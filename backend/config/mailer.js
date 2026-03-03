@@ -28,7 +28,11 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: 'apikey',                 
     pass: process.env.SENDGRID_API_KEY
-  }
+  },
+  tls: {
+    rejectUnauthorized: false // Si el servidor tiene certificados auto-firmados
+  },
+  socketTimeout: 10000 // Establecer un timeout mayor (en milisegundos)
 });
 
 export default transporter;
