@@ -73,7 +73,7 @@ export const registerUser = async (req, res) => {
     const token_email= crypto.randomBytes(32).toString('hex');
     const newUser= new User ({ name, lastname, email, phone_number, password, token_email: token_email, token_email_expires: Date.now() + 1000 * 60 * 60, user_type });
     await newUser.save();
-    const link_verificationEmail=`http://localhost:5173/verify-email/${token_email}`;
+    const link_verificationEmail=`${process.env.FRONT_URL}/${token_email}`;
     await sendEmail ({ to:email, subject:"Verifica tu correo", html: `<a href="${link_verificationEmail}">Verificar cuenta</a>` })
     return res.status(200).json({
       message: "Debes verificar tu correo, revisa tu bandeja de entrada"
@@ -143,31 +143,49 @@ export const loginUser = async (req, res) => {
   }
 }
 
-export const recoverPassword= async (req, res) => {
-  console.log( "Email obligatorio")
-  const {email: rawEmail} = req.body;
-  const email = rawEmail.toLowerCase();
-  const link=process.env.FRONT_URL
-  try{
-    if (!email) {
+export const recoverPassword = async (req, res) => {
+  try {
+    const { email: rawEmail } = req.body;
+
+    if (!rawEmail) {
       return res.status(400).json({
-      message: "Email obligatorio",
-    });
+        message: "Email obligatorio"
+      });
     }
+
+    const email = rawEmail.toLowerCase().trim();
+
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'No hay un usuario registrado con ese correo' });
-    const token_recoverPassword= crypto.randomBytes(32).toString('hex');
-    user.token_recover_password= token_recoverPassword;
+    if (!user) {
+      return res.status(400).json({
+        message: "No hay un usuario registrado con ese correo"
+      });
+    }
+
+    const token_recoverPassword = crypto.randomBytes(32).toString("hex");
+    user.token_recover_password = token_recoverPassword;
     await user.save();
-    const link_recoverPassword=`${link}/ChangePassword/${token_recoverPassword}`;
-    await sendEmail ({ to:email, subject:"Recupera tu cotraseña", html: `<a href="${link_recoverPassword}">Cambiar contraseña</a>` })
-    res.json({ message:'Revisa tu correo y entra al enlace para cambiar tu contraseña' })
+
+    const link_recoverPassword = `${process.env.FRONT_URL}/ChangePassword/${token_recoverPassword}`;
+
+    await sendEmail({
+      to: email,
+      subject: "Recupera tu contraseña",
+      html: `<a href="${link_recoverPassword}">Cambiar contraseña</a>`
+    });
+
+    res.json({
+      message: "Revisa tu correo y entra al enlace para cambiar tu contraseña"
+    });
 
   } catch (error) {
-      console.error('Error interno al recuperar contraseña:', error); // Log explícito del error
-  res.status(500).json({ message: "Error al recuperar contraseña", error: error.message });
+    console.error("Error interno al recuperar contraseña:", error);
+    res.status(500).json({
+      message: "Error al recuperar contraseña",
+      error: error.message
+    });
   }
-}
+};
 
 export const changePassword= async (req, res) => { 
   const {token} =req.params;

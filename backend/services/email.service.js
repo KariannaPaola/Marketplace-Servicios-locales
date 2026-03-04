@@ -20,20 +20,20 @@ import sgMail from '@sendgrid/mail';
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Función para enviar correos
-const sendEmail = async (to, subject, html) => {
+const sendEmail = async ({ to, subject, html }) => {
   const msg = {
-    to, // Dirección de destino
-    from: process.env.MAIL_USER, // Correo verificado en SendGrid
-    subject, // Asunto del correo
-    html, // Cuerpo del correo en HTML
+    to,
+    from: process.env.MAIL_USER,
+    subject,
+    html,
   };
 
   try {
-    // Enviar el correo usando la API de SendGrid
     await sgMail.send(msg);
     console.log('Correo enviado exitosamente');
   } catch (error) {
     console.error('Error al enviar el correo:', error);
+    throw error; // importante para que el controlador capture el error
   }
 };
 
